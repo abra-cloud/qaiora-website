@@ -1,108 +1,385 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="QAIORA - Something intelligent is coming.">
-  <title>QAIORA | Coming Soon</title>
-
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
+  <title>QAIORA — The Intelligence Behind Quality</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1929;
+      --panel: rgba(17, 35, 54, .72);
+      --line: rgba(167, 203, 218, .15);
+      --text: #f4f8fb;
+      --muted: #a8b8c8;
+      --teal: #62d8ce;
+      --teal-2: #2baea8;
+      --blue: #83baff;
+      --max: 1160px;
     }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      color: #fff;
+      margin: 0;
+      color: var(--text);
       background:
-        radial-gradient(circle at 20% 20%, #174b59 0, transparent 35%),
-        radial-gradient(circle at 80% 80%, #26345c 0, transparent 40%),
-        #0b1220;
-      text-align: center;
-      padding: 24px;
+        radial-gradient(ellipse at 80% 4%, rgba(38, 154, 160, .18), transparent 34rem),
+        radial-gradient(ellipse at 5% 34%, rgba(50, 104, 168, .13), transparent 34rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-
-    .container {
-      max-width: 720px;
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+    .nav-shell {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 17, 31, .78);
+      border-bottom: 1px solid var(--line);
     }
-
-    .logo {
-      font-size: 42px;
-      font-weight: 800;
-      letter-spacing: 8px;
-      margin-bottom: 35px;
+    nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 1.2rem; font-weight: 800; letter-spacing: .16em; }
+    .brand-mark {
+      width: 37px; height: 37px; border-radius: 12px; display: grid; place-items: center;
+      color: #06131e; background: linear-gradient(135deg, #8cf0df, #35aaa9);
+      box-shadow: 0 0 30px rgba(98,216,206,.22);
     }
-
-    .logo span {
-      color: #72d6ca;
+    .brand-mark svg { width: 23px; height: 23px; }
+    .brand span { color: var(--teal); }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: #c0ccd8; font-size: .9rem; }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta, .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      border-radius: 999px; padding: 11px 19px; font-weight: 700; font-size: .9rem;
+      border: 1px solid rgba(98,216,206,.5); color: #06151e;
+      background: linear-gradient(135deg, #8ce8dc, #48c5bc);
+      box-shadow: 0 8px 28px rgba(48,177,170,.18);
+      transition: transform .2s ease, box-shadow .2s ease;
     }
-
-    .status {
-      display: inline-block;
-      border: 1px solid #72d6ca;
-      color: #72d6ca;
-      border-radius: 30px;
-      padding: 9px 20px;
-      font-size: 12px;
-      letter-spacing: 3px;
-      margin-bottom: 30px;
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(48,177,170,.27); }
+    .button.secondary { color: var(--text); background: rgba(255,255,255,.035); border-color: var(--line); box-shadow: none; }
+    .menu-button { display: none; border: 1px solid var(--line); background: transparent; color: white; padding: 9px 12px; border-radius: 10px; }
+    .hero { position: relative; padding: 104px 0 92px; }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 64px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; color: var(--teal);
+      border: 1px solid rgba(98,216,206,.24); background: rgba(98,216,206,.07);
+      padding: 7px 12px; border-radius: 999px; text-transform: uppercase;
+      letter-spacing: .13em; font-size: .7rem; font-weight: 800;
     }
-
-    h1 {
-      font-size: clamp(36px, 7vw, 62px);
-      margin-bottom: 22px;
-      line-height: 1.15;
+    .pulse { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; box-shadow: 0 0 0 5px rgba(98,216,206,.12); }
+    h1 { font-size: clamp(3.1rem, 6vw, 5.6rem); line-height: .99; letter-spacing: -.065em; margin: 24px 0 24px; max-width: 760px; }
+    .gradient-text { background: linear-gradient(100deg, #f7fbff 5%, #8fe8df 62%, #8abaff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-copy { max-width: 590px; color: var(--muted); font-size: 1.12rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 32px; }
+    .micro-note { color: #8296a9; font-size: .78rem; margin-top: 20px; }
+    .visual { min-height: 430px; position: relative; display: grid; place-items: center; }
+    .orbit {
+      position: absolute; width: min(420px, 95%); aspect-ratio: 1; border-radius: 50%;
+      border: 1px solid rgba(98,216,206,.17);
+      box-shadow: 0 0 90px rgba(48,177,170,.08), inset 0 0 90px rgba(48,177,170,.04);
     }
-
-    p {
-      color: #b7c4d5;
-      font-size: 18px;
-      line-height: 1.7;
-      margin-bottom: 35px;
+    .orbit:before, .orbit:after { content: ""; position: absolute; border: 1px solid rgba(131,186,255,.15); border-radius: 50%; inset: 34px; }
+    .orbit:after { inset: 76px; border-color: rgba(98,216,206,.19); }
+    .core {
+      width: 190px; height: 190px; border-radius: 42px; transform: rotate(-8deg);
+      display: grid; place-items: center; position: relative; z-index: 2;
+      background: linear-gradient(145deg, rgba(103,228,215,.22), rgba(40,93,133,.18));
+      border: 1px solid rgba(146,239,229,.48);
+      box-shadow: 0 0 80px rgba(64,195,187,.2), inset 0 0 40px rgba(124,231,220,.08);
     }
-
-    .line {
-      width: 65px;
-      height: 3px;
-      background: #72d6ca;
-      margin: 0 auto 35px;
+    .core-inner { transform: rotate(8deg); text-align: center; }
+    .core-symbol { font-size: 4.4rem; line-height: 1; font-weight: 900; letter-spacing: -.1em; color: var(--teal); text-shadow: 0 0 30px rgba(98,216,206,.4); }
+    .core-label { color: #c5d7e5; font-size: .66rem; letter-spacing: .24em; margin-top: 10px; }
+    .float-card {
+      position: absolute; z-index: 3; border: 1px solid var(--line); background: rgba(11,25,41,.88);
+      backdrop-filter: blur(12px); border-radius: 14px; padding: 13px 15px; box-shadow: 0 16px 45px rgba(0,0,0,.22);
+      color: #dce8f0; font-size: .77rem;
     }
-
-    footer {
-      color: #718096;
-      font-size: 13px;
+    .float-card strong { display: block; font-size: .82rem; margin-bottom: 3px; }
+    .float-card small { color: #8fa5b7; }
+    .float-one { top: 48px; right: 0; }
+    .float-two { bottom: 55px; left: -4px; }
+    .float-three { bottom: 12px; right: 25px; }
+    .tiny-icon { color: var(--teal); margin-right: 6px; }
+    .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.018); }
+    .trust-inner { display: flex; justify-content: space-between; gap: 20px; padding: 23px 0; color: #91a5b7; font-size: .82rem; flex-wrap: wrap; }
+    .trust-inner span { display: inline-flex; align-items: center; gap: 9px; }
+    .dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+    section { padding: 94px 0; }
+    .section-head { max-width: 720px; margin-bottom: 42px; }
+    .kicker { color: var(--teal); font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h2 { font-size: clamp(2.15rem, 4vw, 3.5rem); letter-spacing: -.045em; line-height: 1.08; margin: 13px 0 16px; }
+    .section-head p { color: var(--muted); font-size: 1.02rem; margin: 0; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+    .card {
+      min-height: 255px; padding: 25px 22px; border: 1px solid var(--line); border-radius: 18px;
+      background: linear-gradient(155deg, rgba(19,42,62,.78), rgba(10,24,39,.72));
+      transition: transform .22s ease, border-color .22s ease;
     }
+    .card:hover { transform: translateY(-5px); border-color: rgba(98,216,206,.42); }
+    .icon-box { width: 43px; height: 43px; border-radius: 13px; display: grid; place-items: center; color: var(--teal); background: rgba(98,216,206,.1); border: 1px solid rgba(98,216,206,.16); margin-bottom: 22px; }
+    .icon-box svg { width: 21px; height: 21px; }
+    .card h3 { font-size: 1.04rem; margin: 0 0 10px; }
+    .card p { color: #9fb1c1; font-size: .88rem; margin: 0; }
+    .platform { background: linear-gradient(180deg, transparent, rgba(16,39,58,.5), transparent); }
+    .platform-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: center; }
+    .platform-copy p { color: var(--muted); }
+    .check-list { list-style: none; padding: 0; margin: 25px 0 0; display: grid; gap: 13px; color: #cbd8e2; }
+    .check-list li:before { content: "✓"; color: var(--teal); font-weight: 900; margin-right: 11px; }
+    .workflow { border: 1px solid var(--line); border-radius: 22px; padding: 27px; background: rgba(12,29,46,.7); }
+    .workflow-top { display: flex; justify-content: space-between; align-items: center; color: #a6b8c7; font-size: .76rem; border-bottom: 1px solid var(--line); padding-bottom: 17px; }
+    .workflow-top strong { color: #e8f2f7; font-size: .9rem; }
+    .step { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 14px; padding: 17px 0; border-bottom: 1px solid rgba(167,203,218,.1); }
+    .step:last-child { border-bottom: 0; }
+    .step-num { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; background: rgba(98,216,206,.1); color: var(--teal); font-weight: 800; font-size: .82rem; }
+    .step strong { display: block; font-size: .9rem; }
+    .step small { color: #8ea3b5; font-size: .76rem; }
+    .step-tag { color: var(--teal); font-size: .68rem; border: 1px solid rgba(98,216,206,.2); padding: 5px 8px; border-radius: 99px; white-space: nowrap; }
+    .vision-box {
+      padding: 55px; border-radius: 26px; border: 1px solid rgba(98,216,206,.2);
+      background: radial-gradient(ellipse at 85% 0%, rgba(62,173,169,.17), transparent 40%), linear-gradient(135deg, #10283b, #0a1929);
+      display: flex; justify-content: space-between; align-items: center; gap: 40px;
+    }
+    .vision-box h2 { max-width: 650px; margin-bottom: 12px; }
+    .vision-box p { color: var(--muted); max-width: 650px; margin: 0; }
+    .vision-mark { flex: 0 0 120px; width: 120px; height: 120px; border-radius: 34px; display: grid; place-items: center; border: 1px solid rgba(98,216,206,.4); color: var(--teal); font-size: 3.8rem; font-weight: 900; box-shadow: 0 0 60px rgba(98,216,206,.1); }
+    .contact { text-align: center; padding-bottom: 105px; }
+    .contact .section-head { margin: 0 auto 28px; }
+    .contact .section-head p { max-width: 620px; margin: auto; }
+    footer { border-top: 1px solid var(--line); padding: 27px 0; color: #8196a8; font-size: .78rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .footer-brand { color: #dce9f1; font-weight: 800; letter-spacing: .15em; }
+    .footer-brand span { color: var(--teal); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a:hover { color: var(--teal); }
+    @media (max-width: 900px) {
+      .hero-grid, .platform-grid { grid-template-columns: 1fr; gap: 35px; }
+      .hero { padding-top: 75px; }
+      .visual { min-height: 390px; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .platform-grid { gap: 35px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 34px, var(--max)); }
+      nav { min-height: 68px; }
+      .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 20px 24px; background: #0a1929; border-bottom: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 17px; }
+      .nav-links.open { display: flex; }
+      .menu-button { display: inline-flex; }
+      .nav-cta { display: none; }
+      .hero { padding: 65px 0 60px; }
+      h1 { font-size: clamp(2.8rem, 14vw, 4.3rem); }
+      .hero-copy { font-size: 1rem; }
+      .visual { min-height: 330px; }
+      .orbit { width: 300px; }
+      .core { width: 145px; height: 145px; border-radius: 32px; }
+      .core-symbol { font-size: 3.5rem; }
+      .float-card { padding: 10px 11px; font-size: .68rem; }
+      .float-one { top: 15px; right: -3px; }
+      .float-two { bottom: 45px; left: -5px; }
+      .float-three { bottom: 5px; right: 0; }
+      section { padding: 70px 0; }
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: auto; }
+      .vision-box { padding: 30px 24px; display: block; }
+      .vision-mark { width: 76px; height: 76px; border-radius: 23px; font-size: 2.5rem; margin-top: 27px; }
+      .step { grid-template-columns: 34px 1fr; }
+      .step-tag { grid-column: 2; justify-self: start; }
+      .workflow { padding: 19px; }
+      .trust-inner { gap: 12px 20px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
   </style>
 </head>
-
 <body>
-  <main class="container">
-    <div class="logo">QAI<span>ORA</span></div>
+  <div class="nav-shell">
+    <div class="wrap">
+      <nav aria-label="Main navigation">
+        <a class="brand" href="#home" aria-label="QAIORA home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5h14v10.2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5.5Z" stroke="currentColor" stroke-width="1.8"/><path d="M8 5.5V3.8h8v1.7M8.5 11h7M8.5 14.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m15.8 18 1.2 2 1.2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          QAI<span>ORA</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="#platform">Platform</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#approach">Our approach</a>
+          <a href="#vision">Vision</a>
+        </div>
+        <a class="nav-cta" href="#contact">Get in touch <span aria-hidden="true">↗</span></a>
+        <button class="menu-button" id="menuButton" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+      </nav>
+    </div>
+  </div>
 
-    <div class="status">COMING SOON</div>
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> The next perspective on quality</div>
+          <h1><span class="gradient-text">The Intelligence</span><br>Behind Quality.</h1>
+          <p class="hero-copy">Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.</p>
+          <div class="hero-actions">
+            <a class="button" href="#platform">Discover the platform <span aria-hidden="true">→</span></a>
+            <a class="button secondary" href="#capabilities">Explore capabilities</a>
+          </div>
+          <div class="micro-note">A new approach to AI-powered Quality Assurance &amp; Engineering.</div>
+        </div>
+        <div class="visual" aria-label="Abstract QAIORA intelligence visual">
+          <div class="orbit"></div>
+          <div class="core"><div class="core-inner"><div class="core-symbol">Q</div><div class="core-label">INTELLIGENCE</div></div></div>
+          <div class="float-card float-one"><strong><span class="tiny-icon">✳</span>Requirement insight</strong><small>Understand what matters</small></div>
+          <div class="float-card float-two"><strong><span class="tiny-icon">◇</span>Quality by design</strong><small>Make quality actionable</small></div>
+          <div class="float-card float-three"><strong><span class="tiny-icon">⌁</span>AI-assisted testing</strong><small>From insight to confidence</small></div>
+        </div>
+      </div>
+    </section>
 
-    <h1>Something intelligent is coming.</h1>
+    <div class="trust-strip">
+      <div class="wrap trust-inner">
+        <span><i class="dot"></i> Intelligent requirement analysis</span>
+        <span><i class="dot"></i> Testability-focused thinking</span>
+        <span><i class="dot"></i> AI-assisted quality engineering</span>
+        <span><i class="dot"></i> Human expertise at the centre</span>
+      </div>
+    </div>
 
-    <div class="line"></div>
+    <section id="capabilities">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">What QAIORA is about</div>
+          <h2>Quality engineering, <span class="gradient-text">amplified by AI.</span></h2>
+          <p>Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5M8 10.8h5.6M10.8 8v5.6"/></svg></div>
+            <h3>Requirement Analysis</h3>
+            <p>Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5h16v13H4z"/><path d="m7.5 12 2.8 2.8 6.2-6.2"/><path d="M8 3v2.5M16 3v2.5"/></svg></div>
+            <h3>Testability Assessment</h3>
+            <p>Evaluate whether requirements are specific, measurable, consistent and ready to be tested.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4.5h14v15H5z"/><path d="M8 8h8M8 12h5M8 16h8"/><path d="m16 10 2 2-2 2"/></svg></div>
+            <h3>Test Case Generation</h3>
+            <p>Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></svg></div>
+            <h3>Test Data Support</h3>
+            <p>Support the creation of realistic, relevant test data for meaningful and repeatable testing.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <p>
-      We are building something new.<br>
-      Our website is currently under construction.
-      Stay tuned!
-    </p>
+    <section class="platform" id="platform">
+      <div class="wrap platform-grid">
+        <div class="platform-copy">
+          <div class="kicker">One connected perspective</div>
+          <h2>From requirements to <span class="gradient-text">quality confidence.</span></h2>
+          <p>QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.</p>
+          <ul class="check-list">
+            <li>Find gaps and ambiguities earlier</li>
+            <li>Improve requirement clarity and testability</li>
+            <li>Generate structured testing ideas faster</li>
+            <li>Keep human judgement in the loop</li>
+          </ul>
+        </div>
+        <div class="workflow">
+          <div class="workflow-top"><strong>QAIORA quality workflow</strong><span>Concept overview</span></div>
+          <div class="step"><div class="step-num">01</div><div><strong>Understand</strong><small>Analyse requirements and context</small></div><span class="step-tag">Insight</span></div>
+          <div class="step"><div class="step-num">02</div><div><strong>Assess</strong><small>Check completeness and testability</small></div><span class="step-tag">Clarity</span></div>
+          <div class="step"><div class="step-num">03</div><div><strong>Design</strong><small>Derive scenarios and test cases</small></div><span class="step-tag">Coverage</span></div>
+          <div class="step"><div class="step-num">04</div><div><strong>Prepare</strong><small>Support meaningful test data</small></div><span class="step-tag">Readiness</span></div>
+        </div>
+      </div>
+    </section>
 
-    <footer>
-      © 2026 QAIORA. All rights reserved.
-      <br><br>
-      qaiora.com
-    </footer>
+    <section id="approach">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Our approach</div>
+          <h2>AI supports expertise.<br><span class="gradient-text">People create quality.</span></h2>
+          <p>Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">◎</span></div>
+            <h3>Clarity</h3>
+            <p>Make requirements and quality expectations easier to understand.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">⌘</span></div>
+            <h3>Consistency</h3>
+            <p>Encourage repeatable methods and structured quality practices.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">↗</span></div>
+            <h3>Efficiency</h3>
+            <p>Reduce repetitive effort and give teams more room for critical thinking.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">◇</span></div>
+            <h3>Human oversight</h3>
+            <p>Keep professional judgement, review and accountability at the centre.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="wrap">
+        <div class="vision-box">
+          <div>
+            <div class="kicker">The QAIORA vision</div>
+            <h2>Make quality a smarter part of every decision.</h2>
+            <p>We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.</p>
+          </div>
+          <div class="vision-mark" aria-hidden="true">Q.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Stay connected</div>
+          <h2>Quality is evolving.<br><span class="gradient-text">Be part of the journey.</span></h2>
+          <p>QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance &amp; Engineering.</p>
+        </div>
+        <a class="button" href="#home">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div><span class="footer-brand">QAI<span>ORA</span></span><br> The Intelligence Behind Quality.</div>
+      <div class="footer-links"><a href="#platform">Platform</a><a href="#capabilities">Capabilities</a><a href="#vision">Vision</a></div>
+      <div>© <span id="year">2026</span> QAIORA. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const navLinks = document.getElementById('navLinks');
+    menuButton.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
