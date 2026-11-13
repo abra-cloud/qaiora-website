@@ -251,6 +251,7 @@
 </a>
         <div class="nav-links" id="navLinks">
           <a href="#analyzer">Requirement Analyzer</a>
+          <a href="#testability">Testability Checker</a>
           <a href="#platform">Platform</a>
           <a href="#capabilities">Capabilities</a>
           <a href="#approach">Our approach</a>
@@ -375,6 +376,46 @@
       </div>
     </section>
 
+
+    <section class="analyzer-section" id="testability">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">QAIORA workspace · second module</div>
+          <h2>Testability <span class="gradient-text">Checker.</span></h2>
+          <p class="analyzer-intro">Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
+        </div>
+        <div class="analyzer-panel">
+          <form class="analyzer-form" id="testabilityForm">
+            <div>
+              <label for="testabilityText">Requirement and acceptance criteria</label>
+              <textarea id="testabilityText" required minlength="20" placeholder="Paste the requirement and its acceptance criteria here. Include relevant business rules if available."></textarea>
+            </div>
+            <div>
+              <label for="testabilityLanguage">Prompt language</label>
+              <select id="testabilityLanguage">
+                <option value="de">Deutsch</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="analyzer-actions">
+              <button class="button" type="submit">Create testability prompt <span aria-hidden="true">→</span></button>
+              <button class="button secondary" type="button" id="clearTestability">Clear</button>
+            </div>
+          </form>
+          <div class="analyzer-output" id="testabilityOutput" hidden>
+            <label for="generatedTestabilityPrompt">Your QAIORA testability prompt</label>
+            <textarea id="generatedTestabilityPrompt" readonly></textarea>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button class="button" type="button" id="copyTestabilityPrompt">Copy prompt</button>
+              <a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT ↗</a>
+            </div>
+            <p class="analyzer-note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
+            <div class="analyzer-status" id="testabilityCopyStatus" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="platform" id="platform">
       <div class="wrap platform-grid">
         <div class="platform-copy">
@@ -463,6 +504,225 @@
     </div>
   </footer>
   <script>
+
+
+    // QAIORA Testability Checker: prompt generation only; no API call.
+    const testabilityForm = document.getElementById("testabilityForm");
+    const testabilityText = document.getElementById("testabilityText");
+    const testabilityLanguage = document.getElementById("testabilityLanguage");
+    const testabilityOutput = document.getElementById("testabilityOutput");
+    const generatedTestabilityPrompt = document.getElementById("generatedTestabilityPrompt");
+    const testabilityCopyStatus = document.getElementById("testabilityCopyStatus");
+
+    testabilityForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const requirement = testabilityText.value.trim();
+      if (requirement.length < 20) { testabilityText.focus(); return; }
+      const de = testabilityLanguage.value === "de";
+      generatedTestabilityPrompt.value = de
+        ? `Rolle:
+Du bist ein erfahrener Quality Engineer mit fundierten Kenntnissen in Requirements Engineering, Testanalyse und Softwaretest.
+
+Aufgabe:
+Bewerte ausschließlich die Testbarkeit der nachfolgenden fachlichen Anforderung. Prüfe, ob daraus objektive, eindeutige, reproduzierbare und ausführbare Testfälle abgeleitet werden können. Erfinde keine fachlichen Regeln und keine erwarteten Ergebnisse. Eine fehlende Information ist nicht automatisch ein Fehler. Trenne belegbare Feststellungen, Annahmen und offene Fragen.
+
+Anforderung:
+${requirement}
+
+Prüfe systematisch diese Dimensionen:
+
+1. Vorbedingungen und Zustände
+- Sind Voraussetzungen, Benutzerrollen, Berechtigungen und relevante Systemzustände beschrieben?
+- Ist klar, in welchem Ausgangszustand ein Test beginnt?
+
+2. Auslöser, Eingaben und Prozess
+- Sind Auslöser, Eingabedaten, Aktionen und Prozessschritte eindeutig?
+- Sind erforderliche Datenformate, Wertebereiche und Randwerte definiert?
+
+3. Erwartete Ergebnisse und Beobachtbarkeit
+- Sind erwartete Ergebnisse konkret, messbar und überprüfbar?
+- Ist beschrieben, woran ein Tester Erfolg oder Misserfolg erkennt?
+- Sind Zustandsänderungen und Seiteneffekte eindeutig?
+
+4. Szenarioabdeckung
+- Lassen sich positive, negative und alternative Szenarien ableiten?
+- Sind Entscheidungspunkte und relevante Geschäftsregeln abgedeckt?
+
+5. Randbedingungen und Fehlerfälle
+- Sind Grenzwerte, Ausnahmen, Fehlerreaktionen und Abbruchbedingungen beschrieben?
+- Sind Zeitverhalten, Wiederholungen oder parallele Vorgänge relevant und spezifiziert?
+
+Befundregeln:
+- Ordne jeden Befund einer Kategorie zu: Informationslücke, fachlicher Widerspruch (nur mit konkretem Textbeleg) oder Optimierungspotenzial.
+- Bewerte die Auswirkung auf die Testbarkeit: blockierend, wesentlich, begrenzt oder gering.
+- Nenne für jeden Befund den Textbeleg, die Begründung und die konkrete Folge für Testdesign oder Testausführung.
+- Fasse überlappende Befunde zusammen.
+- Erfinde keine Anforderungen, Testdaten oder erwarteten Ergebnisse.
+- Unterscheide ausdrücklich zwischen einer Testidee, einem ableitbaren Testszenario und einem vollständig ausführbaren Testfall.
+
+Erwartetes Ausgabeformat:
+
+A. Testability Summary
+- Gesamtbewertung: testbar / teilweise testbar / nicht testbar
+- Kurze Begründung
+- Anzahl der blockierenden, wesentlichen, begrenzten und geringen Befunde
+- Wichtigste Einschränkung
+
+B. Testbarkeitsmatrix
+Bewerte jede der fünf Dimensionen mit:
+- Gegeben
+- Teilweise gegeben
+- Nicht gegeben
+Begründe jede Bewertung anhand der Anforderung.
+
+C. Erkannte Testbarkeitslücken
+Für jeden Befund:
+- Eindeutige ID
+- Textbeleg oder Hinweis, dass keine entsprechende Information vorhanden ist
+- Kategorie
+- Auswirkung auf Testbarkeit
+- Begründung
+- Welche Information konkret fehlt
+
+D. Ableitbare Tests
+Trenne klar:
+1. Testideen
+2. Testszenarien mit definierten Vorbedingungen und Ergebnissen
+3. Vollständig spezifizierbare, ausführbare Testfälle
+Erstelle nur so viele, wie durch den Anforderungstext gedeckt sind. Wenn keine vollständigen Testfälle möglich sind, sage das ausdrücklich.
+
+E. Nicht ableitbare Tests und offene Fragen
+- Welche Tests können noch nicht spezifiziert werden?
+- Welche konkrete Information fehlt jeweils?
+- Formuliere gezielte Fragen an den Anforderungsgeber.
+- Priorisiere nach Auswirkung auf Testdesign und Abnahme.
+
+F. Verbesserungsvorschläge
+- Konkrete Ergänzungen für bessere Testbarkeit
+- Trenne notwendige fachliche Klärungen von optionalen Präzisierungen.
+- Formuliere keine neuen fachlichen Regeln als bereits beschlossen.
+
+G. QS-Empfehlung
+Gib eine klare Empfehlung:
+- Testbar
+- Mit Einschränkungen testbar
+- Derzeit nicht ausreichend testbar
+Begründe die Empfehlung. Diese Testbarkeitsempfehlung ist keine Aussage über die gesamte Umsetzungsreife der Anforderung.
+
+Arbeite präzise, nachvollziehbar und ohne unnötige Wiederholungen. Bewerte die Testbarkeit unabhängig von sprachlicher Qualität und allgemeiner Umsetzungsreife.`
+        : `Role:
+You are an experienced Quality Engineer with strong expertise in requirements engineering, test analysis and software testing.
+
+Task:
+Assess only the testability of the following business requirement. Determine whether objective, unambiguous, reproducible and executable test cases can be derived. Do not invent business rules or expected results. Missing information is not automatically a defect. Separate evidence-based findings, assumptions and open questions.
+
+Requirement:
+${requirement}
+
+Systematically assess these dimensions:
+
+1. Preconditions and states
+- Are prerequisites, user roles, permissions and relevant system states described?
+- Is the initial state for a test clear?
+
+2. Triggers, inputs and process
+- Are triggers, input data, actions and process steps unambiguous?
+- Are required data formats, value ranges and boundary values defined?
+
+3. Expected results and observability
+- Are expected results concrete, measurable and verifiable?
+- Can a tester identify success or failure?
+- Are state changes and side effects clear?
+
+4. Scenario coverage
+- Can positive, negative and alternative scenarios be derived?
+- Are decision points and relevant business rules covered?
+
+5. Constraints and error cases
+- Are boundaries, exceptions, error responses and abort conditions described?
+- Are timing, retries or concurrent operations relevant and specified?
+
+Finding rules:
+- Assign each finding a category: information gap, business contradiction (only with specific textual evidence), or improvement opportunity.
+- Rate its impact on testability: blocking, significant, limited or minor.
+- For each finding, provide textual evidence, rationale and its concrete consequence for test design or execution.
+- Merge overlapping findings.
+- Do not invent requirements, test data or expected results.
+- Explicitly distinguish a test idea, a derivable test scenario and a fully executable test case.
+
+Expected output:
+
+A. Testability Summary
+- Overall rating: testable / partially testable / not testable
+- Brief rationale
+- Number of blocking, significant, limited and minor findings
+- Most important limitation
+
+B. Testability Matrix
+Rate each of the five dimensions as:
+- Given
+- Partially given
+- Not given
+Justify each rating using the requirement.
+
+C. Identified Testability Gaps
+For each finding:
+- Unique ID
+- Textual evidence or note that the information is absent
+- Category
+- Impact on testability
+- Rationale
+- Specific missing information
+
+D. Derivable Tests
+Clearly separate:
+1. Test ideas
+2. Test scenarios with defined preconditions and outcomes
+3. Fully specifiable, executable test cases
+Create only what is supported by the requirement. Explicitly state when complete test cases cannot be produced.
+
+E. Tests That Cannot Yet Be Derived and Open Questions
+- Which tests cannot yet be specified?
+- What specific information is missing for each?
+- Formulate targeted questions for the requirement owner.
+- Prioritise by impact on test design and acceptance.
+
+F. Improvement Recommendations
+- Concrete additions to improve testability
+- Distinguish mandatory business clarifications from optional refinements.
+- Do not present new business rules as already agreed.
+
+G. QE Recommendation
+Give a clear recommendation:
+- Testable
+- Testable with limitations
+- Currently not sufficiently testable
+Explain the recommendation. This testability recommendation is not a verdict on the overall implementation readiness of the requirement.
+
+Be precise, traceable and avoid unnecessary repetition. Assess testability independently of wording quality and overall implementation readiness.`;
+      testabilityOutput.hidden = false;
+      testabilityCopyStatus.textContent = "";
+      testabilityOutput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    document.getElementById("clearTestability").addEventListener("click", function() {
+      testabilityText.value = "";
+      generatedTestabilityPrompt.value = "";
+      testabilityOutput.hidden = true;
+      testabilityCopyStatus.textContent = "";
+      testabilityText.focus();
+    });
+
+    document.getElementById("copyTestabilityPrompt").addEventListener("click", async function() {
+      try {
+        await navigator.clipboard.writeText(generatedTestabilityPrompt.value);
+        testabilityCopyStatus.textContent = testabilityLanguage.value === "de" ? "Prompt wurde kopiert." : "Prompt copied.";
+      } catch (error) {
+        generatedTestabilityPrompt.focus();
+        generatedTestabilityPrompt.select();
+        testabilityCopyStatus.textContent = testabilityLanguage.value === "de" ? "Bitte kopiere den markierten Prompt manuell." : "Please copy the selected prompt manually.";
+      }
+    });
 
     // QAIORA Requirement Analyzer: prompt generation only; no API call.
     const requirementForm = document.getElementById("requirementForm");
