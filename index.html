@@ -933,11 +933,11 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
     document.getElementById("copyPrompt").addEventListener("click", async function() {
       try {
         await navigator.clipboard.writeText(generatedPrompt.value);
-        copyStatus.textContent = "Prompt copied. Open ChatGPT and paste it into a new conversation.";
+        copyStatus.textContent = promptLanguage.value === "de" ? "Prompt wurde kopiert. Öffne ChatGPT und füge ihn in eine neue Unterhaltung ein." : "Prompt copied. Open ChatGPT and paste it into a new conversation.";
       } catch (error) {
         generatedPrompt.focus();
         generatedPrompt.select();
-        copyStatus.textContent = "Automatic copy was blocked. The prompt is selected; use Ctrl+C.";
+        copyStatus.textContent = promptLanguage.value === "de" ? "Automatisches Kopieren wurde blockiert. Der Prompt ist markiert; bitte Strg+C drücken." : "Automatic copy was blocked. The prompt is selected; use Ctrl+C.";
       }
     });
 
@@ -1031,8 +1031,30 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
         "Be part of the journey.": "Be part of the journey.",
         "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.",
         "Back to top": "Back to top",
-        "All rights reserved.": "All rights reserved."
-      },
+        "All rights reserved.": "All rights reserved.",
+        "Requirement Analyzer": "Requirement Analyzer",
+        "Testability Checker": "Testability Checker",
+        "QAIORA workspace · first module": "QAIORA workspace · first module",
+        "Requirement": "Requirement",
+        "Analyzer.": "Analyzer.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.",
+        "Your requirement": "Your requirement",
+        "Prompt language": "Prompt language",
+        "Create analysis prompt": "Create analysis prompt",
+        "Clear": "Clear",
+        "Your QAIORA prompt": "Your QAIORA prompt",
+        "Copy prompt": "Copy prompt",
+        "Open ChatGPT ↗": "Open ChatGPT ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.",
+        "QAIORA workspace · second module": "QAIORA workspace · second module",
+        "Testability": "Testability",
+        "Checker.": "Checker.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.",
+        "Requirement and acceptance criteria": "Requirement and acceptance criteria",
+        "Create testability prompt": "Create testability prompt",
+        "Your QAIORA testability prompt": "Your QAIORA testability prompt",
+        "The Intelligence Behind Quality.": "The Intelligence Behind Quality.",
+        "QAIORA. All rights reserved.": "QAIORA. All rights reserved.",      },
       de: {
         "Platform": "Plattform",
         "Capabilities": "Funktionen",
@@ -1111,8 +1133,30 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
         "Be part of the journey.": "Werde Teil dieser Entwicklung.",
         "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "QAIORA nimmt Gestalt an. Begleite uns auf dem Weg zu einem intelligenteren Ansatz für Qualitätssicherung und Quality Engineering.",
         "Back to top": "Nach oben",
-        "All rights reserved.": "Alle Rechte vorbehalten."
-      },
+        "All rights reserved.": "Alle Rechte vorbehalten.",
+        "Requirement Analyzer": "Anforderungsanalyse",
+        "Testability Checker": "Testbarkeitsprüfung",
+        "QAIORA workspace · first module": "QAIORA-Arbeitsbereich · erstes Modul",
+        "Requirement": "Anforderungs-",
+        "Analyzer.": "analyse.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "Beschreibe oder füge eine Anforderung ein. QAIORA erstellt daraus einen strukturierten Quality-Engineering-Prompt, den du in deine eigene ChatGPT-Unterhaltung kopieren kannst. Die Analyse selbst findet in ChatGPT statt, nicht auf dieser Seite.",
+        "Your requirement": "Deine Anforderung",
+        "Prompt language": "Sprache des Prompts",
+        "Create analysis prompt": "Analyse-Prompt erstellen",
+        "Clear": "Leeren",
+        "Your QAIORA prompt": "Dein QAIORA-Prompt",
+        "Copy prompt": "Prompt kopieren",
+        "Open ChatGPT ↗": "ChatGPT öffnen ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "Deine Anforderung wird lokal in diesem Browser verarbeitet, um den Prompt zu erstellen. Diese Seite sendet keine Daten an QAIORA oder einen KI-Dienst.",
+        "QAIORA workspace · second module": "QAIORA-Arbeitsbereich · zweites Modul",
+        "Testability": "Testbar-",
+        "Checker.": "keitsprüfung.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "Prüfe, ob eine Anforderung objektiv und reproduzierbar getestet werden kann. QAIORA erstellt dafür einen strukturierten Bewertungs-Prompt für deine eigene ChatGPT-Unterhaltung. Auf dieser Seite findet keine KI-Analyse statt.",
+        "Requirement and acceptance criteria": "Anforderung und Akzeptanzkriterien",
+        "Create testability prompt": "Testbarkeits-Prompt erstellen",
+        "Your QAIORA testability prompt": "Dein QAIORA-Testbarkeitsprompt",
+        "The Intelligence Behind Quality.": "Die Intelligenz hinter Qualität.",
+        "QAIORA. All rights reserved.": "QAIORA. Alle Rechte vorbehalten.",      },
       fr: {
         "Platform": "Plateforme",
         "Capabilities": "Fonctionnalités",
@@ -1191,8 +1235,30 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
         "Be part of the journey.": "Faites partie de l’aventure.",
         "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "QAIORA prend forme. Suivez notre évolution vers une approche plus intelligente de l’assurance qualité et du Quality Engineering.",
         "Back to top": "Retour en haut",
-        "All rights reserved.": "Tous droits réservés."
-      },
+        "All rights reserved.": "Tous droits réservés.",
+        "Requirement Analyzer": "Analyse des exigences",
+        "Testability Checker": "Vérification de la testabilité",
+        "QAIORA workspace · first module": "Espace de travail QAIORA · premier module",
+        "Requirement": "Analyse",
+        "Analyzer.": "des exigences.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "Décrivez ou collez une exigence. QAIORA crée un prompt structuré de Quality Engineering que vous pouvez copier dans votre propre conversation ChatGPT. L’analyse elle-même s’effectue dans ChatGPT, et non sur cette page.",
+        "Your requirement": "Votre exigence",
+        "Prompt language": "Langue du prompt",
+        "Create analysis prompt": "Créer le prompt d’analyse",
+        "Clear": "Effacer",
+        "Your QAIORA prompt": "Votre prompt QAIORA",
+        "Copy prompt": "Copier le prompt",
+        "Open ChatGPT ↗": "Ouvrir ChatGPT ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "Votre exigence est traitée localement dans ce navigateur pour créer le prompt. Cette page n’envoie aucune donnée à QAIORA ni à un service d’IA.",
+        "QAIORA workspace · second module": "Espace de travail QAIORA · deuxième module",
+        "Testability": "Vérification",
+        "Checker.": "de la testabilité.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "Vérifiez si une exigence peut être testée de manière objective et reproductible. QAIORA crée un prompt d’évaluation structuré pour votre propre conversation ChatGPT. Aucune analyse par IA n’est effectuée sur cette page.",
+        "Requirement and acceptance criteria": "Exigence et critères d’acceptation",
+        "Create testability prompt": "Créer le prompt de testabilité",
+        "Your QAIORA testability prompt": "Votre prompt QAIORA de testabilité",
+        "The Intelligence Behind Quality.": "L’intelligence au service de la qualité.",
+        "QAIORA. All rights reserved.": "QAIORA. Tous droits réservés.",      },
       ar: {
         "Platform": "المنصة",
         "Capabilities": "الإمكانات",
@@ -1269,8 +1335,31 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
         "Be part of the journey.": "كن جزءاً من هذه الرحلة.",
         "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "تتخذ QAIORA شكلها. تابع رحلتنا ونحن نطور نهجاً أكثر ذكاءً لضمان الجودة وهندسة الجودة.",
         "Back to top": "العودة إلى الأعلى",
-        "All rights reserved.": "جميع الحقوق محفوظة."
-      }
+        "All rights reserved.": "جميع الحقوق محفوظة.",
+        "Requirement Analyzer": "محلل المتطلبات",
+        "Testability Checker": "مدقق قابلية الاختبار",
+        "QAIORA workspace · first module": "مساحة عمل QAIORA · الوحدة الأولى",
+        "Requirement": "تحليل",
+        "Analyzer.": "المتطلبات.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "اكتب المتطلب أو الصقه. تنشئ QAIORA موجهاً منظماً لهندسة الجودة يمكنك نسخه إلى محادثتك الخاصة في ChatGPT. تتم عملية التحليل نفسها في ChatGPT وليس على هذه الصفحة.",
+        "Your requirement": "المتطلب",
+        "Prompt language": "لغة الموجّه",
+        "Create analysis prompt": "إنشاء موجّه التحليل",
+        "Clear": "مسح",
+        "Your QAIORA prompt": "موجّه QAIORA الخاص بك",
+        "Copy prompt": "نسخ الموجّه",
+        "Open ChatGPT ↗": "فتح ChatGPT ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "تتم معالجة المتطلب محلياً في هذا المتصفح لإنشاء الموجّه. لا ترسل هذه الصفحة أي بيانات إلى QAIORA أو إلى أي خدمة ذكاء اصطناعي.",
+        "QAIORA workspace · second module": "مساحة عمل QAIORA · الوحدة الثانية",
+        "Testability": "قابلية",
+        "Checker.": "الاختبار.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "تحقق مما إذا كان من الممكن اختبار المتطلب بموضوعية وبشكل قابل للتكرار. تنشئ QAIORA موجّه تقييم منظماً لمحادثتك الخاصة في ChatGPT. لا يتم إجراء أي تحليل بالذكاء الاصطناعي على هذه الصفحة.",
+        "Requirement and acceptance criteria": "المتطلب ومعايير القبول",
+        "Create testability prompt": "إنشاء موجّه قابلية الاختبار",
+        "Your QAIORA testability prompt": "موجّه QAIORA لقابلية الاختبار",
+        "Make requirements and quality expectations easier to understand.": "اجعل المتطلبات وتوقعات الجودة أسهل فهماً.",
+        "The Intelligence Behind Quality.": "الذكاء في خدمة الجودة.",
+        "QAIORA. All rights reserved.": "QAIORA. جميع الحقوق محفوظة.",      }
     };
 
     const originalTextNodes = [];
