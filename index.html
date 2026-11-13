@@ -481,8 +481,190 @@
       }
       const isGerman = promptLanguage.value === "de";
       generatedPrompt.value = isGerman
-        ? `Rolle:\nDu bist ein erfahrener Quality Engineer und Requirements Analyst mit fundierten Kenntnissen in Software Engineering, Requirements Engineering und Softwaretest.\n\nAufgabe:\nAnalysiere die folgende fachliche Anforderung systematisch aus QS-Sicht. Erfinde keine fachlichen Regeln. Unterscheide klar zwischen belegbaren Feststellungen, Annahmen und offenen Fragen. Wenn Informationen fehlen, kennzeichne dies als Informationslücke und nicht automatisch als fachlichen Fehler. Behaupte einen Widerspruch oder Fehler nur, wenn er durch den Anforderungstext belegbar ist.\n\nAnforderung:\n${requirement}\n\nAnalysiere mindestens diese Aspekte:\n1. Verständlichkeit und Eindeutigkeit\n2. Vollständigkeit und fehlender fachlicher Kontext\n3. Mehrdeutigkeiten und unklare Begriffe\n4. Tatsächliche Widersprüche und Inkonsistenzen (mit Textbeleg)\n5. Fehlende Geschäftsregeln und Randbedingungen\n6. Akzeptanzkriterien und messbare erwartete Ergebnisse\n7. Risiken für Umsetzung und Test\n\nOrdne jeden Befund einer Kategorie zu:\n- Informationslücke: Eine für Verständnis, Umsetzung oder Test relevante Information fehlt.\n- Fachlicher Fehler/Widerspruch: Der vorliegende Text enthält nachweisbar eine falsche, widersprüchliche oder inkonsistente Aussage. Nenne den konkreten Textbeleg.\n- Optimierungspotenzial: Die Aussage ist grundsätzlich verständlich, könnte aber präziser, klarer oder besser testbar formuliert werden.\nKennzeichne zusätzlich, ob es sich um eine belegbare Feststellung, eine Annahme oder eine offene Frage handelt. Vermische diese Kategorien nicht.\n\nBewerte die Testbarkeit ausdrücklich anhand folgender Punkte:\n- Sind Vorbedingungen und betroffene Benutzer/Systemzustände beschrieben?\n- Sind Auslöser, Eingaben und Prozessschritte eindeutig?\n- Sind erwartete Ergebnisse und Systemreaktionen beobachtbar und überprüfbar?\n- Sind positive und negative Szenarien ableitbar?\n- Sind Rand- und Fehlerfälle ausreichend beschrieben?\nGib für die Testbarkeit eine Bewertung ab: gegeben / teilweise gegeben / nicht gegeben. Nenne, welche Testfälle bereits ableitbar sind und welche wegen fehlender Informationen noch nicht spezifiziert werden können. Erfinde dabei keine erwarteten Ergebnisse.\n\nErwartetes Ausgabeformat:\nA. Kurzfazit\nB. Erkannte Befunde mit Kategorie, Begründung, Textbeleg (falls vorhanden) und Auswirkung\nC. Offene fachliche Fragen an den Anforderungsgeber, nach Priorität geordnet\nD. Konkrete Verbesserungsvorschläge\nE. Vorschlag für eine präzisierte Anforderung (nur soweit ohne unbelegte Annahmen möglich; offene Platzhalter klar kennzeichnen)\nF. Testability Assessment: Bewertung, bereits ableitbare Tests und fehlende Voraussetzungen\nG. QS-Gesamtbewertung: bereit zur Umsetzung / Klärungsbedarf / nicht ausreichend spezifiziert\n\nArbeite strukturiert, konkret und nachvollziehbar. Bewerte nicht nur sprachliche Qualität, sondern insbesondere fachliche Präzision, Umsetzungsreife und spätere Testbarkeit.`
-        : `Role:\nYou are an experienced Quality Engineer and Requirements Analyst with strong knowledge of software engineering, requirements engineering and software testing.\n\nTask:\nAnalyse the following business requirement systematically from a Quality Engineering perspective. Do not invent business rules. Clearly distinguish evidence-based findings, assumptions and open questions. If information is missing, classify it as an information gap, not automatically as a business defect. Claim a contradiction or defect only when it is supported by the requirement text.\n\nRequirement:\n${requirement}\n\nAnalyse at least these aspects:\n1. Clarity and unambiguity\n2. Completeness and missing business context\n3. Ambiguous or undefined terms\n4. Actual contradictions and inconsistencies (with textual evidence)\n5. Missing business rules and constraints\n6. Acceptance criteria and measurable expected outcomes\n7. Risks for implementation and testing\n\nClassify every finding as one of the following:\n- Information gap: Information relevant to understanding, implementation or testing is missing.\n- Business defect/contradiction: The supplied text demonstrably contains an incorrect, conflicting or inconsistent statement. Cite the specific evidence.\n- Improvement opportunity: The statement is understandable in principle but could be more precise, clear or testable.\nAlso label each point as an evidence-based finding, an assumption or an open question. Do not mix these categories.\n\nExplicitly assess testability using these questions:\n- Are preconditions and relevant user/system states described?\n- Are triggers, inputs and process steps unambiguous?\n- Are expected outcomes and system responses observable and verifiable?\n- Can positive and negative scenarios be derived?\n- Are boundary and error cases sufficiently described?\nRate testability as: testable / partially testable / not testable. State which test cases can already be derived and which cannot yet be specified due to missing information. Do not invent expected outcomes.\n\nExpected output:\nA. Executive summary\nB. Findings with category, rationale, textual evidence (where available) and impact\nC. Open questions for the requirement owner, prioritised\nD. Concrete improvement recommendations\nE. Suggested refined requirement (only where possible without unsupported assumptions; clearly mark unresolved placeholders)\nF. Testability assessment: rating, tests that can already be derived and missing prerequisites\nG. Overall quality assessment: ready for implementation / clarification required / insufficiently specified\n\nBe structured, specific and traceable. Assess not only language quality but also business precision, implementation readiness and downstream testability.`;
+        ? `Rolle:
+Du bist ein erfahrener Quality Engineer und Requirements Analyst mit fundierten Kenntnissen in Software Engineering, Requirements Engineering und Softwaretest.
+
+Aufgabe:
+Analysiere die folgende fachliche Anforderung systematisch aus QS-Sicht. Erfinde keine fachlichen Regeln. Unterscheide klar zwischen belegbaren Feststellungen, Annahmen und offenen Fragen. Eine fehlende Information ist nicht automatisch ein fachlicher Fehler. Behaupte einen Fehler oder Widerspruch nur mit konkretem Textbeleg.
+
+Anforderung:
+${requirement}
+
+Analyse und Befundklassifizierung:
+Prüfe mindestens:
+1. Verständlichkeit und Eindeutigkeit
+2. Vollständigkeit und fachlichen Kontext
+3. Mehrdeutigkeiten und unklare Begriffe
+4. Tatsächliche Widersprüche und Inkonsistenzen
+5. Geschäftsregeln, Vorbedingungen und Randbedingungen
+6. Akzeptanzkriterien und messbare erwartete Ergebnisse
+7. Risiken für Umsetzung, Betrieb und Test
+
+Ordne jeden eigenständigen Befund genau einer Hauptkategorie zu:
+- Informationslücke: Eine relevante Information fehlt.
+- Fachlicher Fehler/Widerspruch: Eine Aussage ist anhand des Textes nachweisbar falsch, widersprüchlich oder inkonsistent. Zitiere den Beleg.
+- Optimierungspotenzial: Die Aussage ist grundsätzlich verständlich, könnte aber präziser oder besser testbar sein.
+
+Bewerte zusätzlich die Kritikalität jedes Befunds:
+- Kritisch: Verhindert eine sichere fachliche Entscheidung, Umsetzung oder Abnahme.
+- Hoch: Eine wesentliche fachliche Klärung ist erforderlich.
+- Mittel: Beeinflusst einzelne Szenarien, Randbedingungen oder die Testabdeckung.
+- Niedrig: Verbesserung der Verständlichkeit oder Dokumentationsqualität ohne erkennbaren unmittelbaren Umsetzungsblocker.
+
+Kennzeichne bei jedem Befund, ob es eine belegbare Feststellung, eine Annahme oder eine offene Frage ist. Annahmen dürfen nicht als Fakten dargestellt werden. Fasse identische oder stark überlappende Befunde zusammen und vermeide Wiederholungen in mehreren Abschnitten. Verweise bei Bedarf auf die Befund-ID.
+
+Testability Assessment:
+Bewerte separat und ausdrücklich:
+- Vorbedingungen und betroffene Benutzer-/Systemzustände
+- Auslöser, Eingaben und Prozessschritte
+- Beobachtbare und überprüfbare erwartete Ergebnisse
+- Ableitbarkeit positiver und negativer Szenarien
+- Rand- und Fehlerfälle
+
+Bewerte jedes Kriterium mit „gegeben“, „teilweise gegeben“ oder „nicht gegeben“. Leite daraus eine Gesamtbewertung der Testbarkeit ab: „gegeben“, „teilweise gegeben“ oder „nicht gegeben“. Unterscheide Testideen von vollständig spezifizierbaren, ausführbaren Testfällen. Erfinde keine erwarteten Ergebnisse.
+
+Einheitliche Reifegradentscheidung:
+Triff genau eine eindeutige QS-Hauptentscheidung:
+- Umsetzungsreif: Die wesentlichen fachlichen Regeln und überprüfbaren Ergebnisse sind ausreichend beschrieben.
+- Bedingt umsetzungsreif: Die Kernfunktion ist ausreichend klar; begrenzte, nicht blockierende Punkte sind noch zu klären.
+- Nicht umsetzungsreif: Wesentliche Informationen fehlen oder echte Widersprüche verhindern eine verlässliche Umsetzung oder Abnahme.
+
+Nenne die Entscheidung genau einmal als Haupturteil und begründe sie. „Klärungsbedarf“ darf ergänzend als Maßnahme erscheinen, aber nicht als konkurrierendes Reifegradurteil. Die Testbarkeitsbewertung bleibt eine separate Bewertung und muss nicht automatisch identisch mit dem Reifegrad sein.
+
+Erwartetes Ausgabeformat:
+A. Management Summary
+   - Eindeutiges QS-Haupturteil und kurze Begründung
+   - Testbarkeitsstatus
+   - Anzahl der Befunde je Kritikalität (kritisch/hoch/mittel/niedrig)
+   - Anzahl der offenen fachlichen Fragen
+   - Wichtigste nächste Maßnahme
+   Zähle nur tatsächlich ausgegebene, eindeutige Befunde und Fragen. Erfinde keine Kennzahlen.
+
+B. Erkannte Befunde
+   - Eindeutige ID
+   - Textbeleg (falls vorhanden)
+   - Kategorie
+   - Kritikalität
+   - Status: Feststellung / Annahme / offene Frage
+   - Begründung und konkrete Auswirkung
+   Keine künstlichen Befunde erzeugen, nur um alle Kategorien zu füllen.
+
+C. Offene fachliche Fragen an den Anforderungsgeber
+   - Nach Kritikalität oder Umsetzungsrelevanz priorisiert
+   - Jeweils mit kurzer Begründung
+   - Keine Frage wiederholen, die bereits eindeutig beantwortet ist
+
+D. Konkrete Verbesserungsvorschläge
+   - Auf die wichtigsten Befunde beziehen
+   - Zwischen notwendigen Klärungen und optionalen Formulierungsverbesserungen unterscheiden
+
+E. Vorschlag für eine präzisierte Anforderung
+   - Nur soweit ohne unbelegte Annahmen möglich
+   - Offene Punkte als Platzhalter kennzeichnen
+
+F. Testability Assessment
+   - Einzelbewertung der fünf Kriterien
+   - Gesamtbewertung
+   - Bereits ableitbare Testideen
+   - Noch nicht spezifizierbare Testfälle und jeweils fehlende Voraussetzung
+
+G. QS-Gesamtbewertung und nächste Schritte
+   - Das eindeutige QS-Haupturteil aus A wiederaufgreifen, nicht neu oder abweichend bewerten
+   - Konkrete nächste Schritte in sinnvoller Reihenfolge
+
+Arbeite strukturiert, präzise, nachvollziehbar und möglichst ohne Wiederholungen. Trenne konsequent fachliche Qualität, Umsetzungsreife und Testbarkeit.`
+        : `Role:
+You are an experienced Quality Engineer and Requirements Analyst with strong knowledge of software engineering, requirements engineering and software testing.
+
+Task:
+Analyse the following business requirement systematically from a Quality Engineering perspective. Do not invent business rules. Clearly distinguish evidence-based findings, assumptions and open questions. Missing information is not automatically a business defect. Claim a defect or contradiction only with specific textual evidence.
+
+Requirement:
+${requirement}
+
+Analysis and finding classification:
+Assess at least:
+1. Clarity and unambiguity
+2. Completeness and business context
+3. Ambiguous or undefined terms
+4. Actual contradictions and inconsistencies
+5. Business rules, preconditions and constraints
+6. Acceptance criteria and measurable expected outcomes
+7. Risks for implementation, operation and testing
+
+Assign exactly one primary category to each distinct finding:
+- Information gap: Relevant information is missing.
+- Business defect/contradiction: A statement is demonstrably incorrect, conflicting or inconsistent based on the text. Quote the evidence.
+- Improvement opportunity: The statement is understandable in principle but could be more precise or testable.
+
+Also rate each finding's criticality:
+- Critical: Prevents a safe business decision, implementation or acceptance.
+- High: Requires essential business clarification.
+- Medium: Affects specific scenarios, constraints or test coverage.
+- Low: Improves clarity or documentation without an evident immediate implementation blocker.
+
+Label each finding as an evidence-based finding, assumption or open question. Never present assumptions as facts. Merge identical or strongly overlapping findings and avoid repeating them across sections. Refer to finding IDs where useful.
+
+Testability assessment:
+Explicitly assess:
+- Preconditions and relevant user/system states
+- Triggers, inputs and process steps
+- Observable and verifiable expected outcomes
+- Derivation of positive and negative scenarios
+- Boundary and error cases
+
+Rate each criterion as testable, partially testable or not testable. Derive an overall testability rating: testable, partially testable or not testable. Distinguish test ideas from fully specified, executable test cases. Do not invent expected outcomes.
+
+Consistent readiness decision:
+Choose exactly one overall Quality Engineering decision:
+- Ready for implementation: Essential business rules and verifiable outcomes are sufficiently described.
+- Conditionally ready: The core functionality is sufficiently clear; only limited, non-blocking points remain.
+- Not ready for implementation: Essential information is missing or actual contradictions prevent reliable implementation or acceptance.
+
+State this decision once as the primary verdict and explain it. Clarification required may be listed as an action, but must not appear as a competing readiness verdict. Testability is a separate assessment and does not have to match the readiness decision.
+
+Expected output:
+A. Management Summary
+   - Clear overall QE verdict and brief rationale
+   - Testability status
+   - Number of findings by criticality (critical/high/medium/low)
+   - Number of open business questions
+   - Most important next action
+   Count only distinct findings and questions actually included. Do not invent metrics.
+
+B. Findings
+   - Unique ID
+   - Textual evidence (where available)
+   - Category
+   - Criticality
+   - Status: finding / assumption / open question
+   - Rationale and concrete impact
+   Do not create artificial findings just to populate every category.
+
+C. Open questions for the requirement owner
+   - Prioritised by criticality or implementation relevance
+   - Brief rationale for each
+   - Do not repeat questions that are already answered unambiguously
+
+D. Concrete improvement recommendations
+   - Link recommendations to the most relevant findings
+   - Distinguish mandatory clarification from optional wording improvements
+
+E. Suggested refined requirement
+   - Only where possible without unsupported assumptions
+   - Mark unresolved items as placeholders
+
+F. Testability Assessment
+   - Individual rating for all five criteria
+   - Overall rating
+   - Test ideas that can already be derived
+   - Test cases that cannot yet be specified and the missing prerequisite for each
+
+G. Overall QE assessment and next steps
+   - Repeat the same primary verdict from A; do not introduce a different verdict
+   - Give concrete next steps in a sensible order
+
+Be structured, precise, traceable and avoid unnecessary repetition. Consistently separate business quality, implementation readiness and testability.`;
       promptOutput.hidden = false;
       copyStatus.textContent = "";
       promptOutput.scrollIntoView({behavior:"smooth", block:"nearest"});
