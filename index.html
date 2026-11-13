@@ -204,6 +204,19 @@
       .trust-inner { gap: 12px 20px; }
       .footer-inner { align-items: flex-start; flex-direction: column; }
     }
+    html[lang="ar"] body { direction: rtl; text-align: right; }
+    html[lang="ar"] nav,
+    html[lang="ar"] .hero-grid,
+    html[lang="ar"] .platform-grid,
+    html[lang="ar"] .vision-box,
+    html[lang="ar"] .footer-inner { direction: rtl; }
+    html[lang="ar"] .nav-links,
+    html[lang="ar"] .hero-actions,
+    html[lang="ar"] .footer-links { direction: rtl; }
+    html[lang="ar"] .check-list li:before { margin-right: 0; margin-left: 11px; }
+    html[lang="ar"] .step { direction: rtl; }
+    html[lang="ar"] .language-control { direction: ltr; }
+    html[lang="ar"] .eyebrow { letter-spacing: 0; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
   </style>
 </head>
@@ -211,9 +224,12 @@
   <div class="nav-shell">
     <div class="wrap">
       <nav aria-label="Main navigation">
-    <a class="brand" href="#home" aria-label="QAIORA home">
-  <img src="qaiora-logo.png" alt="QAIORA Logo" style="height:42px;width:auto;">
-</a>
+        <a class="brand" href="#home" aria-label="QAIORA home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5h14v10.2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5.5Z" stroke="currentColor" stroke-width="1.8"/><path d="M8 5.5V3.8h8v1.7M8.5 11h7M8.5 14.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m15.8 18 1.2 2 1.2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </span>
+          QAI<span>ORA</span>
+        </a>
         <div class="nav-links" id="navLinks">
           <a href="#platform">Platform</a>
           <a href="#capabilities">Capabilities</a>
@@ -227,6 +243,7 @@
             <option value="en">EN</option>
             <option value="de">DE</option>
             <option value="fr">FR</option>
+            <option value="ar">AR</option>
           </select>
         </label>
         <button class="menu-button" id="menuButton" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
@@ -629,6 +646,84 @@
         "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "QAIORA prend forme. Suivez notre évolution vers une approche plus intelligente de l’assurance qualité et du Quality Engineering.",
         "Back to top": "Retour en haut",
         "All rights reserved.": "Tous droits réservés."
+      },
+      ar: {
+        "Platform": "المنصة",
+        "Capabilities": "الإمكانات",
+        "Our approach": "نهجنا",
+        "Vision": "رؤيتنا",
+        "Get in touch": "تواصل معنا",
+        "Menu": "القائمة",
+        "The next perspective on quality": "رؤية جديدة للجودة",
+        "The Intelligence": "الذكاء",
+        "Behind Quality.": "في خدمة الجودة.",
+        "Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.": "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة، وتقدم نهجاً أكثر ذكاءً لفهم المتطلبات وتعزيز قابليتها للاختبار ودعم الجودة طوال دورة حياة البرمجيات.",
+        "Discover the platform": "اكتشف المنصة",
+        "Explore capabilities": "استكشف الإمكانات",
+        "A new approach to AI-powered Quality Assurance & Engineering.": "نهج جديد لضمان الجودة وهندسة الجودة بالاستعانة بالذكاء الاصطناعي.",
+        "INTELLIGENCE": "الذكاء",
+        "Requirement insight": "تحليل المتطلبات",
+        "Understand what matters": "فهم الأمور الأساسية",
+        "Quality by design": "الجودة منذ التصميم",
+        "Make quality actionable": "تحويل الجودة إلى خطوات عملية",
+        "AI-assisted testing": "اختبار مدعوم بالذكاء الاصطناعي",
+        "From insight to confidence": "من الفهم إلى الثقة",
+        "Intelligent requirement analysis": "تحليل ذكي للمتطلبات",
+        "Testability-focused thinking": "التركيز على قابلية الاختبار",
+        "AI-assisted quality engineering": "هندسة جودة مدعومة بالذكاء الاصطناعي",
+        "Human expertise at the centre": "الخبرة البشرية في صميم العمل",
+        "What QAIORA is about": "ما الذي تقدمه QAIORA؟",
+        "Quality engineering,": "هندسة الجودة،",
+        "amplified by AI.": "معززة بالذكاء الاصطناعي.",
+        "Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.": "تبدأ جودة البرمجيات الممتازة قبل التنفيذ بوقت طويل. تقدم QAIORA مساعدة ذكية للأنشطة التي تمكّن الفرق من بناء المنتج المناسب وتنفيذه بالشكل الصحيح.",
+        "Requirement Analysis": "تحليل المتطلبات",
+        "Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.": "اكتشاف الثغرات والغموض والمعلومات الناقصة لجعل المتطلبات أكثر وضوحاً وقابلية للتنفيذ.",
+        "Testability Assessment": "تقييم قابلية الاختبار",
+        "Evaluate whether requirements are specific, measurable, consistent and ready to be tested.": "تقييم مدى وضوح المتطلبات وقابليتها للقياس واتساقها وجاهزيتها للاختبار.",
+        "Test Case Generation": "إنشاء حالات الاختبار",
+        "Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.": "تحويل المتطلبات ومعايير القبول إلى سيناريوهات اختبار منظمة، تشمل الحالات الإيجابية والسلبية والحالات الحدّية.",
+        "Test Data Support": "دعم بيانات الاختبار",
+        "Support the creation of realistic, relevant test data for meaningful and repeatable testing.": "دعم إنشاء بيانات اختبار واقعية وملائمة لإجراء اختبارات موثوقة وقابلة للتكرار.",
+        "One connected perspective": "رؤية مترابطة وشاملة",
+        "From requirements to": "من المتطلبات إلى",
+        "quality confidence.": "الثقة بالجودة.",
+        "QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.": "تتمثل رؤية QAIORA في ربط أنشطة الجودة الأساسية ضمن سير عمل ذكي واحد. يساعد الذكاء الاصطناعي الفرق على استكشاف المعلومات وكشف المخاطر وتحسين إعداد الاختبارات، مع بقاء الأشخاص مسؤولين عن السياق والقرارات والنتائج.",
+        "Find gaps and ambiguities earlier": "اكتشاف الثغرات والغموض في وقت مبكر",
+        "Improve requirement clarity and testability": "تحسين وضوح المتطلبات وقابليتها للاختبار",
+        "Generate structured testing ideas faster": "إنشاء أفكار اختبار منظمة بسرعة أكبر",
+        "Keep human judgement in the loop": "الإبقاء على التقييم البشري ضمن العملية",
+        "QAIORA quality workflow": "سير عمل الجودة في QAIORA",
+        "Concept overview": "نظرة عامة على المفهوم",
+        "Understand": "الفهم",
+        "Analyse requirements and context": "تحليل المتطلبات والسياق",
+        "Insight": "رؤية",
+        "Assess": "التقييم",
+        "Check completeness and testability": "التحقق من الاكتمال وقابلية الاختبار",
+        "Clarity": "الوضوح",
+        "Design": "التصميم",
+        "Derive scenarios and test cases": "اشتقاق السيناريوهات وحالات الاختبار",
+        "Coverage": "التغطية",
+        "Prepare": "التحضير",
+        "Support meaningful test data": "توفير بيانات اختبار ذات معنى",
+        "Readiness": "الجاهزية",
+        "AI supports expertise.": "الذكاء الاصطناعي يدعم الخبرة.",
+        "People create quality.": "الإنسان يصنع الجودة.",
+        "Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.": "ينبغي للتكنولوجيا أن تجعل أعمال الجودة أكثر تركيزاً واتساقاً وشفافية، لا أن تحل محل خبرة الأشخاص القائمين بها وحكمهم المهني.",
+        "Consistency": "الاتساق",
+        "Encourage repeatable methods and structured quality practices.": "تعزيز الأساليب القابلة للتكرار وممارسات الجودة المنظمة.",
+        "Efficiency": "الكفاءة",
+        "Reduce repetitive effort and give teams more room for critical thinking.": "تقليل الجهد المتكرر وإتاحة مساحة أكبر للفرق للتفكير النقدي.",
+        "Human oversight": "الإشراف البشري",
+        "Keep professional judgement, review and accountability at the centre.": "الحفاظ على التقييم المهني والمراجعة والمساءلة في صميم العمل.",
+        "The QAIORA vision": "رؤية QAIORA",
+        "Make quality a smarter part of every decision.": "اجعل الجودة جزءاً أكثر ذكاءً من كل قرار.",
+        "We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.": "نؤمن بأن مستقبل ضمان الجودة مترابط وذكي وتعاوني. ويجري تطوير QAIORA انطلاقاً من هذا الإيمان.",
+        "Stay connected": "ابقَ على تواصل",
+        "Quality is evolving.": "الجودة تتطور.",
+        "Be part of the journey.": "كن جزءاً من هذه الرحلة.",
+        "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "تتخذ QAIORA شكلها. تابع رحلتنا ونحن نطور نهجاً أكثر ذكاءً لضمان الجودة وهندسة الجودة.",
+        "Back to top": "العودة إلى الأعلى",
+        "All rights reserved.": "جميع الحقوق محفوظة."
       }
     };
 
@@ -649,16 +744,21 @@
         node.nodeValue = leading + translated + trailing;
       });
       document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
       document.title = lang === "de"
         ? "QAIORA — Die Intelligenz hinter Qualität"
         : lang === "fr"
           ? "QAIORA — L’intelligence au service de la qualité"
-          : "QAIORA — The Intelligence Behind Quality";
+          : lang === "ar"
+            ? "QAIORA — الذكاء في خدمة الجودة"
+            : "QAIORA — The Intelligence Behind Quality";
       document.querySelector('meta[name="description"]').content = lang === "de"
         ? "QAIORA verbindet KI und Quality Engineering für intelligente Qualitätssicherung."
         : lang === "fr"
           ? "QAIORA associe l’IA et le Quality Engineering pour une assurance qualité intelligente."
-          : "QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.";
+          : lang === "ar"
+            ? "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة لضمان جودة أكثر ذكاءً."
+            : "QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.";
       document.getElementById("languageSelect").value = lang;
       try { localStorage.setItem("qaiora-language", lang); } catch (e) {}
     }
