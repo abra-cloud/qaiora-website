@@ -219,6 +219,25 @@
     html[lang="ar"] .language-control { direction: ltr; }
     html[lang="ar"] .eyebrow { letter-spacing: 0; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+
+    /* QAIORA Requirement Analyzer */
+    .analyzer-section { background: linear-gradient(180deg, rgba(16,39,58,.42), transparent); }
+    .analyzer-panel { border:1px solid rgba(98,216,206,.22); border-radius:22px; padding:clamp(20px,4vw,36px); background:rgba(12,29,46,.78); box-shadow:0 20px 60px rgba(0,0,0,.18); }
+    .analyzer-intro { color:var(--muted); max-width:760px; }
+    .analyzer-form { display:grid; gap:16px; margin-top:26px; }
+    .analyzer-form label { display:block; color:#dce8f0; font-weight:700; margin-bottom:8px; }
+    .analyzer-form textarea, .analyzer-form select { width:100%; border:1px solid rgba(167,203,218,.24); border-radius:12px; background:#091a2a; color:var(--text); padding:14px 15px; font:inherit; }
+    .analyzer-form textarea { min-height:190px; resize:vertical; }
+    .analyzer-form textarea:focus, .analyzer-form select:focus { outline:2px solid rgba(98,216,206,.45); border-color:var(--teal); }
+    .analyzer-actions { display:flex; flex-wrap:wrap; gap:12px; }
+    .analyzer-output { margin-top:24px; }
+    .analyzer-output[hidden] { display:none; }
+    .analyzer-output textarea { width:100%; min-height:360px; padding:16px; border:1px solid rgba(98,216,206,.22); border-radius:12px; background:#061421; color:#dce8f0; font: .88rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; resize:vertical; }
+    .analyzer-note { color:#91a5b7; font-size:.82rem; margin-top:12px; }
+    .analyzer-status { color:var(--teal); min-height:1.5em; font-size:.88rem; }
+    html[lang="ar"] .analyzer-form { text-align:right; }
+    @media(max-width:640px) { .analyzer-actions .button { width:100%; } }
+
   </style>
 </head>
 <body>
@@ -231,6 +250,7 @@
        style="height:55px; width:auto; display:block;">
 </a>
         <div class="nav-links" id="navLinks">
+          <a href="#analyzer">Requirement Analyzer</a>
           <a href="#platform">Platform</a>
           <a href="#capabilities">Capabilities</a>
           <a href="#approach">Our approach</a>
@@ -311,6 +331,46 @@
             <h3>Test Data Support</h3>
             <p>Support the creation of realistic, relevant test data for meaningful and repeatable testing.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="analyzer-section" id="analyzer">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">QAIORA workspace · first module</div>
+          <h2>Requirement <span class="gradient-text">Analyzer.</span></h2>
+          <p class="analyzer-intro">Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.</p>
+        </div>
+        <div class="analyzer-panel">
+          <form class="analyzer-form" id="requirementForm">
+            <div>
+              <label for="requirementText">Your requirement</label>
+              <textarea id="requirementText" required minlength="20" placeholder="Example: As a user, I want to reset my password so that I can regain access to my account if I forget it."></textarea>
+            </div>
+            <div>
+              <label for="promptLanguage">Prompt language</label>
+              <select id="promptLanguage">
+                <option value="de">Deutsch</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="analyzer-actions">
+              <button class="button" type="submit">Create analysis prompt <span aria-hidden="true">→</span></button>
+              <button class="button secondary" type="button" id="clearRequirement">Clear</button>
+            </div>
+          </form>
+          <div class="analyzer-output" id="promptOutput" hidden>
+            <label for="generatedPrompt">Your QAIORA prompt</label>
+            <textarea id="generatedPrompt" readonly></textarea>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button class="button" type="button" id="copyPrompt">Copy prompt</button>
+              <a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT ↗</a>
+            </div>
+            <p class="analyzer-note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
+            <div class="analyzer-status" id="copyStatus" role="status" aria-live="polite"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -403,6 +463,50 @@
     </div>
   </footer>
   <script>
+
+    // QAIORA Requirement Analyzer: prompt generation only; no API call.
+    const requirementForm = document.getElementById("requirementForm");
+    const requirementText = document.getElementById("requirementText");
+    const promptLanguage = document.getElementById("promptLanguage");
+    const promptOutput = document.getElementById("promptOutput");
+    const generatedPrompt = document.getElementById("generatedPrompt");
+    const copyStatus = document.getElementById("copyStatus");
+
+    requirementForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const requirement = requirementText.value.trim();
+      if (requirement.length < 20) {
+        requirementText.focus();
+        return;
+      }
+      const isGerman = promptLanguage.value === "de";
+      generatedPrompt.value = isGerman
+        ? `Rolle:\\nDu bist ein erfahrener Quality Engineer und Requirements Analyst mit fundierten Kenntnissen in Software Engineering, Requirements Engineering und Softwaretest.\\n\\nAufgabe:\\nAnalysiere die folgende fachliche Anforderung systematisch aus QS-Sicht. Erfinde keine fachlichen Regeln. Unterscheide klar zwischen belegbaren Feststellungen, Annahmen und offenen Fragen.\\n\\nAnforderung:\\n${requirement}\\n\\nAnalysiere mindestens diese Aspekte:\\n1. Verständlichkeit und Eindeutigkeit\\n2. Vollständigkeit und fehlender fachlicher Kontext\\n3. Mehrdeutigkeiten und unklare Begriffe\\n4. Widersprüche und mögliche Inkonsistenzen\\n5. Fehlende Geschäftsregeln und Randbedingungen\\n6. Akzeptanzkriterien und messbare erwartete Ergebnisse\\n7. Risiken für Umsetzung und Test\\n\\nErwartetes Ausgabeformat:\\nA. Kurzfazit\\nB. Erkannte Lücken und Unklarheiten (mit Begründung und Auswirkung)\\nC. Offene fachliche Fragen an den Anforderungsgeber\\nD. Konkrete Verbesserungsvorschläge\\nE. Vorschlag für eine präzisierte Anforderung (nur soweit ohne unbelegte Annahmen möglich)\\nF. QS-Bewertung: bereit zur Umsetzung / Klärungsbedarf / nicht ausreichend spezifiziert\\n\\nArbeite strukturiert und konkret. Bewerte nicht nur sprachliche Qualität, sondern insbesondere fachliche Präzision und spätere Testbarkeit.`
+        : `Role:\\nYou are an experienced Quality Engineer and Requirements Analyst with strong knowledge of software engineering, requirements engineering and software testing.\\n\\nTask:\\nAnalyse the following business requirement systematically from a Quality Engineering perspective. Do not invent business rules. Clearly distinguish evidence-based findings, assumptions and open questions.\\n\\nRequirement:\\n${requirement}\\n\\nAnalyse at least these aspects:\\n1. Clarity and unambiguity\\n2. Completeness and missing business context\\n3. Ambiguous or undefined terms\\n4. Contradictions and inconsistencies\\n5. Missing business rules and constraints\\n6. Acceptance criteria and measurable expected outcomes\\n7. Risks for implementation and testing\\n\\nExpected output:\\nA. Executive summary\\nB. Identified gaps and ambiguities (including rationale and impact)\\nC. Open questions for the requirement owner\\nD. Concrete improvement recommendations\\nE. Suggested refined requirement (only where possible without unsupported assumptions)\\nF. Quality assessment: ready for implementation / clarification required / insufficiently specified\\n\\nBe structured and specific. Assess not only language quality but also business precision and downstream testability.`;
+      promptOutput.hidden = false;
+      copyStatus.textContent = "";
+      promptOutput.scrollIntoView({behavior:"smooth", block:"nearest"});
+    });
+
+    document.getElementById("copyPrompt").addEventListener("click", async function() {
+      try {
+        await navigator.clipboard.writeText(generatedPrompt.value);
+        copyStatus.textContent = "Prompt copied. Open ChatGPT and paste it into a new conversation.";
+      } catch (error) {
+        generatedPrompt.focus();
+        generatedPrompt.select();
+        copyStatus.textContent = "Automatic copy was blocked. The prompt is selected; use Ctrl+C.";
+      }
+    });
+
+    document.getElementById("clearRequirement").addEventListener("click", function() {
+      requirementText.value = "";
+      generatedPrompt.value = "";
+      promptOutput.hidden = true;
+      copyStatus.textContent = "";
+      requirementText.focus();
+    });
+
     const translations = {
       en: {
         "Main navigation": "Main navigation",
