@@ -421,7 +421,7 @@
     <section class="analyzer-section" id="testcase-generator">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · third module · V1.3</div>
+          <div class="kicker">QAIORA workspace · third module · V1.4</div>
           <h2>Test Case <span class="gradient-text">Generator.</span></h2>
           <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -1006,7 +1006,7 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
     });
 
 
-    // QAIORA Test Case Generator V1.3: local prompt generation only; no API call.
+    // QAIORA Test Case Generator V1.4: local prompt generation only; no API call.
     const testCaseForm = document.getElementById("testCaseForm");
     const testCaseText = document.getElementById("testCaseText");
     const testCaseLanguage = document.getElementById("testCaseLanguage");
@@ -1054,8 +1054,11 @@ Verbindliche Regeln:
 - Ein Testschritt muss eine konkrete, beobachtbare Aktion oder Zustandsänderung beschreiben. Eine Absicht wie „Der Benutzer möchte seine E-Mail-Adresse ändern“ ist kein Testschritt.
 - Wiederhole keine Vorbedingung, Akzeptanzkriterien oder erwarteten Ergebnisse als nummerierte Testschritte.
 - Schreibe nur konkrete Benutzer- oder Systemaktionen als belegte Schritte, wenn der bereitgestellte Text die Aktion selbst beschreibt. Eine fachliche Regel wie „die Änderung wird erst nach Bestätigung wirksam“ ist ein erwartetes Ergebnis bzw. eine Prüfbedingung, aber kein ausgeführter Schritt.
-- Wenn keine konkrete Aktion beschrieben ist, erfinde keine Ersatzaktion. Führe stattdessen genau einen passenden Klärungspunkt auf, z. B. „Konkrete Aktion: nicht ableitbar – Klärung erforderlich: Wie wird die Änderung im System ausgelöst?“ Vermeide mehrere redundante Klärungsschritte für denselben fehlenden Bedienweg.
-- Unterscheide bei den Testschritten zwischen „Durch den Text belegte Aktion“ und „Konkrete Aktion nicht ableitbar“.
+- Wenn keine konkrete Aktion beschrieben ist, erfinde keine Ersatzaktion. Gib im Feld „Testschritte“ ausdrücklich aus: „Keine konkreten Testschritte aus dem bereitgestellten Text ableitbar.“
+- Nummeriere ausschließlich tatsächlich durch den Text belegte, konkrete Aktionen. Eine fehlende Aktion oder eine Klärungsfrage darf niemals als nummerierter Testschritt erscheinen.
+- Führe fehlende Aktionen ausschließlich im separaten Feld „Klärungsbedarf“ auf, z. B. „Wie wird die Änderung im System ausgelöst?“ Erzeuge dafür keine nummerierten Pseudo-Schritte und vermeide mehrere redundante Fragen zum selben fehlenden Bedienweg.
+- Wenn einzelne konkrete Aktionen belegt sind, nummeriere nur diese Aktionen. Führe nicht ableitbare Folgeaktionen separat unter „Klärungsbedarf“ auf.
+- Unterscheide bei den Testschritten zwischen „Durch den Text belegte Aktion“ und fehlenden Aktionen, die ausschließlich im Klärungsbedarf stehen.
 - Formuliere nur Aktionen als konkrete Testschritte, die sich aus dem Anforderungstext ergeben. Verwende keine allgemeinen Ersatzformulierungen wie „Validierung auslösen“, „Prüfung durchführen“, „Bestätigungsprozess starten“ oder „Systemverhalten prüfen“, wenn der Text den konkreten Auslöser oder Ablauf nicht beschreibt.
 - Wenn eine notwendige Aktion nicht spezifiziert ist, schreibe an dieser Stelle ausdrücklich: „Konkrete Aktion: nicht ableitbar – Klärung erforderlich: [genau fehlende Information]“. Erfinde keinen Bedienweg und nummeriere keine vermuteten Prozessschritte als feststehende Aktionen.
 - Halte belegte Schritte und klärungsbedürftige Schritte sichtbar getrennt. Ein Testfall mit ungeklärten Aktionen bleibt Status B, sofern das fachliche Szenario selbst durch ein Akzeptanzkriterium belegt ist.
@@ -1063,10 +1066,11 @@ Verbindliche Regeln:
 - Vergib Prioritäten grundsätzlich als „nicht bewertet“, sofern der Anforderungstext keine konkrete Priorität, Kritikalität oder belastbare Risikoinformation enthält. Die allgemeine Bedeutung einer Kernfunktion reicht allein nicht aus, um „Hoch“ zu vergeben.
 - Führe vor der Ausgabe eine verpflichtende Qualitätssicherung jedes Testfalls durch:
   1. Ist jeder nummerierte Schritt eine konkrete Aktion und kein Wunsch, keine Vorbedingung, keine Regel und kein erwartetes Ergebnis?
-  2. Ist jede konkrete Aktion durch den Text belegt?
-  3. Sind fehlende Aktionen als Klärungsbedarf gekennzeichnet, ohne einen Prozess zu erfinden?
-  4. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
-  5. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
+  2. Enthält die Liste nummerierter Schritte ausschließlich belegte Aktionen? Falls keine Aktion ableitbar ist, steht dort nur „Keine konkreten Testschritte aus dem bereitgestellten Text ableitbar“ und die fehlenden Aktionen stehen ausschließlich im Klärungsbedarf?
+  3. Ist jede konkrete Aktion durch den Text belegt?
+  4. Sind fehlende Aktionen als Klärungsbedarf gekennzeichnet, ohne einen Prozess zu erfinden?
+  5. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
+  6. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
 - Entferne oder korrigiere vor der Ausgabe jeden Testschritt, der diese Prüfung nicht besteht.
 
 Ausführungsstatus je Testfall:
@@ -1145,8 +1149,11 @@ Mandatory rules:
 - A test step must describe a concrete, observable action or state change. An intention such as “The user wants to change their email address” is not a test step.
 - Do not repeat preconditions, acceptance criteria or expected results as numbered test steps.
 - Write concrete user or system actions as evidenced steps only when the supplied text describes the action itself. A business rule such as “the change becomes effective only after confirmation” is an expected result or verification condition, not an executed step.
-- If no concrete action is described, do not invent a substitute action. Instead provide one relevant clarification item, e.g. “Concrete action: not derivable – clarification required: How is the change initiated in the system?” Avoid multiple redundant clarification steps for the same missing user journey.
-- Distinguish between “Action supported by the text” and “Concrete action cannot be derived” in the test steps.
+- If no concrete action is described, do not invent a substitute action. In the “Test steps” field, explicitly state: “No concrete test steps can be derived from the supplied text.”
+- Number only concrete actions actually supported by the text. A missing action or clarification question must never appear as a numbered test step.
+- List missing actions only in the separate “Clarification needed” field, e.g. “How is the change initiated in the system?” Do not create numbered pseudo-steps for clarification items, and avoid multiple redundant questions about the same missing user journey.
+- If some concrete actions are supported, number only those actions. List any non-derivable follow-up actions separately under “Clarification needed”.
+- Keep text-supported actions separate from missing actions, which belong only in clarification needed.
 - Write an action as a concrete test step only when it is supported by the requirement. Do not use generic substitutes such as “trigger validation”, “perform the check”, “start the confirmation process” or “check system behavior” when the text does not specify the actual trigger or process.
 - If a necessary action is unspecified, state explicitly: “Concrete action: not derivable – clarification required: [exact missing information]”. Do not invent a user journey or number assumed process steps as established actions.
 - Keep evidenced steps visibly separate from clarification-dependent steps. A test case with unresolved actions remains status B if the business scenario itself is supported by an acceptance criterion.
@@ -1154,10 +1161,11 @@ Mandatory rules:
 - By default, set priority to “not assessed” unless the requirement provides a specific priority, criticality or substantiated risk information. The general importance of a core feature alone is not sufficient to assign “High”.
 - Perform a mandatory quality review of every test case before output:
   1. Is every numbered step a concrete action rather than an intention, precondition, rule or expected result?
-  2. Is every concrete action supported by the text?
-  3. Are missing actions marked as clarification needed without inventing a process?
-  4. Are priorities evidenced or correctly marked “not assessed”?
-  5. Do test case IDs, categories, sources, statuses and counts match?
+  2. Does the numbered step list contain only evidenced actions? If no action can be derived, does it state only “No concrete test steps can be derived from the supplied text” and keep missing actions exclusively in clarification needed?
+  3. Is every concrete action supported by the text?
+  4. Are missing actions marked as clarification needed without inventing a process?
+  5. Are priorities evidenced or correctly marked “not assessed”?
+  6. Do test case IDs, categories, sources, statuses and counts match?
 - Remove or correct every test step that fails this review before producing the output.
 
 Execution status for each test case:
