@@ -421,7 +421,7 @@
     <section class="analyzer-section" id="testcase-generator">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · third module · V1.1</div>
+          <div class="kicker">QAIORA workspace · third module · V1.2</div>
           <h2>Test Case <span class="gradient-text">Generator.</span></h2>
           <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -1006,7 +1006,7 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
     });
 
 
-    // QAIORA Test Case Generator V1.1: local prompt generation only; no API call.
+    // QAIORA Test Case Generator V1.2: local prompt generation only; no API call.
     const testCaseForm = document.getElementById("testCaseForm");
     const testCaseText = document.getElementById("testCaseText");
     const testCaseLanguage = document.getElementById("testCaseLanguage");
@@ -1051,6 +1051,11 @@ Verbindliche Regeln:
 - Erzeuge keine Testfälle nur, um alle Kategorien zu füllen. Eine Kategorie darf ausdrücklich „Keine Testfälle ableitbar“ enthalten.
 - Decke positive, negative sowie Grenzwert-/Sonderfälle nur soweit ab, wie es der Anforderungstext erlaubt.
 - Schreibe konkrete, atomare Testschritte. Trenne Vorbedingungen, Testdaten, Aktion und erwartetes Ergebnis.
+- Unterscheide bei den Testschritten zwischen „Durch den Text belegte Aktion“ und „Konkrete Aktion nicht ableitbar“.
+- Formuliere nur Aktionen als konkrete Testschritte, die sich aus dem Anforderungstext ergeben. Verwende keine allgemeinen Ersatzformulierungen wie „Validierung auslösen“, „Prüfung durchführen“, „Bestätigungsprozess starten“ oder „Systemverhalten prüfen“, wenn der Text den konkreten Auslöser oder Ablauf nicht beschreibt.
+- Wenn eine notwendige Aktion nicht spezifiziert ist, schreibe an dieser Stelle ausdrücklich: „Konkrete Aktion: nicht ableitbar – Klärung erforderlich: [genau fehlende Information]“. Erfinde keinen Bedienweg und nummeriere keine vermuteten Prozessschritte als feststehende Aktionen.
+- Halte belegte Schritte und klärungsbedürftige Schritte sichtbar getrennt. Ein Testfall mit ungeklärten Aktionen bleibt Status B, sofern das fachliche Szenario selbst durch ein Akzeptanzkriterium belegt ist.
+- Schreibe beim erwarteten Ergebnis nur das fachlich zugesicherte Verhalten. Trenne davon technische oder UI-Prüfmethoden, sofern diese nicht spezifiziert sind.
 
 Ausführungsstatus je Testfall:
 A. „Mit den vorhandenen Informationen ausführbar“: Vorbedingungen, Testdaten (oder eindeutig beschriebene Datenmerkmale), Schritte und erwartetes Ergebnis sind ausreichend spezifiziert.
@@ -1125,6 +1130,11 @@ Mandatory rules:
 - Do not create test cases merely to populate all categories. A category may explicitly state “No test cases derivable”.
 - Cover positive, negative, and boundary/special cases only to the extent justified by the requirement.
 - Use concrete, atomic test steps. Separate preconditions, test data, action and expected result.
+- Distinguish between “Action supported by the text” and “Concrete action cannot be derived” in the test steps.
+- Write an action as a concrete test step only when it is supported by the requirement. Do not use generic substitutes such as “trigger validation”, “perform the check”, “start the confirmation process” or “check system behavior” when the text does not specify the actual trigger or process.
+- If a necessary action is unspecified, state explicitly: “Concrete action: not derivable – clarification required: [exact missing information]”. Do not invent a user journey or number assumed process steps as established actions.
+- Keep evidenced steps visibly separate from clarification-dependent steps. A test case with unresolved actions remains status B if the business scenario itself is supported by an acceptance criterion.
+- In the expected result, state only the behavior guaranteed by the requirement. Keep technical or UI verification methods separate unless they are specified.
 
 Execution status for each test case:
 A. “Executable with the information provided”: Preconditions, test data (or clearly defined data characteristics), steps and expected result are sufficiently specified.
