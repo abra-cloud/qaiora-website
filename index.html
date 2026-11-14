@@ -583,6 +583,10 @@ Befundregeln:
 - Weise zusätzlich getrennt aus: (a) Anzahl fachlich vollständig spezifizierbarer Szenarien, (b) Anzahl nach fachlicher Klärung spezifizierbarer Szenarien und (c) Anzahl praktisch ausführbarer Testfälle. Zähle ein fachlich spezifizierbares Szenario nicht als fachlich unvollständig, nur weil Testdaten oder technische Voraussetzungen fehlen.
 - Gib diese Einordnung zusätzlich in einer übersichtlichen Testübersicht aus. Nenne bei jedem Test mit Klärungsbedarf die konkret fehlende Information und ordne sie eindeutig fachlicher Klärung oder Testvorbereitung/technischer Bereitstellung zu.
 - Behaupte nicht, dass ein Test vollständig ausführbar ist, wenn Testdaten, Vorbedingungen, Prozessschritte oder erwartete Ergebnisse dafür erst angenommen werden müssten.
+- WICHTIG: Leite aus dem Anforderungstext allein niemals ab, dass Testdaten, Testkonten, Zugänge, Testumgebungen oder Beobachtungsmöglichkeiten tatsächlich fehlen oder nicht vorhanden sind. „Im Anforderungstext nicht erwähnt“ bedeutet ausschließlich „Verfügbarkeit unbekannt / nicht nachgewiesen“ und nicht „nicht vorhanden“.
+- Bewerte die praktische Ausführbarkeit anhand der tatsächlich verfügbaren Informationen. Unterscheide dabei ausdrücklich: (a) verfügbar/nachgewiesen, (b) nachweislich nicht verfügbar, (c) unbekannt/nicht angegeben. Wenn keine Informationen zur Testumgebung oder Testvorbereitung vorliegen, darfst du nicht pauschal „0 praktisch ausführbare Testfälle“ behaupten. Verwende stattdessen „praktische Ausführbarkeit nicht abschließend bewertbar“ und kennzeichne die Anzahl der nachweislich ausführbaren Testfälle als „nicht bestimmbar“.
+- Eine Anzahl von 0 ist nur zulässig, wenn ausdrücklich festgestellt wurde, dass kein Testfall die Voraussetzungen erfüllt oder dass erforderliche Voraussetzungen nachweislich fehlen. Erkläre dann die Beleggrundlage.
+- Weise getrennt aus: (a) fachlich vollständig spezifizierbare Szenarien, (b) nach fachlicher Klärung spezifizierbare Szenarien, (c) nachweislich praktisch ausführbare Testfälle, (d) Szenarien, deren praktische Ausführbarkeit mangels Angaben unbekannt ist. Verwechsle „nicht nachgewiesen“ nicht mit „nicht vorhanden“.
 
 Erwartetes Ausgabeformat:
 
@@ -591,6 +595,8 @@ A. Testability Summary
 - Kurze Begründung
 - Anzahl der blockierenden, wesentlichen, begrenzten und geringen Befunde
 - Wichtigste Einschränkung
+- Status der praktischen Voraussetzungen: verfügbar/nachgewiesen, nachweislich nicht verfügbar oder unbekannt/nicht angegeben
+- Anzahl praktisch ausführbarer Testfälle nur dann numerisch angeben, wenn sie anhand konkreter Informationen bestimmbar ist; andernfalls „nicht bestimmbar“
 
 B. Testbarkeitsmatrix
 Bewerte jede der fünf Dimensionen mit „Gegeben“, „Teilweise gegeben“ oder „Nicht gegeben“, soweit der Anforderungstext eine belastbare Bewertung zulässt. Bewerte Dimension 4 zusätzlich getrennt nach „Szenarien identifizierbar“ und „Szenarien fachlich vollständig spezifizierbar“.
@@ -700,6 +706,10 @@ Finding rules:
 - Separately report: (a) number of scenarios fully specifiable from a business perspective, (b) number of scenarios specifiable after business clarification, and (c) number of practically executable test cases. Do not count a business-specifiable scenario as business-incomplete merely because test data or technical prerequisites are missing.
 - Also show this classification in a concise test overview. For every test requiring clarification, state the specific missing information and classify it clearly as business clarification or test preparation / technical provision.
 - Do not claim that a test is fully executable if its test data, preconditions, process steps or expected outcomes would need to be assumed.
+- IMPORTANT: Never infer from the requirement text alone that test data, test accounts, access, test environments or observability facilities are actually missing or unavailable. “Not mentioned in the requirement” means only “availability unknown / not evidenced”, not “unavailable”.
+- Assess practical executability using the information actually available. Explicitly distinguish: (a) available/evidenced, (b) demonstrably unavailable, and (c) unknown/not stated. If there is no information about the test environment or test preparation, do not categorically state “0 practically executable test cases”. Instead use “practical executability cannot be conclusively assessed” and mark the number of demonstrably executable test cases as “undeterminable”.
+- A count of zero is permitted only when it is explicitly established that no test case meets the prerequisites or that required prerequisites are demonstrably unavailable. Explain the evidence.
+- Report separately: (a) scenarios fully specifiable from a business perspective, (b) scenarios specifiable after business clarification, (c) demonstrably practically executable test cases, and (d) scenarios whose practical executability is unknown due to missing information. Do not confuse “not evidenced” with “unavailable”.
 
 Expected output:
 
@@ -708,6 +718,8 @@ A. Testability Summary
 - Brief rationale
 - Number of blocking, significant, limited and minor findings
 - Most important limitation
+- Status of practical prerequisites: available/evidenced, demonstrably unavailable, or unknown/not stated
+- Give a numeric count of practically executable test cases only when it can be determined from concrete information; otherwise state “undeterminable”
 
 B. Testability Matrix
 Rate each of the five dimensions as Given, Partially given or Not given where the requirement text supports a reliable assessment. For dimension 4, separately rate “scenarios identifiable” and “scenarios fully specifiable from a business perspective”.
