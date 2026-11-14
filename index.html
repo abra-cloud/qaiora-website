@@ -551,6 +551,7 @@ Prüfe systematisch diese Dimensionen:
 5. Randbedingungen und Fehlerfälle
 - Sind Grenzwerte, Ausnahmen, Fehlerreaktionen und Abbruchbedingungen beschrieben?
 - Sind Zeitverhalten, Wiederholungen oder parallele Vorgänge relevant und spezifiziert?
+- Bewerte nur Randbedingungen und Fehlerfälle, die aus dem beschriebenen fachlichen Umfang oder ausdrücklich genannten Risiken hervorgehen. Behandle nicht erwähnte Robustheits- und Sonderfälle nicht automatisch als Lücke. Wenn zusätzliche Szenarien denkbare QS-Erweiterungen sind, kennzeichne sie als optional und bewerte Dimension 5 für den aktuellen Umfang als „nicht anwendbar / nicht bewertet“, sofern keine konkrete fachliche Randbedingung fehlt.
 
 Befundregeln:
 - Ordne jeden Befund einer Kategorie zu: Informationslücke, fachlicher Widerspruch (nur mit konkretem Textbeleg) oder Optimierungspotenzial.
@@ -574,11 +575,13 @@ Befundregeln:
 - Zähle jeden eindeutigen Befund genau einmal. Die Summe der Befunde je Auswirkungskategorie muss der Anzahl der tatsächlich aufgeführten Befunde entsprechen.
 - Weise eine Auswirkung nur dann als „blockierend“ aus, wenn dadurch ein relevantes Testszenario oder eine verlässliche Abnahme tatsächlich verhindert wird. Fehlende Detailinformationen sind nicht automatisch blockierend.
 - Leite die Gesamtbewertung aus den tatsächlich ableitbaren Testszenarien und den konkreten Einschränkungen ab. Begründe, welche Tests bereits möglich sind und welche noch nicht.
-- Kennzeichne bei jedem abgeleiteten Test ausdrücklich den Umsetzungsstatus:
-  1. „Mit den vorhandenen Informationen ausführbar“: Vorbedingungen, Aktion und erwartetes Ergebnis sind durch den Anforderungstext ausreichend festgelegt.
-  2. „Nach fachlicher Klärung ausführbar“: Das Szenario ist erkennbar, aber mindestens eine notwendige Information fehlt.
-  3. „Noch nicht ableitbar“: Der Anforderungstext bietet keine ausreichende Grundlage für ein konkretes Szenario.
-- Gib diese Einordnung zusätzlich in einer übersichtlichen Testübersicht aus. Nenne bei jedem Test mit Klärungsbedarf die konkret fehlende Information.
+- Kennzeichne bei jedem abgeleiteten Test ausdrücklich den Umsetzungsstatus und unterscheide mindestens diese vier Fälle:
+  1. „Mit den vorhandenen Informationen ausführbar“: Fachliche Vorbedingungen, Aktion und erwartetes Ergebnis sind ausreichend festgelegt; Testdaten und technische Ausführungsmöglichkeiten sind vorhanden.
+  2. „Nach Testvorbereitung/technischer Bereitstellung ausführbar“: Das Szenario ist fachlich vollständig spezifizierbar; es fehlen ausschließlich Testdaten, Testkonten, Zugänge, ein Bedienweg oder technische Beobachtungsmöglichkeiten.
+  3. „Nach fachlicher Klärung ausführbar“: Das Szenario ist erkennbar, aber mindestens eine notwendige fachliche Regel, Vorbedingung oder ein erwartetes Ergebnis fehlt.
+  4. „Noch nicht ableitbar“: Der Anforderungstext bietet keine ausreichende Grundlage für eine konkrete Testidee oder ein konkretes Szenario. Verwende diesen Status nicht, wenn eine konkrete Testidee erkennbar ist.
+- Weise zusätzlich getrennt aus: (a) Anzahl fachlich vollständig spezifizierbarer Szenarien, (b) Anzahl nach fachlicher Klärung spezifizierbarer Szenarien und (c) Anzahl praktisch ausführbarer Testfälle. Zähle ein fachlich spezifizierbares Szenario nicht als fachlich unvollständig, nur weil Testdaten oder technische Voraussetzungen fehlen.
+- Gib diese Einordnung zusätzlich in einer übersichtlichen Testübersicht aus. Nenne bei jedem Test mit Klärungsbedarf die konkret fehlende Information und ordne sie eindeutig fachlicher Klärung oder Testvorbereitung/technischer Bereitstellung zu.
 - Behaupte nicht, dass ein Test vollständig ausführbar ist, wenn Testdaten, Vorbedingungen, Prozessschritte oder erwartete Ergebnisse dafür erst angenommen werden müssten.
 
 Erwartetes Ausgabeformat:
@@ -665,6 +668,7 @@ Systematically assess these dimensions:
 5. Constraints and error cases
 - Are boundaries, exceptions, error responses and abort conditions described?
 - Are timing, retries or concurrent operations relevant and specified?
+- Assess only constraints and error cases that arise from the stated business scope or explicitly mentioned risks. Do not automatically treat unmentioned robustness or special cases as gaps. If additional scenarios are optional QA extensions, mark dimension 5 as “not applicable / not assessed” for the current scope unless a concrete business constraint is missing.
 
 Finding rules:
 - Assign each finding a category: information gap, business contradiction (only with specific textual evidence), or improvement opportunity.
@@ -688,11 +692,13 @@ Finding rules:
 - Count each distinct finding exactly once. The sum of findings by impact category must equal the number of findings actually listed.
 - Use “blocking” only when the issue genuinely prevents a relevant test scenario or reliable acceptance. Missing detail is not automatically blocking.
 - Derive the overall rating from the test scenarios that can actually be specified and their concrete limitations. Explain which tests are already possible and which are not.
-- Explicitly assign an execution-readiness status to every derived test:
-  1. “Executable with the information provided”: preconditions, action and expected outcome are sufficiently specified by the requirement.
-  2. “Executable after business clarification”: the scenario is identifiable, but at least one necessary detail is missing.
-  3. “Not yet derivable”: the requirement does not provide a sufficient basis for a concrete scenario.
-- Also show this classification in a concise test overview. For every test requiring clarification, state the specific missing information.
+- Explicitly assign an execution-readiness status to every derived test and distinguish at least these four cases:
+  1. “Executable with the information provided”: business preconditions, action and expected outcome are sufficiently specified, and test data and technical execution facilities are available.
+  2. “Executable after test preparation / technical provision”: the scenario is fully specifiable from a business perspective; only test data, test accounts, access, an interaction path or technical observability is missing.
+  3. “Executable after business clarification”: the scenario is identifiable, but at least one necessary business rule, precondition or expected outcome is missing.
+  4. “Not yet derivable”: the requirement does not provide a sufficient basis for a concrete test idea or scenario. Do not use this status when a concrete test idea is recognisable.
+- Separately report: (a) number of scenarios fully specifiable from a business perspective, (b) number of scenarios specifiable after business clarification, and (c) number of practically executable test cases. Do not count a business-specifiable scenario as business-incomplete merely because test data or technical prerequisites are missing.
+- Also show this classification in a concise test overview. For every test requiring clarification, state the specific missing information and classify it clearly as business clarification or test preparation / technical provision.
 - Do not claim that a test is fully executable if its test data, preconditions, process steps or expected outcomes would need to be assumed.
 
 Expected output:
