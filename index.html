@@ -421,7 +421,7 @@
     <section class="analyzer-section" id="testcase-generator">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · third module · V1.4</div>
+          <div class="kicker">QAIORA workspace · third module · V1.5</div>
           <h2>Test Case <span class="gradient-text">Generator.</span></h2>
           <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -1006,7 +1006,7 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
     });
 
 
-    // QAIORA Test Case Generator V1.4: local prompt generation only; no API call.
+    // QAIORA Test Case Generator V1.5: local prompt generation only; no API call.
     const testCaseForm = document.getElementById("testCaseForm");
     const testCaseText = document.getElementById("testCaseText");
     const testCaseLanguage = document.getElementById("testCaseLanguage");
@@ -1053,35 +1053,48 @@ Verbindliche Regeln:
 - Schreibe konkrete, atomare Testschritte. Trenne Vorbedingungen, Testdaten, Aktion und erwartetes Ergebnis.
 - Ein Testschritt muss eine konkrete, beobachtbare Aktion oder Zustandsänderung beschreiben. Eine Absicht wie „Der Benutzer möchte seine E-Mail-Adresse ändern“ ist kein Testschritt.
 - Wiederhole keine Vorbedingung, Akzeptanzkriterien oder erwarteten Ergebnisse als nummerierte Testschritte.
-- Schreibe nur konkrete Benutzer- oder Systemaktionen als belegte Schritte, wenn der bereitgestellte Text die Aktion selbst beschreibt. Eine fachliche Regel wie „die Änderung wird erst nach Bestätigung wirksam“ ist ein erwartetes Ergebnis bzw. eine Prüfbedingung, aber kein ausgeführter Schritt.
-- Wenn keine konkrete Aktion beschrieben ist, erfinde keine Ersatzaktion. Gib im Feld „Testschritte“ ausdrücklich aus: „Keine konkreten Testschritte aus dem bereitgestellten Text ableitbar.“
-- Nummeriere ausschließlich tatsächlich durch den Text belegte, konkrete Aktionen. Eine fehlende Aktion oder eine Klärungsfrage darf niemals als nummerierter Testschritt erscheinen.
-- Führe fehlende Aktionen ausschließlich im separaten Feld „Klärungsbedarf“ auf, z. B. „Wie wird die Änderung im System ausgelöst?“ Erzeuge dafür keine nummerierten Pseudo-Schritte und vermeide mehrere redundante Fragen zum selben fehlenden Bedienweg.
-- Wenn einzelne konkrete Aktionen belegt sind, nummeriere nur diese Aktionen. Führe nicht ableitbare Folgeaktionen separat unter „Klärungsbedarf“ auf.
-- Unterscheide bei den Testschritten zwischen „Durch den Text belegte Aktion“ und fehlenden Aktionen, die ausschließlich im Klärungsbedarf stehen.
-- Formuliere nur Aktionen als konkrete Testschritte, die sich aus dem Anforderungstext ergeben. Verwende keine allgemeinen Ersatzformulierungen wie „Validierung auslösen“, „Prüfung durchführen“, „Bestätigungsprozess starten“ oder „Systemverhalten prüfen“, wenn der Text den konkreten Auslöser oder Ablauf nicht beschreibt.
-- Wenn eine notwendige Aktion nicht spezifiziert ist, schreibe an dieser Stelle ausdrücklich: „Konkrete Aktion: nicht ableitbar – Klärung erforderlich: [genau fehlende Information]“. Erfinde keinen Bedienweg und nummeriere keine vermuteten Prozessschritte als feststehende Aktionen.
-- Halte belegte Schritte und klärungsbedürftige Schritte sichtbar getrennt. Ein Testfall mit ungeklärten Aktionen bleibt Status B, sofern das fachliche Szenario selbst durch ein Akzeptanzkriterium belegt ist.
+- Unterscheide zwischen einer fachlich beschriebenen Testaktion und dem konkreten technischen oder UI-Bedienweg. Eine abstrakte Aktion wie „einen Anmeldeversuch mit falschen Zugangsdaten durchführen“ ist zulässig, wenn der Anforderungstext ausdrücklich fehlgeschlagene Anmeldeversuche voraussetzt. Erfinde daraus aber keine konkreten Klicks, Masken, URLs, Buttons oder technischen Aufrufe.
+- Formuliere fachlich belegte Aktionen als nummerierte, abstrakte Testschritte. Beispiel: „Drei aufeinanderfolgende fehlgeschlagene Anmeldeversuche durchführen.“ Ergänze keine nicht beschriebenen UI- oder Systemdetails.
+- Wenn nur der konkrete Bedienweg fehlt, darf der fachliche Testschritt trotzdem formuliert werden. Kennzeichne ausschließlich den fehlenden Bedienweg separat als „Technischer/UI-Klärungsbedarf“; erkläre den gesamten Testfall nicht allein deshalb für fachlich nicht ableitbar.
+- Wenn nicht einmal eine fachliche Aktion aus dem Text hervorgeht, erfinde keine Ersatzaktion. Schreibe dann: „Keine fachlich konkrete Testaktion aus dem bereitgestellten Text ableitbar.“
+- Nummeriere ausschließlich fachlich belegte Testaktionen. Eine Klärungsfrage, ein technischer Bedienweg oder eine Prüfidee darf niemals als ausgeführter Schritt ausgegeben werden.
+- Führe fehlende technische/UI-Aktionen separat auf, z. B. „Über welche Schnittstelle oder Benutzeroberfläche wird der Anmeldeversuch ausgelöst?“ Vermeide redundante Fragen zum selben Bedienweg.
+- Verwende keine allgemeinen Pseudo-Schritte wie „Validierung auslösen“, „Prüfung durchführen“, „Bestätigungsprozess starten“ oder „Systemverhalten prüfen“, wenn die fachliche Aktion selbst nicht beschrieben ist.
+- Trenne sichtbar: (1) fachlich belegte Testaktionen, (2) technische/UI-Ausführungsdetails, die noch geklärt werden müssen, und (3) fachliche Regeln bzw. erwartete Ergebnisse.
+- Ein fehlender technischer Bedienweg darf den Status der fachlichen Ableitbarkeit nicht herabsetzen. Er kann jedoch die praktische Ausführbarkeit in einer konkreten Testumgebung einschränken.
 - Schreibe beim erwarteten Ergebnis nur das fachlich zugesicherte Verhalten. Trenne davon technische oder UI-Prüfmethoden, sofern diese nicht spezifiziert sind.
 - Vergib Prioritäten grundsätzlich als „nicht bewertet“, sofern der Anforderungstext keine konkrete Priorität, Kritikalität oder belastbare Risikoinformation enthält. Die allgemeine Bedeutung einer Kernfunktion reicht allein nicht aus, um „Hoch“ zu vergeben.
 - Führe vor der Ausgabe eine verpflichtende Qualitätssicherung jedes Testfalls durch:
-  1. Ist jeder nummerierte Schritt eine konkrete Aktion und kein Wunsch, keine Vorbedingung, keine Regel und kein erwartetes Ergebnis?
-  2. Enthält die Liste nummerierter Schritte ausschließlich belegte Aktionen? Falls keine Aktion ableitbar ist, steht dort nur „Keine konkreten Testschritte aus dem bereitgestellten Text ableitbar“ und die fehlenden Aktionen stehen ausschließlich im Klärungsbedarf?
-  3. Ist jede konkrete Aktion durch den Text belegt?
-  4. Sind fehlende Aktionen als Klärungsbedarf gekennzeichnet, ohne einen Prozess zu erfinden?
-  5. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
-  6. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
+  1. Ist jeder nummerierte Schritt eine fachlich belegte Testaktion und kein Wunsch, keine Vorbedingung, keine Regel und kein erwartetes Ergebnis?
+  2. Wurden abstrakte fachliche Aktionen genutzt, ohne nicht belegte UI- oder technische Details zu erfinden?
+  3. Sind fehlende technische/UI-Ausführungsdetails getrennt vom fachlichen Szenario aufgeführt?
+  4. Sind fachliche Ableitbarkeit und praktische Ausführbarkeit unabhängig voneinander bewertet?
+  5. Sind zwingende fachliche Klärungen von optionalen QS-Erweiterungspunkten getrennt?
+  6. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
+  7. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
 - Entferne oder korrigiere vor der Ausgabe jeden Testschritt, der diese Prüfung nicht besteht.
 
-Ausführungsstatus je Testfall:
-A. „Mit den vorhandenen Informationen ausführbar“: Vorbedingungen, Testdaten (oder eindeutig beschriebene Datenmerkmale), Schritte und erwartetes Ergebnis sind ausreichend spezifiziert.
-B. „Nach fachlicher Klärung ausführbar“: Ein sinnvolles Szenario ist erkennbar, aber mindestens eine konkrete Information fehlt. Nenne genau, was geklärt werden muss.
-C. „Noch nicht ableitbar“: Der Text bietet keine ausreichende Grundlage für einen konkreten Testfall. Erfinde keinen Ersatzfall.
+Bewerte je Testfall zwei getrennte Dimensionen:
+1. Fachliche Ableitbarkeit:
+   - „Vollständig ableitbar“: Szenario, relevante Bedingung und erwartetes fachliches Verhalten sind durch den Text belegt.
+   - „Teilweise ableitbar“: Ein Teil des Szenarios ist belegt, aber eine notwendige fachliche Regel oder ein erwartetes Ergebnis fehlt.
+   - „Nicht ableitbar“: Es gibt keine ausreichende Textgrundlage für ein konkretes fachliches Szenario.
+2. Praktische Ausführbarkeit:
+   A. „Mit den vorhandenen Informationen ausführbar“: Die fachliche Aktion, notwendige Vorbedingungen/Testdaten und das erwartete Ergebnis sind ausreichend beschrieben. Ein nicht spezifizierter UI-Bedienweg verhindert Status A nicht, wenn die fachliche Aktion abstrakt und eindeutig ausführbar ist.
+   B. „Nach Klärung ausführbar“: Das fachliche Szenario ist ableitbar, aber eine notwendige fachliche Voraussetzung, ein Datenmerkmal, ein Testzugang oder ein für die gewählte Testumgebung erforderlicher Ausführungs-/Beobachtungsweg fehlt. Benenne genau, was fehlt. Unterscheide fachliche Klärung von technischer/UI-Klärung.
+   C. „Noch nicht ableitbar“: Es lässt sich kein konkretes fachliches Testszenario aus dem Text ableiten. Erzeuge keinen Ersatzfall.
+Wichtig: Ein Testfall kann fachlich vollständig ableitbar sein und dennoch praktische Ausführungsdetails benötigen. Setze ihn nicht allein wegen fehlender UI-Details auf „fachlich teilweise ableitbar“.
+
+Ordne offene Punkte außerdem ein:
+- „Zwingende fachliche Klärung“: Ohne diese Information ist eine fachliche Erwartung oder ein notwendiger Testzustand nicht eindeutig.
+- „Technische/UI-Klärung“: Betrifft nur den konkreten Ausführungs- oder Beobachtungsweg, nicht die fachliche Regel.
+- „Optionale QS-Erweiterung“: Zusätzliche Robustheits-, Betriebs- oder Randfallprüfung, die nicht aus dem aktuellen Umfang gefordert ist. Nicht als Anforderungsmangel, Blocker oder notwendige Klärung darstellen.
 
 Ausgabeformat:
 1. Kurzüberblick
 - Anzahl der Testfälle je Kategorie
 - Anzahl je Ausführungsstatus A, B und C
+- Anzahl je fachlicher Ableitbarkeit (vollständig, teilweise, nicht ableitbar)
 - Zähle ausschließlich tatsächlich beschriebene Testfälle; offene Fragen ohne Testfall-ID nicht mitzählen.
 - Wichtigste Einschränkungen und offene Punkte
 
@@ -1112,7 +1125,8 @@ Stelle jeden Testfall mit diesen Feldern dar:
 - Welche Fälle sind unmittelbar ausführbar?
 - Welche benötigen Klärung?
 - Welche Testabdeckung bleibt aufgrund fehlender Informationen offen?
-- Trenne ausdrücklich zwischen unmittelbar ausführbaren Testfällen, fachlich ableitbaren aber klärungsbedürftigen Szenarien und nicht ableitbaren Fällen.
+- Welche Punkte sind zwingende fachliche Klärungen, welche nur technische/UI-Klärungen und welche optionale QS-Erweiterungen?
+- Trenne ausdrücklich fachliche Ableitbarkeit von praktischer Ausführbarkeit.
 
 Prüfe abschließend die Konsistenz: IDs, Kategorien, Zählungen, Quellenverweise und Ausführungsstatus müssen übereinstimmen.` : `Role:
 You are an experienced Quality Engineer and Test Analyst with strong knowledge of requirements engineering, test design and software testing.
@@ -1148,35 +1162,48 @@ Mandatory rules:
 - Use concrete, atomic test steps. Separate preconditions, test data, action and expected result.
 - A test step must describe a concrete, observable action or state change. An intention such as “The user wants to change their email address” is not a test step.
 - Do not repeat preconditions, acceptance criteria or expected results as numbered test steps.
-- Write concrete user or system actions as evidenced steps only when the supplied text describes the action itself. A business rule such as “the change becomes effective only after confirmation” is an expected result or verification condition, not an executed step.
-- If no concrete action is described, do not invent a substitute action. In the “Test steps” field, explicitly state: “No concrete test steps can be derived from the supplied text.”
-- Number only concrete actions actually supported by the text. A missing action or clarification question must never appear as a numbered test step.
-- List missing actions only in the separate “Clarification needed” field, e.g. “How is the change initiated in the system?” Do not create numbered pseudo-steps for clarification items, and avoid multiple redundant questions about the same missing user journey.
-- If some concrete actions are supported, number only those actions. List any non-derivable follow-up actions separately under “Clarification needed”.
-- Keep text-supported actions separate from missing actions, which belong only in clarification needed.
-- Write an action as a concrete test step only when it is supported by the requirement. Do not use generic substitutes such as “trigger validation”, “perform the check”, “start the confirmation process” or “check system behavior” when the text does not specify the actual trigger or process.
-- If a necessary action is unspecified, state explicitly: “Concrete action: not derivable – clarification required: [exact missing information]”. Do not invent a user journey or number assumed process steps as established actions.
-- Keep evidenced steps visibly separate from clarification-dependent steps. A test case with unresolved actions remains status B if the business scenario itself is supported by an acceptance criterion.
+- Distinguish a business-level test action from its concrete technical or UI interaction path. An abstract action such as “perform a login attempt with incorrect credentials” is allowed when the requirement explicitly refers to failed login attempts. Do not invent clicks, screens, URLs, buttons or technical calls.
+- Write business-level actions supported by the requirement as numbered, abstract test steps. Example: “Perform three consecutive failed login attempts.” Do not add unsupported UI or system details.
+- If only the concrete interaction path is missing, the business-level test step may still be stated. List the missing path separately as “Technical/UI clarification”; do not treat the whole scenario as not derivable for that reason alone.
+- If no business-level action can be derived, do not invent a substitute. State: “No concrete business-level test action can be derived from the supplied text.”
+- Number only business-level test actions supported by the text. A clarification question, technical interaction path or verification idea must never be presented as an executed step.
+- List missing technical/UI actions separately, e.g. “Through which interface or UI is the login attempt initiated?” Avoid redundant questions about the same interaction path.
+- Do not use generic pseudo-steps such as “trigger validation”, “perform the check”, “start the confirmation process” or “check system behavior” when the business action itself is not described.
+- Clearly separate (1) evidenced business-level test actions, (2) technical/UI execution details still to be clarified, and (3) business rules or expected results.
+- A missing technical interaction path must not lower the business derivability assessment. It may, however, limit practical execution in a specific test environment.
 - In the expected result, state only the behavior guaranteed by the requirement. Keep technical or UI verification methods separate unless they are specified.
 - By default, set priority to “not assessed” unless the requirement provides a specific priority, criticality or substantiated risk information. The general importance of a core feature alone is not sufficient to assign “High”.
 - Perform a mandatory quality review of every test case before output:
-  1. Is every numbered step a concrete action rather than an intention, precondition, rule or expected result?
-  2. Does the numbered step list contain only evidenced actions? If no action can be derived, does it state only “No concrete test steps can be derived from the supplied text” and keep missing actions exclusively in clarification needed?
-  3. Is every concrete action supported by the text?
-  4. Are missing actions marked as clarification needed without inventing a process?
-  5. Are priorities evidenced or correctly marked “not assessed”?
-  6. Do test case IDs, categories, sources, statuses and counts match?
+  1. Is every numbered step a business-level test action supported by the text, rather than an intention, precondition, rule or expected result?
+  2. Are abstract business actions used without inventing unsupported UI or technical details?
+  3. Are missing technical/UI execution details separated from the business scenario?
+  4. Are business derivability and practical executability assessed independently?
+  5. Are mandatory business clarifications separated from optional QA extensions?
+  6. Are priorities evidenced or correctly marked “not assessed”?
+  7. Do test case IDs, categories, sources, statuses and counts match?
 - Remove or correct every test step that fails this review before producing the output.
 
-Execution status for each test case:
-A. “Executable with the information provided”: Preconditions, test data (or clearly defined data characteristics), steps and expected result are sufficiently specified.
-B. “Executable after business clarification”: A meaningful scenario is identifiable, but specific information is missing. State exactly what must be clarified.
-C. “Not yet derivable”: The text does not provide a sufficient basis for a concrete test case. Do not invent a substitute.
+Assess two separate dimensions for each test case:
+1. Business derivability:
+   - “Fully derivable”: The scenario, relevant condition and expected business behavior are supported by the text.
+   - “Partially derivable”: Part of the scenario is supported, but a necessary business rule or expected result is missing.
+   - “Not derivable”: The text does not support a concrete business-level scenario.
+2. Practical executability:
+   A. “Executable with the information provided”: The business action, necessary preconditions/test data and expected result are sufficiently specified. An unspecified UI path does not prevent status A when the business action is clear and can be executed abstractly.
+   B. “Executable after clarification”: The business scenario is derivable, but a necessary business precondition, data characteristic, test access, or execution/observation path for the chosen test environment is missing. State exactly what is missing and distinguish business clarification from technical/UI clarification.
+   C. “Not yet derivable”: No concrete business-level test scenario can be derived. Do not invent a substitute.
+Important: A test case may be fully derivable from a business perspective while still needing practical execution details. Do not mark it as partially business-derivable merely because UI details are missing.
+
+Also classify open points:
+- “Mandatory business clarification”: Without this information, a business expectation or required test state is ambiguous.
+- “Technical/UI clarification”: Only the concrete execution or observation path is missing, not the business rule.
+- “Optional QA extension”: An additional robustness, operational or edge-case test not required by the current scope. Do not present it as a requirement defect, blocker or mandatory clarification.
 
 Output format:
 1. Short overview
 - Number of test cases per category
 - Number per execution status A, B and C
+- Number per business derivability (fully, partially, not derivable)
 - Count only test cases actually described; do not count open questions without a test case ID.
 - Most important limitations and open points
 
@@ -1207,7 +1234,8 @@ For each test case provide:
 - Which cases can be executed immediately?
 - Which require clarification?
 - Which coverage remains open due to missing information?
-- Explicitly distinguish immediately executable test cases, derivable but clarification-dependent scenarios, and cases that cannot yet be derived.
+- Which points are mandatory business clarifications, technical/UI clarifications, or optional QA extensions?
+- Explicitly distinguish business derivability from practical executability.
 
 Finally, check consistency: IDs, categories, counts, source references and execution statuses must match.`;
       testCaseOutput.hidden = false;
