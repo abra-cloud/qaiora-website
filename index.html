@@ -380,7 +380,7 @@
     <section class="analyzer-section" id="testability">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · second module · V2</div>
+          <div class="kicker">QAIORA workspace · second module · V2.1</div>
           <h2>Testability <span class="gradient-text">Checker.</span></h2>
           <p class="analyzer-intro">Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -562,6 +562,12 @@ Befundregeln:
 - Zähle jeden eindeutigen Befund genau einmal. Die Summe der Befunde je Auswirkungskategorie muss der Anzahl der tatsächlich aufgeführten Befunde entsprechen.
 - Weise eine Auswirkung nur dann als „blockierend“ aus, wenn dadurch ein relevantes Testszenario oder eine verlässliche Abnahme tatsächlich verhindert wird. Fehlende Detailinformationen sind nicht automatisch blockierend.
 - Leite die Gesamtbewertung aus den tatsächlich ableitbaren Testszenarien und den konkreten Einschränkungen ab. Begründe, welche Tests bereits möglich sind und welche noch nicht.
+- Kennzeichne bei jedem abgeleiteten Test ausdrücklich den Umsetzungsstatus:
+  1. „Mit den vorhandenen Informationen ausführbar“: Vorbedingungen, Aktion und erwartetes Ergebnis sind durch den Anforderungstext ausreichend festgelegt.
+  2. „Nach fachlicher Klärung ausführbar“: Das Szenario ist erkennbar, aber mindestens eine notwendige Information fehlt.
+  3. „Noch nicht ableitbar“: Der Anforderungstext bietet keine ausreichende Grundlage für ein konkretes Szenario.
+- Gib diese Einordnung zusätzlich in einer übersichtlichen Testübersicht aus. Nenne bei jedem Test mit Klärungsbedarf die konkret fehlende Information.
+- Behaupte nicht, dass ein Test vollständig ausführbar ist, wenn Testdaten, Vorbedingungen, Prozessschritte oder erwartete Ergebnisse dafür erst angenommen werden müssten.
 
 Erwartetes Ausgabeformat:
 
@@ -655,6 +661,12 @@ Finding rules:
 - Count each distinct finding exactly once. The sum of findings by impact category must equal the number of findings actually listed.
 - Use “blocking” only when the issue genuinely prevents a relevant test scenario or reliable acceptance. Missing detail is not automatically blocking.
 - Derive the overall rating from the test scenarios that can actually be specified and their concrete limitations. Explain which tests are already possible and which are not.
+- Explicitly assign an execution-readiness status to every derived test:
+  1. “Executable with the information provided”: preconditions, action and expected outcome are sufficiently specified by the requirement.
+  2. “Executable after business clarification”: the scenario is identifiable, but at least one necessary detail is missing.
+  3. “Not yet derivable”: the requirement does not provide a sufficient basis for a concrete scenario.
+- Also show this classification in a concise test overview. For every test requiring clarification, state the specific missing information.
+- Do not claim that a test is fully executable if its test data, preconditions, process steps or expected outcomes would need to be assumed.
 
 Expected output:
 
