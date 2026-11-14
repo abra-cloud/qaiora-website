@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
   <title>QAIORA — The Intelligence Behind Quality</title>
+  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V3, Testability Checker V2.4, Test Case Generator V1.6 -->
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {
@@ -252,6 +253,7 @@
         <div class="nav-links" id="navLinks">
           <a href="#analyzer">Requirement Analyzer</a>
           <a href="#testability">Testability Checker</a>
+          <a href="#testcase-generator">Test Case Generator</a>
           <a href="#platform">Platform</a>
           <a href="#capabilities">Capabilities</a>
           <a href="#approach">Our approach</a>
@@ -416,6 +418,43 @@
       </div>
     </section>
 
+
+    <section class="analyzer-section" id="testcase-generator">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">QAIORA workspace · third module · V1.5</div>
+          <h2>Test Case <span class="gradient-text">Generator.</span></h2>
+          <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
+        </div>
+        <div class="analyzer-panel">
+          <form class="analyzer-form" id="testCaseForm">
+            <div>
+              <label for="testCaseText" data-m3="reqLabel">Requirement and acceptance criteria</label>
+              <textarea id="testCaseText" required minlength="20" placeholder="Paste the requirement and its acceptance criteria here." data-m3-placeholder="reqPlaceholder"></textarea>
+            </div>
+            <div>
+              <label for="testCaseLanguage" data-m3="promptLang">Prompt language</label>
+              <select id="testCaseLanguage"><option value="en">English</option><option value="de">Deutsch</option></select>
+            </div>
+            <div class="analyzer-actions">
+              <button class="button" type="submit" data-m3="create">Create test case prompt <span aria-hidden="true">→</span></button>
+              <button class="button secondary" type="button" id="clearTestCases" data-m3="clear">Clear</button>
+            </div>
+          </form>
+          <div class="analyzer-output" id="testCaseOutput" hidden>
+            <label for="generatedTestCasePrompt" data-m3="outputLabel">Your QAIORA test case prompt</label>
+            <textarea id="generatedTestCasePrompt" readonly></textarea>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button class="button" type="button" id="copyTestCasePrompt" data-m3="copy">Copy prompt</button>
+              <a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" data-m3="open">Open ChatGPT ↗</a>
+            </div>
+            <p class="analyzer-note" data-m3="note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
+            <div class="analyzer-status" id="testCaseCopyStatus" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="platform" id="platform">
       <div class="wrap platform-grid">
         <div class="platform-copy">
@@ -529,7 +568,18 @@ Bewerte ausschließlich die Testbarkeit der nachfolgenden fachlichen Anforderung
 Anforderung:
 ${requirement}
 
+Prüfe systematisch diese Dimensionen:${requirement}
+
 Prüfe systematisch diese Dimensionen:
+
+Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
+- Belege jede fachliche Feststellung mit einer konkreten Textstelle oder kennzeichne ausdrücklich, dass eine Information nicht angegeben ist. Trenne Feststellungen, Annahmen und offene Fragen.
+- Verwende für Befunde genau eine Hauptkategorie: „Informationslücke“, „fachlicher Fehler/Widerspruch“ (nur mit konkretem Textbeleg) oder „Optimierungspotenzial“. Ein Optimierungspotenzial ist nicht automatisch ein fachlicher Fehler oder eine fehlende Geschäftsregel.
+- Ordne Klärungsbedarf eindeutig zu: „fachliche Klärung“, „Testdaten/Testvorbereitung“, „technische Ausführbarkeit/Beobachtbarkeit“ oder „optionale QS-Erweiterung“. Technische und organisatorische Voraussetzungen sind keine fachlichen Anforderungslücken.
+- Unterscheide konsequent drei Reifegrade: (1) Testidee identifizierbar, (2) fachliches Testszenario vollständig spezifizierbar, (3) Testfall praktisch ausführbar. Eine erkennbare Testidee darf nicht als „nicht ableitbar“ bezeichnet werden, nur weil fachliche Details fehlen.
+- „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“. Zähle praktische Ausführbarkeit nur dann als gegeben oder nicht gegeben, wenn dafür konkrete Informationen vorliegen; andernfalls als „unbekannt/nicht abschließend bewertbar“.
+- Optionale QS-Erweiterungen sind nicht als Befunde oder notwendige Klärungen zu zählen, solange sie nicht ausdrücklich zum Anforderungsumfang gehören. Zähle Befunde und Szenarien konsistent und ohne Doppelzählung.
+- Fachliche Kritikalität, Auswirkung auf Testbarkeit und praktische Ausführbarkeit sind unterschiedliche Bewertungsdimensionen und dürfen nicht gleichgesetzt werden.
 
 1. Vorbedingungen und Zustände
 - Sind Voraussetzungen, Benutzerrollen, Berechtigungen und relevante Systemzustände beschrieben?
@@ -652,7 +702,18 @@ Assess only the testability of the following business requirement. Determine whe
 Requirement:
 ${requirement}
 
+Systematically assess these dimensions:${requirement}
+
 Systematically assess these dimensions:
+
+Shared QAIORA quality assessment rules (apply across all modules):
+- Support every business finding with a specific text reference, or explicitly state that the information is not provided. Separate evidence-based findings, assumptions and open questions.
+- Assign exactly one primary category to each finding: “information gap”, “business defect/contradiction” (only with specific textual evidence), or “improvement opportunity”. An improvement opportunity is not automatically a business defect or a missing business rule.
+- Classify clarification needs as “business clarification”, “test data/test preparation”, “technical execution/observability”, or “optional QA extension”. Technical and organizational prerequisites are not business requirement gaps.
+- Consistently distinguish three maturity levels: (1) test idea identifiable, (2) business test scenario fully specifiable, and (3) test case practically executable. Do not label an identifiable test idea “not derivable” merely because business details are missing.
+- “Not mentioned in the requirement” means “unknown/not evidenced”, not “unavailable”. Rate practical executability as available or unavailable only when supported by concrete information; otherwise use “unknown/not assessable”.
+- Optional QA extensions are not findings or mandatory clarifications unless they are explicitly within the requirement scope. Keep finding and scenario counts consistent and avoid double counting.
+- Business criticality, impact on testability and practical executability are different assessment dimensions and must not be conflated.
 
 1. Preconditions and states
 - Are prerequisites, user roles, permissions and relevant system states described?
@@ -816,7 +877,18 @@ Analysiere die folgende fachliche Anforderung systematisch aus QS-Sicht. Erfinde
 Anforderung:
 ${requirement}
 
+Analyse und Befundklassifizierung:${requirement}
+
 Analyse und Befundklassifizierung:
+
+Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
+- Belege jede fachliche Feststellung mit einer konkreten Textstelle oder kennzeichne ausdrücklich, dass eine Information nicht angegeben ist. Trenne Feststellungen, Annahmen und offene Fragen.
+- Verwende für Befunde genau eine Hauptkategorie: „Informationslücke“, „fachlicher Fehler/Widerspruch“ (nur mit konkretem Textbeleg) oder „Optimierungspotenzial“. Ein Optimierungspotenzial ist nicht automatisch ein fachlicher Fehler oder eine fehlende Geschäftsregel.
+- Ordne Klärungsbedarf eindeutig zu: „fachliche Klärung“, „Testdaten/Testvorbereitung“, „technische Ausführbarkeit/Beobachtbarkeit“ oder „optionale QS-Erweiterung“. Technische und organisatorische Voraussetzungen sind keine fachlichen Anforderungslücken.
+- Unterscheide konsequent drei Reifegrade: (1) Testidee identifizierbar, (2) fachliches Testszenario vollständig spezifizierbar, (3) Testfall praktisch ausführbar. Eine erkennbare Testidee darf nicht als „nicht ableitbar“ bezeichnet werden, nur weil fachliche Details fehlen.
+- „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“. Zähle praktische Ausführbarkeit nur dann als gegeben oder nicht gegeben, wenn dafür konkrete Informationen vorliegen; andernfalls als „unbekannt/nicht abschließend bewertbar“.
+- Optionale QS-Erweiterungen sind nicht als Befunde oder notwendige Klärungen zu zählen, solange sie nicht ausdrücklich zum Anforderungsumfang gehören. Zähle Befunde und Szenarien konsistent und ohne Doppelzählung.
+- Fachliche Kritikalität, Auswirkung auf Testbarkeit und praktische Ausführbarkeit sind unterschiedliche Bewertungsdimensionen und dürfen nicht gleichgesetzt werden.
 Prüfe mindestens:
 1. Verständlichkeit und Eindeutigkeit
 2. Vollständigkeit und fachlichen Kontext
@@ -908,7 +980,18 @@ Analyse the following business requirement systematically from a Quality Enginee
 Requirement:
 ${requirement}
 
+Analysis and finding classification:${requirement}
+
 Analysis and finding classification:
+
+Shared QAIORA quality assessment rules (apply across all modules):
+- Support every business finding with a specific text reference, or explicitly state that the information is not provided. Separate evidence-based findings, assumptions and open questions.
+- Assign exactly one primary category to each finding: “information gap”, “business defect/contradiction” (only with specific textual evidence), or “improvement opportunity”. An improvement opportunity is not automatically a business defect or a missing business rule.
+- Classify clarification needs as “business clarification”, “test data/test preparation”, “technical execution/observability”, or “optional QA extension”. Technical and organizational prerequisites are not business requirement gaps.
+- Consistently distinguish three maturity levels: (1) test idea identifiable, (2) business test scenario fully specifiable, and (3) test case practically executable. Do not label an identifiable test idea “not derivable” merely because business details are missing.
+- “Not mentioned in the requirement” means “unknown/not evidenced”, not “unavailable”. Rate practical executability as available or unavailable only when supported by concrete information; otherwise use “unknown/not assessable”.
+- Optional QA extensions are not findings or mandatory clarifications unless they are explicitly within the requirement scope. Keep finding and scenario counts consistent and avoid double counting.
+- Business criticality, impact on testability and practical executability are different assessment dimensions and must not be conflated.
 Assess at least:
 1. Clarity and unambiguity
 2. Completeness and business context
@@ -1014,6 +1097,297 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
       copyStatus.textContent = "";
       requirementText.focus();
     });
+
+
+    // QAIORA Test Case Generator V1.6: local prompt generation only; no API call.
+    const testCaseForm = document.getElementById("testCaseForm");
+    const testCaseText = document.getElementById("testCaseText");
+    const testCaseLanguage = document.getElementById("testCaseLanguage");
+    const testCaseOutput = document.getElementById("testCaseOutput");
+    const generatedTestCasePrompt = document.getElementById("generatedTestCasePrompt");
+    const testCaseCopyStatus = document.getElementById("testCaseCopyStatus");
+
+    testCaseForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const requirement = testCaseText.value.trim();
+      if (requirement.length < 20) { testCaseText.focus(); return; }
+      const de = testCaseLanguage.value === "de";
+      generatedTestCasePrompt.value = de ? `Rolle:
+Du bist ein erfahrener Quality Engineer und Test Analyst mit fundierten Kenntnissen in Requirements Engineering, Testdesign und Softwaretest.
+
+Aufgabe:
+Leite aus der nachfolgenden fachlichen Anforderung und den Akzeptanzkriterien strukturierte Testfälle ab. Arbeite ausschließlich auf Grundlage des bereitgestellten Textes. Erfinde keine fachlichen Regeln, Vorbedingungen, Testdaten, Prozessschritte oder erwarteten Ergebnisse.
+
+Anforderung:
+${requirement}
+
+Ziel:${requirement}
+
+Ziel:
+
+Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
+- Belege jede fachliche Feststellung mit einer konkreten Textstelle oder kennzeichne ausdrücklich, dass eine Information nicht angegeben ist. Trenne Feststellungen, Annahmen und offene Fragen.
+- Verwende für Befunde genau eine Hauptkategorie: „Informationslücke“, „fachlicher Fehler/Widerspruch“ (nur mit konkretem Textbeleg) oder „Optimierungspotenzial“. Ein Optimierungspotenzial ist nicht automatisch ein fachlicher Fehler oder eine fehlende Geschäftsregel.
+- Ordne Klärungsbedarf eindeutig zu: „fachliche Klärung“, „Testdaten/Testvorbereitung“, „technische Ausführbarkeit/Beobachtbarkeit“ oder „optionale QS-Erweiterung“. Technische und organisatorische Voraussetzungen sind keine fachlichen Anforderungslücken.
+- Unterscheide konsequent drei Reifegrade: (1) Testidee identifizierbar, (2) fachliches Testszenario vollständig spezifizierbar, (3) Testfall praktisch ausführbar. Eine erkennbare Testidee darf nicht als „nicht ableitbar“ bezeichnet werden, nur weil fachliche Details fehlen.
+- „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“. Zähle praktische Ausführbarkeit nur dann als gegeben oder nicht gegeben, wenn dafür konkrete Informationen vorliegen; andernfalls als „unbekannt/nicht abschließend bewertbar“.
+- Optionale QS-Erweiterungen sind nicht als Befunde oder notwendige Klärungen zu zählen, solange sie nicht ausdrücklich zum Anforderungsumfang gehören. Zähle Befunde und Szenarien konsistent und ohne Doppelzählung.
+- Fachliche Kritikalität, Auswirkung auf Testbarkeit und praktische Ausführbarkeit sind unterschiedliche Bewertungsdimensionen und dürfen nicht gleichgesetzt werden.
+Erstelle nachvollziehbare Testfälle in genau diesen drei Kategorien:
+1. Positive Testfälle
+2. Negative Testfälle
+3. Grenzwert- und Sonderfälle
+Ordne einen Testfall nur dann einer Kategorie zu, wenn dies fachlich durch den Text begründet ist. Erzeuge keine künstlichen Grenzwerttests, wenn keine Grenzwerte oder Wertebereiche genannt sind.
+
+Verbindliche Regeln:
+- Jeder Testfall muss auf mindestens ein konkretes Akzeptanzkriterium oder eine konkrete Aussage der Anforderung verweisen.
+- Unterscheide strikt zwischen belegbaren Angaben, notwendigen Annahmen und offenen Fragen.
+- Fehlende Informationen sind nicht automatisch fachliche Fehler. Kennzeichne sie als Klärungsbedarf.
+- Erfinde keine konkreten Testdaten. Verwende bei fehlenden Werten beschreibende Platzhalter und benenne die benötigte Klärung.
+- Erfinde keine erwarteten Ergebnisse. Wenn das Ergebnis nicht aus dem Text hervorgeht, kennzeichne es als offen und leite keinen vollständig ausführbaren Testfall daraus ab.
+- Unterscheide strikt zwischen fachlicher Ableitbarkeit eines Szenarios und seiner tatsächlichen Ausführbarkeit. Ein fachlich ableitbares Szenario darf den Status B erhalten, auch wenn einzelne Ausführungsdetails fehlen.
+- Weise Status A nur zu, wenn Vorbedingungen, Testdaten oder Datenmerkmale, konkrete Schritte und erwartetes Ergebnis vollständig aus dem Text hervorgehen. Ein beschreibender Platzhalter allein macht einen Testfall nicht ausführbar.
+- Weise Status B nur zu, wenn ein konkretes, durch den Text belegtes Szenario existiert und genau benannt werden kann, welche Information zur Ausführung fehlt.
+- Weise Status C zu, wenn kein konkretes Szenario aus dem Text abgeleitet werden kann. Erzeuge dafür keinen künstlichen Testfall und führe den Punkt stattdessen unter den offenen Fragen auf.
+- Kennzeichne jeden Schritt, der mangels Information nicht konkret beschrieben werden kann, ausdrücklich als „Klärung erforderlich“; formuliere ihn nicht als bereits feststehenden Systemprozess.
+- Verwende eindeutige Testfall-IDs (TC-001, TC-002 …) fortlaufend über alle drei Kategorien hinweg, ohne Lücken und ohne Duplikate.
+- Vermeide redundante Testfälle. Begründe, wenn zwei Fälle unterschiedliche Risiken oder Kriterien abdecken.
+- Erzeuge keine Testfälle nur, um alle Kategorien zu füllen. Eine Kategorie darf ausdrücklich „Keine Testfälle ableitbar“ enthalten.
+- Decke positive, negative sowie Grenzwert-/Sonderfälle nur soweit ab, wie es der Anforderungstext erlaubt.
+- Schreibe konkrete, atomare Testschritte. Trenne Vorbedingungen, Testdaten, Aktion und erwartetes Ergebnis.
+- Ein Testschritt muss eine konkrete, beobachtbare Aktion oder Zustandsänderung beschreiben. Eine Absicht wie „Der Benutzer möchte seine E-Mail-Adresse ändern“ ist kein Testschritt.
+- Wiederhole keine Vorbedingung, Akzeptanzkriterien oder erwarteten Ergebnisse als nummerierte Testschritte.
+- Unterscheide zwischen einer fachlich beschriebenen Testaktion und dem konkreten technischen oder UI-Bedienweg. Eine abstrakte Aktion wie „einen Anmeldeversuch mit falschen Zugangsdaten durchführen“ ist zulässig, wenn der Anforderungstext ausdrücklich fehlgeschlagene Anmeldeversuche voraussetzt. Erfinde daraus aber keine konkreten Klicks, Masken, URLs, Buttons oder technischen Aufrufe.
+- Formuliere fachlich belegte Aktionen als nummerierte, abstrakte Testschritte. Beispiel: „Drei aufeinanderfolgende fehlgeschlagene Anmeldeversuche durchführen.“ Ergänze keine nicht beschriebenen UI- oder Systemdetails.
+- Wenn nur der konkrete Bedienweg fehlt, darf der fachliche Testschritt trotzdem formuliert werden. Kennzeichne ausschließlich den fehlenden Bedienweg separat als „Technischer/UI-Klärungsbedarf“; erkläre den gesamten Testfall nicht allein deshalb für fachlich nicht ableitbar.
+- Wenn nicht einmal eine fachliche Aktion aus dem Text hervorgeht, erfinde keine Ersatzaktion. Schreibe dann: „Keine fachlich konkrete Testaktion aus dem bereitgestellten Text ableitbar.“
+- Nummeriere ausschließlich fachlich belegte Testaktionen. Eine Klärungsfrage, ein technischer Bedienweg oder eine Prüfidee darf niemals als ausgeführter Schritt ausgegeben werden.
+- Führe fehlende technische/UI-Aktionen separat auf, z. B. „Über welche Schnittstelle oder Benutzeroberfläche wird der Anmeldeversuch ausgelöst?“ Vermeide redundante Fragen zum selben Bedienweg.
+- Verwende keine allgemeinen Pseudo-Schritte wie „Validierung auslösen“, „Prüfung durchführen“, „Bestätigungsprozess starten“ oder „Systemverhalten prüfen“, wenn die fachliche Aktion selbst nicht beschrieben ist.
+- Trenne sichtbar: (1) fachlich belegte Testaktionen, (2) technische/UI-Ausführungsdetails, die noch geklärt werden müssen, und (3) fachliche Regeln bzw. erwartete Ergebnisse.
+- Ein fehlender technischer Bedienweg darf den Status der fachlichen Ableitbarkeit nicht herabsetzen. Er kann jedoch die praktische Ausführbarkeit in einer konkreten Testumgebung einschränken.
+- Schreibe beim erwarteten Ergebnis nur das fachlich zugesicherte Verhalten. Trenne davon technische oder UI-Prüfmethoden, sofern diese nicht spezifiziert sind.
+- Vergib Prioritäten grundsätzlich als „nicht bewertet“, sofern der Anforderungstext keine konkrete Priorität, Kritikalität oder belastbare Risikoinformation enthält. Die allgemeine Bedeutung einer Kernfunktion reicht allein nicht aus, um „Hoch“ zu vergeben.
+- Führe vor der Ausgabe eine verpflichtende Qualitätssicherung jedes Testfalls durch:
+  1. Ist jeder nummerierte Schritt eine fachlich belegte Testaktion und kein Wunsch, keine Vorbedingung, keine Regel und kein erwartetes Ergebnis?
+  2. Wurden abstrakte fachliche Aktionen genutzt, ohne nicht belegte UI- oder technische Details zu erfinden?
+  3. Sind fehlende technische/UI-Ausführungsdetails getrennt vom fachlichen Szenario aufgeführt?
+  4. Sind fachliche Ableitbarkeit und praktische Ausführbarkeit unabhängig voneinander bewertet?
+  5. Sind zwingende fachliche Klärungen von optionalen QS-Erweiterungspunkten getrennt?
+  6. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
+  7. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
+- Entferne oder korrigiere vor der Ausgabe jeden Testschritt, der diese Prüfung nicht besteht.
+
+Bewerte je Testfall zwei getrennte Dimensionen:
+1. Fachliche Ableitbarkeit:
+   - „Vollständig ableitbar“: Szenario, relevante Bedingung und erwartetes fachliches Verhalten sind durch den Text belegt.
+   - „Teilweise ableitbar“: Ein Teil des Szenarios ist belegt, aber eine notwendige fachliche Regel oder ein erwartetes Ergebnis fehlt.
+   - „Nicht ableitbar“: Es gibt keine ausreichende Textgrundlage für ein konkretes fachliches Szenario.
+2. Praktische Ausführbarkeit:
+   A. „Mit den vorhandenen Informationen ausführbar“: Die fachliche Aktion, notwendige Vorbedingungen/Testdaten und das erwartete Ergebnis sind ausreichend beschrieben. Ein nicht spezifizierter UI-Bedienweg verhindert Status A nicht, wenn die fachliche Aktion abstrakt und eindeutig ausführbar ist.
+   B. „Nach Klärung ausführbar“: Das fachliche Szenario ist ableitbar, aber eine notwendige fachliche Voraussetzung, ein Datenmerkmal, ein Testzugang oder ein für die gewählte Testumgebung erforderlicher Ausführungs-/Beobachtungsweg fehlt. Benenne genau, was fehlt. Unterscheide fachliche Klärung von technischer/UI-Klärung.
+   C. „Noch nicht ableitbar“: Es lässt sich kein konkretes fachliches Testszenario aus dem Text ableiten. Erzeuge keinen Ersatzfall.
+Wichtig: Ein Testfall kann fachlich vollständig ableitbar sein und dennoch praktische Ausführungsdetails benötigen. Setze ihn nicht allein wegen fehlender UI-Details auf „fachlich teilweise ableitbar“.
+
+Ordne offene Punkte außerdem ein:
+- „Zwingende fachliche Klärung“: Ohne diese Information ist eine fachliche Erwartung oder ein notwendiger Testzustand nicht eindeutig.
+- „Technische/UI-Klärung“: Betrifft nur den konkreten Ausführungs- oder Beobachtungsweg, nicht die fachliche Regel.
+- „Optionale QS-Erweiterung“: Zusätzliche Robustheits-, Betriebs- oder Randfallprüfung, die nicht aus dem aktuellen Umfang gefordert ist. Nicht als Anforderungsmangel, Blocker oder notwendige Klärung darstellen.
+
+Ausgabeformat:
+1. Kurzüberblick
+- Anzahl der Testfälle je Kategorie
+- Anzahl je Ausführungsstatus A, B und C
+- Anzahl je fachlicher Ableitbarkeit (vollständig, teilweise, nicht ableitbar)
+- Zähle ausschließlich tatsächlich beschriebene Testfälle; offene Fragen ohne Testfall-ID nicht mitzählen.
+- Wichtigste Einschränkungen und offene Punkte
+
+2. Positive Testfälle
+3. Negative Testfälle
+4. Grenzwert- und Sonderfälle
+
+Stelle jeden Testfall mit diesen Feldern dar:
+- Testfall-ID
+- Titel
+- Testziel
+- Quelle (Akzeptanzkriterium / Textstelle)
+- Vorbedingungen
+- Testdaten
+- Testschritte (nummeriert)
+- Erwartetes Ergebnis
+- Ausführungsstatus
+- Klärungsbedarf (falls vorhanden)
+- Priorität nur dann, wenn sie aus dem fachlichen Risiko ableitbar ist; andernfalls „nicht bewertet“.
+
+5. Nicht ableitbare Testfälle und offene Fragen
+- Benenne die fehlende Information konkret.
+- Formuliere eine gezielte Frage an den Anforderungsgeber.
+- Erzeuge aus offenen Fragen keine erfundenen Testfälle.
+
+6. QS-Abschlusseinschätzung
+- Sind die Testfälle fachlich nachvollziehbar und durch den Text belegt?
+- Welche Fälle sind unmittelbar ausführbar?
+- Welche benötigen Klärung?
+- Welche Testabdeckung bleibt aufgrund fehlender Informationen offen?
+- Welche Punkte sind zwingende fachliche Klärungen, welche nur technische/UI-Klärungen und welche optionale QS-Erweiterungen?
+- Trenne ausdrücklich fachliche Ableitbarkeit von praktischer Ausführbarkeit.
+
+Prüfe abschließend die Konsistenz: IDs, Kategorien, Zählungen, Quellenverweise und Ausführungsstatus müssen übereinstimmen.` : `Role:
+You are an experienced Quality Engineer and Test Analyst with strong knowledge of requirements engineering, test design and software testing.
+
+Task:
+Derive structured test cases from the following business requirement and acceptance criteria. Work only from the supplied text. Do not invent business rules, preconditions, test data, process steps or expected results.
+
+Requirement:
+${requirement}
+
+Objective:${requirement}
+
+Objective:
+
+Shared QAIORA quality assessment rules (apply across all modules):
+- Support every business finding with a specific text reference, or explicitly state that the information is not provided. Separate evidence-based findings, assumptions and open questions.
+- Assign exactly one primary category to each finding: “information gap”, “business defect/contradiction” (only with specific textual evidence), or “improvement opportunity”. An improvement opportunity is not automatically a business defect or a missing business rule.
+- Classify clarification needs as “business clarification”, “test data/test preparation”, “technical execution/observability”, or “optional QA extension”. Technical and organizational prerequisites are not business requirement gaps.
+- Consistently distinguish three maturity levels: (1) test idea identifiable, (2) business test scenario fully specifiable, and (3) test case practically executable. Do not label an identifiable test idea “not derivable” merely because business details are missing.
+- “Not mentioned in the requirement” means “unknown/not evidenced”, not “unavailable”. Rate practical executability as available or unavailable only when supported by concrete information; otherwise use “unknown/not assessable”.
+- Optional QA extensions are not findings or mandatory clarifications unless they are explicitly within the requirement scope. Keep finding and scenario counts consistent and avoid double counting.
+- Business criticality, impact on testability and practical executability are different assessment dimensions and must not be conflated.
+Create traceable test cases in exactly these three categories:
+1. Positive test cases
+2. Negative test cases
+3. Boundary and special cases
+Assign a case to a category only when supported by the requirement. Do not create artificial boundary tests when no limits or value ranges are specified.
+
+Mandatory rules:
+- Every test case must reference at least one specific acceptance criterion or statement in the requirement.
+- Strictly distinguish evidenced information, necessary assumptions and open questions.
+- Missing information is not automatically a business defect. Mark it as clarification needed.
+- Do not invent concrete test data. Use descriptive placeholders when values are missing and state what must be clarified.
+- Do not invent expected results. If an outcome is not supported by the text, mark it as open and do not present the case as fully executable.
+- Strictly distinguish whether a scenario can be derived from the requirement and whether it is actually executable. A derivable scenario may have status B when execution details are missing.
+- Assign status A only when preconditions, test data or data characteristics, concrete steps and expected result are all supported by the text. A descriptive placeholder alone does not make a test case executable.
+- Assign status B only when a concrete scenario is supported by the text and the exact missing execution information can be named.
+- Assign status C when no concrete scenario can be derived. Do not create an artificial test case; list the point under open questions instead.
+- Explicitly mark any step that cannot be specified due to missing information as “clarification required”; do not present it as an established system process.
+- Use unique test case IDs (TC-001, TC-002 …) sequentially across all three categories, without gaps or duplicates.
+- Avoid redundant test cases. Explain when cases cover different risks or criteria.
+- Do not create test cases merely to populate all categories. A category may explicitly state “No test cases derivable”.
+- Cover positive, negative, and boundary/special cases only to the extent justified by the requirement.
+- Use concrete, atomic test steps. Separate preconditions, test data, action and expected result.
+- A test step must describe a concrete, observable action or state change. An intention such as “The user wants to change their email address” is not a test step.
+- Do not repeat preconditions, acceptance criteria or expected results as numbered test steps.
+- Distinguish a business-level test action from its concrete technical or UI interaction path. An abstract action such as “perform a login attempt with incorrect credentials” is allowed when the requirement explicitly refers to failed login attempts. Do not invent clicks, screens, URLs, buttons or technical calls.
+- Write business-level actions supported by the requirement as numbered, abstract test steps. Example: “Perform three consecutive failed login attempts.” Do not add unsupported UI or system details.
+- If only the concrete interaction path is missing, the business-level test step may still be stated. List the missing path separately as “Technical/UI clarification”; do not treat the whole scenario as not derivable for that reason alone.
+- If no business-level action can be derived, do not invent a substitute. State: “No concrete business-level test action can be derived from the supplied text.”
+- Number only business-level test actions supported by the text. A clarification question, technical interaction path or verification idea must never be presented as an executed step.
+- List missing technical/UI actions separately, e.g. “Through which interface or UI is the login attempt initiated?” Avoid redundant questions about the same interaction path.
+- Do not use generic pseudo-steps such as “trigger validation”, “perform the check”, “start the confirmation process” or “check system behavior” when the business action itself is not described.
+- Clearly separate (1) evidenced business-level test actions, (2) technical/UI execution details still to be clarified, and (3) business rules or expected results.
+- A missing technical interaction path must not lower the business derivability assessment. It may, however, limit practical execution in a specific test environment.
+- In the expected result, state only the behavior guaranteed by the requirement. Keep technical or UI verification methods separate unless they are specified.
+- By default, set priority to “not assessed” unless the requirement provides a specific priority, criticality or substantiated risk information. The general importance of a core feature alone is not sufficient to assign “High”.
+- Perform a mandatory quality review of every test case before output:
+  1. Is every numbered step a business-level test action supported by the text, rather than an intention, precondition, rule or expected result?
+  2. Are abstract business actions used without inventing unsupported UI or technical details?
+  3. Are missing technical/UI execution details separated from the business scenario?
+  4. Are business derivability and practical executability assessed independently?
+  5. Are mandatory business clarifications separated from optional QA extensions?
+  6. Are priorities evidenced or correctly marked “not assessed”?
+  7. Do test case IDs, categories, sources, statuses and counts match?
+- Remove or correct every test step that fails this review before producing the output.
+
+Assess two separate dimensions for each test case:
+1. Business derivability:
+   - “Fully derivable”: The scenario, relevant condition and expected business behavior are supported by the text.
+   - “Partially derivable”: Part of the scenario is supported, but a necessary business rule or expected result is missing.
+   - “Not derivable”: The text does not support a concrete business-level scenario.
+2. Practical executability:
+   A. “Executable with the information provided”: The business action, necessary preconditions/test data and expected result are sufficiently specified. An unspecified UI path does not prevent status A when the business action is clear and can be executed abstractly.
+   B. “Executable after clarification”: The business scenario is derivable, but a necessary business precondition, data characteristic, test access, or execution/observation path for the chosen test environment is missing. State exactly what is missing and distinguish business clarification from technical/UI clarification.
+   C. “Not yet derivable”: No concrete business-level test scenario can be derived. Do not invent a substitute.
+Important: A test case may be fully derivable from a business perspective while still needing practical execution details. Do not mark it as partially business-derivable merely because UI details are missing.
+
+Also classify open points:
+- “Mandatory business clarification”: Without this information, a business expectation or required test state is ambiguous.
+- “Technical/UI clarification”: Only the concrete execution or observation path is missing, not the business rule.
+- “Optional QA extension”: An additional robustness, operational or edge-case test not required by the current scope. Do not present it as a requirement defect, blocker or mandatory clarification.
+
+Output format:
+1. Short overview
+- Number of test cases per category
+- Number per execution status A, B and C
+- Number per business derivability (fully, partially, not derivable)
+- Count only test cases actually described; do not count open questions without a test case ID.
+- Most important limitations and open points
+
+2. Positive test cases
+3. Negative test cases
+4. Boundary and special cases
+
+For each test case provide:
+- Test case ID
+- Title
+- Test objective
+- Source (acceptance criterion / text passage)
+- Preconditions
+- Test data
+- Test steps (numbered)
+- Expected result
+- Execution status
+- Clarification needed (if any)
+- Priority only if it can be derived from the business risk; otherwise “not assessed”.
+
+5. Not-yet-derivable test cases and open questions
+- State the missing information specifically.
+- Formulate a targeted question for the requirement owner.
+- Do not turn open questions into invented test cases.
+
+6. QA conclusion
+- Are the test cases traceable to the supplied text?
+- Which cases can be executed immediately?
+- Which require clarification?
+- Which coverage remains open due to missing information?
+- Which points are mandatory business clarifications, technical/UI clarifications, or optional QA extensions?
+- Explicitly distinguish business derivability from practical executability.
+
+Finally, check consistency: IDs, categories, counts, source references and execution statuses must match.`;
+      testCaseOutput.hidden = false;
+      testCaseCopyStatus.textContent = "";
+      testCaseOutput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    document.getElementById("clearTestCases").addEventListener("click", () => {
+      testCaseText.value = "";
+      generatedTestCasePrompt.value = "";
+      testCaseOutput.hidden = true;
+      testCaseCopyStatus.textContent = "";
+      testCaseText.focus();
+    });
+
+    document.getElementById("copyTestCasePrompt").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(generatedTestCasePrompt.value);
+        testCaseCopyStatus.textContent = "Prompt copied to clipboard.";
+      } catch (error) {
+        generatedTestCasePrompt.focus();
+        generatedTestCasePrompt.select();
+        testCaseCopyStatus.textContent = "Select and copy the prompt manually.";
+      }
+    });
+
+    const module3Translations = {
+      en: {intro:"Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.",reqLabel:"Requirement and acceptance criteria",reqPlaceholder:"Paste the requirement and its acceptance criteria here.",promptLang:"Prompt language",create:"Create test case prompt",clear:"Clear",outputLabel:"Your QAIORA test case prompt",copy:"Copy prompt",open:"Open ChatGPT ↗",note:"Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page."},
+      de: {intro:"Überführe Anforderungen und Akzeptanzkriterien in strukturierte Testfälle. QAIORA erstellt einen Prompt für deine eigene ChatGPT-Konversation; auf dieser Seite findet keine KI-Analyse statt.",reqLabel:"Anforderung und Akzeptanzkriterien",reqPlaceholder:"Füge hier die Anforderung und ihre Akzeptanzkriterien ein.",promptLang:"Sprache des Prompts",create:"Testfall-Prompt erstellen",clear:"Leeren",outputLabel:"Dein QAIORA-Testfall-Prompt",copy:"Prompt kopieren",open:"ChatGPT öffnen ↗",note:"Deine Anforderung wird lokal in diesem Browser zur Erstellung des Prompts verarbeitet. Diese Seite sendet nichts an QAIORA oder einen KI-Dienst."},
+      fr: {intro:"Transformez les exigences et critères d’acceptation en cas de test structurés. QAIORA crée un prompt pour votre propre conversation ChatGPT ; aucune analyse IA n’est effectuée sur cette page.",reqLabel:"Exigence et critères d’acceptation",reqPlaceholder:"Collez ici l’exigence et ses critères d’acceptation.",promptLang:"Langue du prompt",create:"Créer le prompt de cas de test",clear:"Effacer",outputLabel:"Votre prompt QAIORA de cas de test",copy:"Copier le prompt",open:"Ouvrir ChatGPT ↗",note:"Votre exigence est traitée localement dans ce navigateur pour créer le prompt. Cette page n’envoie rien à QAIORA ni à un service d’IA."},
+      ar: {intro:"حوّل المتطلبات ومعايير القبول إلى حالات اختبار منظمة. تنشئ QAIORA موجهاً لمحادثتك الخاصة في ChatGPT؛ ولا يتم إجراء أي تحليل بالذكاء الاصطناعي على هذه الصفحة.",reqLabel:"المتطلب ومعايير القبول",reqPlaceholder:"أدخل المتطلب ومعايير القبول هنا.",promptLang:"لغة الموجّه",create:"إنشاء موجّه حالات الاختبار",clear:"مسح",outputLabel:"موجّه QAIORA لحالات الاختبار",copy:"نسخ الموجّه",open:"فتح ChatGPT ↗",note:"تتم معالجة المتطلب محلياً في هذا المتصفح لإنشاء الموجّه. لا ترسل هذه الصفحة أي شيء إلى QAIORA أو إلى خدمة ذكاء اصطناعي."}
+    };
+    function setModule3Language(lang) {
+      const dict = module3Translations[lang] || module3Translations.en;
+      document.querySelectorAll("[data-m3]").forEach(el => { el.textContent = dict[el.dataset.m3]; });
+      document.querySelectorAll("[data-m3-placeholder]").forEach(el => { el.placeholder = dict[el.dataset.m3Placeholder]; });
+    }
 
     const translations = {
       en: {
@@ -1461,6 +1835,7 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
             ? "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة لضمان جودة أكثر ذكاءً."
             : "QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.";
       document.getElementById("languageSelect").value = lang;
+      setModule3Language(lang);
 
       // Keep input examples and hints in sync with the selected site language.
       const placeholders = {
