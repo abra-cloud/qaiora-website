@@ -252,6 +252,7 @@
         <div class="nav-links" id="navLinks">
           <a href="#analyzer">Requirement Analyzer</a>
           <a href="#testability">Testability Checker</a>
+          <a href="#testcase-generator">Test Case Generator</a>
           <a href="#platform">Platform</a>
           <a href="#capabilities">Capabilities</a>
           <a href="#approach">Our approach</a>
@@ -411,6 +412,43 @@
             </div>
             <p class="analyzer-note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
             <div class="analyzer-status" id="testabilityCopyStatus" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="analyzer-section" id="testcase-generator">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">QAIORA workspace · third module · V1</div>
+          <h2>Test Case <span class="gradient-text">Generator.</span></h2>
+          <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
+        </div>
+        <div class="analyzer-panel">
+          <form class="analyzer-form" id="testCaseForm">
+            <div>
+              <label for="testCaseText" data-m3="reqLabel">Requirement and acceptance criteria</label>
+              <textarea id="testCaseText" required minlength="20" placeholder="Paste the requirement and its acceptance criteria here." data-m3-placeholder="reqPlaceholder"></textarea>
+            </div>
+            <div>
+              <label for="testCaseLanguage" data-m3="promptLang">Prompt language</label>
+              <select id="testCaseLanguage"><option value="en">English</option><option value="de">Deutsch</option></select>
+            </div>
+            <div class="analyzer-actions">
+              <button class="button" type="submit" data-m3="create">Create test case prompt <span aria-hidden="true">→</span></button>
+              <button class="button secondary" type="button" id="clearTestCases" data-m3="clear">Clear</button>
+            </div>
+          </form>
+          <div class="analyzer-output" id="testCaseOutput" hidden>
+            <label for="generatedTestCasePrompt" data-m3="outputLabel">Your QAIORA test case prompt</label>
+            <textarea id="generatedTestCasePrompt" readonly></textarea>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button class="button" type="button" id="copyTestCasePrompt" data-m3="copy">Copy prompt</button>
+              <a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" data-m3="open">Open ChatGPT ↗</a>
+            </div>
+            <p class="analyzer-note" data-m3="note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
+            <div class="analyzer-status" id="testCaseCopyStatus" role="status" aria-live="polite"></div>
           </div>
         </div>
       </div>
@@ -967,6 +1005,189 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
       requirementText.focus();
     });
 
+
+    // QAIORA Test Case Generator V1: local prompt generation only; no API call.
+    const testCaseForm = document.getElementById("testCaseForm");
+    const testCaseText = document.getElementById("testCaseText");
+    const testCaseLanguage = document.getElementById("testCaseLanguage");
+    const testCaseOutput = document.getElementById("testCaseOutput");
+    const generatedTestCasePrompt = document.getElementById("generatedTestCasePrompt");
+    const testCaseCopyStatus = document.getElementById("testCaseCopyStatus");
+
+    testCaseForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const requirement = testCaseText.value.trim();
+      if (requirement.length < 20) { testCaseText.focus(); return; }
+      const de = testCaseLanguage.value === "de";
+      generatedTestCasePrompt.value = de ? `Rolle:
+Du bist ein erfahrener Quality Engineer und Test Analyst mit fundierten Kenntnissen in Requirements Engineering, Testdesign und Softwaretest.
+
+Aufgabe:
+Leite aus der nachfolgenden fachlichen Anforderung und den Akzeptanzkriterien strukturierte Testfälle ab. Arbeite ausschließlich auf Grundlage des bereitgestellten Textes. Erfinde keine fachlichen Regeln, Vorbedingungen, Testdaten, Prozessschritte oder erwarteten Ergebnisse.
+
+Anforderung:
+${requirement}
+
+Ziel:
+Erstelle nachvollziehbare Testfälle in genau diesen drei Kategorien:
+1. Positive Testfälle
+2. Negative Testfälle
+3. Grenzwert- und Sonderfälle
+Ordne einen Testfall nur dann einer Kategorie zu, wenn dies fachlich durch den Text begründet ist. Erzeuge keine künstlichen Grenzwerttests, wenn keine Grenzwerte oder Wertebereiche genannt sind.
+
+Verbindliche Regeln:
+- Jeder Testfall muss auf mindestens ein konkretes Akzeptanzkriterium oder eine konkrete Aussage der Anforderung verweisen.
+- Unterscheide strikt zwischen belegbaren Angaben, notwendigen Annahmen und offenen Fragen.
+- Fehlende Informationen sind nicht automatisch fachliche Fehler. Kennzeichne sie als Klärungsbedarf.
+- Erfinde keine konkreten Testdaten. Verwende bei fehlenden Werten beschreibende Platzhalter und benenne die benötigte Klärung.
+- Erfinde keine erwarteten Ergebnisse. Wenn das Ergebnis nicht aus dem Text hervorgeht, kennzeichne es als offen und leite keinen vollständig ausführbaren Testfall daraus ab.
+- Verwende eindeutige Testfall-IDs (TC-001, TC-002 …) ohne Lücken und ohne Duplikate.
+- Vermeide redundante Testfälle. Begründe, wenn zwei Fälle unterschiedliche Risiken oder Kriterien abdecken.
+- Decke positive, negative sowie Grenzwert-/Sonderfälle nur soweit ab, wie es der Anforderungstext erlaubt.
+- Schreibe konkrete, atomare Testschritte. Trenne Vorbedingungen, Testdaten, Aktion und erwartetes Ergebnis.
+
+Ausführungsstatus je Testfall:
+A. „Mit den vorhandenen Informationen ausführbar“: Vorbedingungen, Testdaten (oder eindeutig beschriebene Datenmerkmale), Schritte und erwartetes Ergebnis sind ausreichend spezifiziert.
+B. „Nach fachlicher Klärung ausführbar“: Ein sinnvolles Szenario ist erkennbar, aber mindestens eine konkrete Information fehlt. Nenne genau, was geklärt werden muss.
+C. „Noch nicht ableitbar“: Der Text bietet keine ausreichende Grundlage für einen konkreten Testfall. Erfinde keinen Ersatzfall.
+
+Ausgabeformat:
+1. Kurzüberblick
+- Anzahl der Testfälle je Kategorie
+- Anzahl je Ausführungsstatus
+- Wichtigste Einschränkungen und offene Punkte
+
+2. Positive Testfälle
+3. Negative Testfälle
+4. Grenzwert- und Sonderfälle
+
+Stelle jeden Testfall mit diesen Feldern dar:
+- Testfall-ID
+- Titel
+- Testziel
+- Quelle (Akzeptanzkriterium / Textstelle)
+- Vorbedingungen
+- Testdaten
+- Testschritte (nummeriert)
+- Erwartetes Ergebnis
+- Ausführungsstatus
+- Klärungsbedarf (falls vorhanden)
+- Priorität nur dann, wenn sie aus dem fachlichen Risiko ableitbar ist; andernfalls „nicht bewertet“.
+
+5. Nicht ableitbare Testfälle und offene Fragen
+- Benenne die fehlende Information konkret.
+- Formuliere eine gezielte Frage an den Anforderungsgeber.
+- Erzeuge aus offenen Fragen keine erfundenen Testfälle.
+
+6. QS-Abschlusseinschätzung
+- Sind die Testfälle fachlich nachvollziehbar und durch den Text belegt?
+- Welche Fälle sind unmittelbar ausführbar?
+- Welche benötigen Klärung?
+- Welche Testabdeckung bleibt aufgrund fehlender Informationen offen?
+
+Prüfe abschließend die Konsistenz: IDs, Kategorien, Zählungen, Quellenverweise und Ausführungsstatus müssen übereinstimmen.` : `Role:
+You are an experienced Quality Engineer and Test Analyst with strong knowledge of requirements engineering, test design and software testing.
+
+Task:
+Derive structured test cases from the following business requirement and acceptance criteria. Work only from the supplied text. Do not invent business rules, preconditions, test data, process steps or expected results.
+
+Requirement:
+${requirement}
+
+Objective:
+Create traceable test cases in exactly these three categories:
+1. Positive test cases
+2. Negative test cases
+3. Boundary and special cases
+Assign a case to a category only when supported by the requirement. Do not create artificial boundary tests when no limits or value ranges are specified.
+
+Mandatory rules:
+- Every test case must reference at least one specific acceptance criterion or statement in the requirement.
+- Strictly distinguish evidenced information, necessary assumptions and open questions.
+- Missing information is not automatically a business defect. Mark it as clarification needed.
+- Do not invent concrete test data. Use descriptive placeholders when values are missing and state what must be clarified.
+- Do not invent expected results. If an outcome is not supported by the text, mark it as open and do not present the case as fully executable.
+- Use unique test case IDs (TC-001, TC-002 …), without gaps or duplicates.
+- Avoid redundant test cases. Explain when cases cover different risks or criteria.
+- Cover positive, negative, and boundary/special cases only to the extent justified by the requirement.
+- Use concrete, atomic test steps. Separate preconditions, test data, action and expected result.
+
+Execution status for each test case:
+A. “Executable with the information provided”: Preconditions, test data (or clearly defined data characteristics), steps and expected result are sufficiently specified.
+B. “Executable after business clarification”: A meaningful scenario is identifiable, but specific information is missing. State exactly what must be clarified.
+C. “Not yet derivable”: The text does not provide a sufficient basis for a concrete test case. Do not invent a substitute.
+
+Output format:
+1. Short overview
+- Number of test cases per category
+- Number per execution status
+- Most important limitations and open points
+
+2. Positive test cases
+3. Negative test cases
+4. Boundary and special cases
+
+For each test case provide:
+- Test case ID
+- Title
+- Test objective
+- Source (acceptance criterion / text passage)
+- Preconditions
+- Test data
+- Test steps (numbered)
+- Expected result
+- Execution status
+- Clarification needed (if any)
+- Priority only if it can be derived from the business risk; otherwise “not assessed”.
+
+5. Not-yet-derivable test cases and open questions
+- State the missing information specifically.
+- Formulate a targeted question for the requirement owner.
+- Do not turn open questions into invented test cases.
+
+6. QA conclusion
+- Are the test cases traceable to the supplied text?
+- Which cases can be executed immediately?
+- Which require clarification?
+- Which coverage remains open due to missing information?
+
+Finally, check consistency: IDs, categories, counts, source references and execution statuses must match.`;
+      testCaseOutput.hidden = false;
+      testCaseCopyStatus.textContent = "";
+      testCaseOutput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    document.getElementById("clearTestCases").addEventListener("click", () => {
+      testCaseText.value = "";
+      generatedTestCasePrompt.value = "";
+      testCaseOutput.hidden = true;
+      testCaseCopyStatus.textContent = "";
+      testCaseText.focus();
+    });
+
+    document.getElementById("copyTestCasePrompt").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(generatedTestCasePrompt.value);
+        testCaseCopyStatus.textContent = "Prompt copied to clipboard.";
+      } catch (error) {
+        generatedTestCasePrompt.focus();
+        generatedTestCasePrompt.select();
+        testCaseCopyStatus.textContent = "Select and copy the prompt manually.";
+      }
+    });
+
+    const module3Translations = {
+      en: {intro:"Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.",reqLabel:"Requirement and acceptance criteria",reqPlaceholder:"Paste the requirement and its acceptance criteria here.",promptLang:"Prompt language",create:"Create test case prompt",clear:"Clear",outputLabel:"Your QAIORA test case prompt",copy:"Copy prompt",open:"Open ChatGPT ↗",note:"Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page."},
+      de: {intro:"Überführe Anforderungen und Akzeptanzkriterien in strukturierte Testfälle. QAIORA erstellt einen Prompt für deine eigene ChatGPT-Konversation; auf dieser Seite findet keine KI-Analyse statt.",reqLabel:"Anforderung und Akzeptanzkriterien",reqPlaceholder:"Füge hier die Anforderung und ihre Akzeptanzkriterien ein.",promptLang:"Sprache des Prompts",create:"Testfall-Prompt erstellen",clear:"Leeren",outputLabel:"Dein QAIORA-Testfall-Prompt",copy:"Prompt kopieren",open:"ChatGPT öffnen ↗",note:"Deine Anforderung wird lokal in diesem Browser zur Erstellung des Prompts verarbeitet. Diese Seite sendet nichts an QAIORA oder einen KI-Dienst."},
+      fr: {intro:"Transformez les exigences et critères d’acceptation en cas de test structurés. QAIORA crée un prompt pour votre propre conversation ChatGPT ; aucune analyse IA n’est effectuée sur cette page.",reqLabel:"Exigence et critères d’acceptation",reqPlaceholder:"Collez ici l’exigence et ses critères d’acceptation.",promptLang:"Langue du prompt",create:"Créer le prompt de cas de test",clear:"Effacer",outputLabel:"Votre prompt QAIORA de cas de test",copy:"Copier le prompt",open:"Ouvrir ChatGPT ↗",note:"Votre exigence est traitée localement dans ce navigateur pour créer le prompt. Cette page n’envoie rien à QAIORA ni à un service d’IA."},
+      ar: {intro:"حوّل المتطلبات ومعايير القبول إلى حالات اختبار منظمة. تنشئ QAIORA موجهاً لمحادثتك الخاصة في ChatGPT؛ ولا يتم إجراء أي تحليل بالذكاء الاصطناعي على هذه الصفحة.",reqLabel:"المتطلب ومعايير القبول",reqPlaceholder:"أدخل المتطلب ومعايير القبول هنا.",promptLang:"لغة الموجّه",create:"إنشاء موجّه حالات الاختبار",clear:"مسح",outputLabel:"موجّه QAIORA لحالات الاختبار",copy:"نسخ الموجّه",open:"فتح ChatGPT ↗",note:"تتم معالجة المتطلب محلياً في هذا المتصفح لإنشاء الموجّه. لا ترسل هذه الصفحة أي شيء إلى QAIORA أو إلى خدمة ذكاء اصطناعي."}
+    };
+    function setModule3Language(lang) {
+      const dict = module3Translations[lang] || module3Translations.en;
+      document.querySelectorAll("[data-m3]").forEach(el => { el.textContent = dict[el.dataset.m3]; });
+      document.querySelectorAll("[data-m3-placeholder]").forEach(el => { el.placeholder = dict[el.dataset.m3Placeholder]; });
+    }
+
     const translations = {
       en: {
         "Main navigation": "Main navigation",
@@ -1413,6 +1634,7 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
             ? "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة لضمان جودة أكثر ذكاءً."
             : "QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.";
       document.getElementById("languageSelect").value = lang;
+      setModule3Language(lang);
 
       // Keep input examples and hints in sync with the selected site language.
       const placeholders = {
