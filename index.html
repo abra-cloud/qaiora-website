@@ -1395,6 +1395,29 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
             ? "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة لضمان جودة أكثر ذكاءً."
             : "QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.";
       document.getElementById("languageSelect").value = lang;
+
+      // Keep input examples and hints in sync with the selected site language.
+      const placeholders = {
+        en: {
+          requirement: "Example: As a user, I want to reset my password so that I can regain access to my account if I forget it.",
+          testability: "Paste the requirement and its acceptance criteria here. Include relevant business rules if available."
+        },
+        de: {
+          requirement: "Beispiel: Als Benutzer möchte ich mein Passwort zurücksetzen können, damit ich wieder Zugriff auf mein Konto erhalte, wenn ich es vergessen habe.",
+          testability: "Füge hier die Anforderung und ihre Akzeptanzkriterien ein. Ergänze bei Bedarf relevante Geschäftsregeln."
+        },
+        fr: {
+          requirement: "Exemple : En tant qu’utilisateur, je souhaite réinitialiser mon mot de passe afin de retrouver l’accès à mon compte si je l’oublie.",
+          testability: "Collez ici l’exigence et ses critères d’acceptation. Ajoutez les règles métier pertinentes, si elles sont disponibles."
+        },
+        ar: {
+          requirement: "مثال: بصفتي مستخدماً، أريد إعادة تعيين كلمة المرور حتى أتمكن من استعادة الوصول إلى حسابي إذا نسيتها.",
+          testability: "أدخل المتطلب ومعايير القبول هنا. أضف قواعد العمل ذات الصلة إذا كانت متاحة."
+        }
+      };
+      document.getElementById("requirementText").placeholder = placeholders[lang].requirement;
+      document.getElementById("testabilityText").placeholder = placeholders[lang].testability;
+
       try { localStorage.setItem("qaiora-language", lang); } catch (e) {}
     }
 
