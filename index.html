@@ -421,7 +421,7 @@
     <section class="analyzer-section" id="testcase-generator">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · third module · V1</div>
+          <div class="kicker">QAIORA workspace · third module · V1.1</div>
           <h2>Test Case <span class="gradient-text">Generator.</span></h2>
           <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -1006,7 +1006,7 @@ Be structured, precise, traceable and avoid unnecessary repetition. Consistently
     });
 
 
-    // QAIORA Test Case Generator V1: local prompt generation only; no API call.
+    // QAIORA Test Case Generator V1.1: local prompt generation only; no API call.
     const testCaseForm = document.getElementById("testCaseForm");
     const testCaseText = document.getElementById("testCaseText");
     const testCaseLanguage = document.getElementById("testCaseLanguage");
@@ -1041,8 +1041,14 @@ Verbindliche Regeln:
 - Fehlende Informationen sind nicht automatisch fachliche Fehler. Kennzeichne sie als Klärungsbedarf.
 - Erfinde keine konkreten Testdaten. Verwende bei fehlenden Werten beschreibende Platzhalter und benenne die benötigte Klärung.
 - Erfinde keine erwarteten Ergebnisse. Wenn das Ergebnis nicht aus dem Text hervorgeht, kennzeichne es als offen und leite keinen vollständig ausführbaren Testfall daraus ab.
-- Verwende eindeutige Testfall-IDs (TC-001, TC-002 …) ohne Lücken und ohne Duplikate.
+- Unterscheide strikt zwischen fachlicher Ableitbarkeit eines Szenarios und seiner tatsächlichen Ausführbarkeit. Ein fachlich ableitbares Szenario darf den Status B erhalten, auch wenn einzelne Ausführungsdetails fehlen.
+- Weise Status A nur zu, wenn Vorbedingungen, Testdaten oder Datenmerkmale, konkrete Schritte und erwartetes Ergebnis vollständig aus dem Text hervorgehen. Ein beschreibender Platzhalter allein macht einen Testfall nicht ausführbar.
+- Weise Status B nur zu, wenn ein konkretes, durch den Text belegtes Szenario existiert und genau benannt werden kann, welche Information zur Ausführung fehlt.
+- Weise Status C zu, wenn kein konkretes Szenario aus dem Text abgeleitet werden kann. Erzeuge dafür keinen künstlichen Testfall und führe den Punkt stattdessen unter den offenen Fragen auf.
+- Kennzeichne jeden Schritt, der mangels Information nicht konkret beschrieben werden kann, ausdrücklich als „Klärung erforderlich“; formuliere ihn nicht als bereits feststehenden Systemprozess.
+- Verwende eindeutige Testfall-IDs (TC-001, TC-002 …) fortlaufend über alle drei Kategorien hinweg, ohne Lücken und ohne Duplikate.
 - Vermeide redundante Testfälle. Begründe, wenn zwei Fälle unterschiedliche Risiken oder Kriterien abdecken.
+- Erzeuge keine Testfälle nur, um alle Kategorien zu füllen. Eine Kategorie darf ausdrücklich „Keine Testfälle ableitbar“ enthalten.
 - Decke positive, negative sowie Grenzwert-/Sonderfälle nur soweit ab, wie es der Anforderungstext erlaubt.
 - Schreibe konkrete, atomare Testschritte. Trenne Vorbedingungen, Testdaten, Aktion und erwartetes Ergebnis.
 
@@ -1054,7 +1060,8 @@ C. „Noch nicht ableitbar“: Der Text bietet keine ausreichende Grundlage für
 Ausgabeformat:
 1. Kurzüberblick
 - Anzahl der Testfälle je Kategorie
-- Anzahl je Ausführungsstatus
+- Anzahl je Ausführungsstatus A, B und C
+- Zähle ausschließlich tatsächlich beschriebene Testfälle; offene Fragen ohne Testfall-ID nicht mitzählen.
 - Wichtigste Einschränkungen und offene Punkte
 
 2. Positive Testfälle
@@ -1084,6 +1091,7 @@ Stelle jeden Testfall mit diesen Feldern dar:
 - Welche Fälle sind unmittelbar ausführbar?
 - Welche benötigen Klärung?
 - Welche Testabdeckung bleibt aufgrund fehlender Informationen offen?
+- Trenne ausdrücklich zwischen unmittelbar ausführbaren Testfällen, fachlich ableitbaren aber klärungsbedürftigen Szenarien und nicht ableitbaren Fällen.
 
 Prüfe abschließend die Konsistenz: IDs, Kategorien, Zählungen, Quellenverweise und Ausführungsstatus müssen übereinstimmen.` : `Role:
 You are an experienced Quality Engineer and Test Analyst with strong knowledge of requirements engineering, test design and software testing.
@@ -1107,8 +1115,14 @@ Mandatory rules:
 - Missing information is not automatically a business defect. Mark it as clarification needed.
 - Do not invent concrete test data. Use descriptive placeholders when values are missing and state what must be clarified.
 - Do not invent expected results. If an outcome is not supported by the text, mark it as open and do not present the case as fully executable.
-- Use unique test case IDs (TC-001, TC-002 …), without gaps or duplicates.
+- Strictly distinguish whether a scenario can be derived from the requirement and whether it is actually executable. A derivable scenario may have status B when execution details are missing.
+- Assign status A only when preconditions, test data or data characteristics, concrete steps and expected result are all supported by the text. A descriptive placeholder alone does not make a test case executable.
+- Assign status B only when a concrete scenario is supported by the text and the exact missing execution information can be named.
+- Assign status C when no concrete scenario can be derived. Do not create an artificial test case; list the point under open questions instead.
+- Explicitly mark any step that cannot be specified due to missing information as “clarification required”; do not present it as an established system process.
+- Use unique test case IDs (TC-001, TC-002 …) sequentially across all three categories, without gaps or duplicates.
 - Avoid redundant test cases. Explain when cases cover different risks or criteria.
+- Do not create test cases merely to populate all categories. A category may explicitly state “No test cases derivable”.
 - Cover positive, negative, and boundary/special cases only to the extent justified by the requirement.
 - Use concrete, atomic test steps. Separate preconditions, test data, action and expected result.
 
@@ -1120,7 +1134,8 @@ C. “Not yet derivable”: The text does not provide a sufficient basis for a c
 Output format:
 1. Short overview
 - Number of test cases per category
-- Number per execution status
+- Number per execution status A, B and C
+- Count only test cases actually described; do not count open questions without a test case ID.
 - Most important limitations and open points
 
 2. Positive test cases
@@ -1150,6 +1165,7 @@ For each test case provide:
 - Which cases can be executed immediately?
 - Which require clarification?
 - Which coverage remains open due to missing information?
+- Explicitly distinguish immediately executable test cases, derivable but clarification-dependent scenarios, and cases that cannot yet be derived.
 
 Finally, check consistency: IDs, categories, counts, source references and execution statuses must match.`;
       testCaseOutput.hidden = false;
