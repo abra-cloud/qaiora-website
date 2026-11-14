@@ -380,7 +380,7 @@
     <section class="analyzer-section" id="testability">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · second module</div>
+          <div class="kicker">QAIORA workspace · second module · V2</div>
           <h2>Testability <span class="gradient-text">Checker.</span></h2>
           <p class="analyzer-intro">Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -556,9 +556,12 @@ Befundregeln:
 - Ordne jeden Befund einer Kategorie zu: Informationslücke, fachlicher Widerspruch (nur mit konkretem Textbeleg) oder Optimierungspotenzial.
 - Bewerte die Auswirkung auf die Testbarkeit: blockierend, wesentlich, begrenzt oder gering.
 - Nenne für jeden Befund den Textbeleg, die Begründung und die konkrete Folge für Testdesign oder Testausführung.
-- Fasse überlappende Befunde zusammen.
+- Fasse überlappende Befunde zusammen und vergebe keine mehrfachen IDs für denselben Sachverhalt.
 - Erfinde keine Anforderungen, Testdaten oder erwarteten Ergebnisse.
 - Unterscheide ausdrücklich zwischen einer Testidee, einem ableitbaren Testszenario und einem vollständig ausführbaren Testfall.
+- Zähle jeden eindeutigen Befund genau einmal. Die Summe der Befunde je Auswirkungskategorie muss der Anzahl der tatsächlich aufgeführten Befunde entsprechen.
+- Weise eine Auswirkung nur dann als „blockierend“ aus, wenn dadurch ein relevantes Testszenario oder eine verlässliche Abnahme tatsächlich verhindert wird. Fehlende Detailinformationen sind nicht automatisch blockierend.
+- Leite die Gesamtbewertung aus den tatsächlich ableitbaren Testszenarien und den konkreten Einschränkungen ab. Begründe, welche Tests bereits möglich sind und welche noch nicht.
 
 Erwartetes Ausgabeformat:
 
@@ -569,11 +572,11 @@ A. Testability Summary
 - Wichtigste Einschränkung
 
 B. Testbarkeitsmatrix
-Bewerte jede der fünf Dimensionen mit:
-- Gegeben
-- Teilweise gegeben
-- Nicht gegeben
-Begründe jede Bewertung anhand der Anforderung.
+Bewerte jede der fünf Dimensionen mit „Gegeben“, „Teilweise gegeben“ oder „Nicht gegeben“, soweit der Anforderungstext eine belastbare Bewertung zulässt.
+- Unterscheide strikt zwischen „nicht spezifiziert“ und „nicht testbar“: Fehlt eine Information im Text, kennzeichne sie zunächst als Informationslücke. Leite daraus nicht automatisch ab, dass die gesamte Dimension oder Anforderung nicht testbar ist.
+- Kann eine Dimension mangels Informationen nicht zuverlässig bewertet werden, kennzeichne sie als „nicht ausreichend spezifiziert / nicht abschließend bewertbar“ und erläutere, welche Information fehlt. Erzwinge keine negative Bewertung.
+- Bewerte die Testbarkeit auf Ebene der konkreten Szenarien. Eine fehlende Randbedingung darf bereits klar beschriebene Tests nicht pauschal entwerten.
+- Begründe jede Bewertung anhand der Anforderung.
 
 C. Erkannte Testbarkeitslücken
 Für jeden Befund:
@@ -646,9 +649,12 @@ Finding rules:
 - Assign each finding a category: information gap, business contradiction (only with specific textual evidence), or improvement opportunity.
 - Rate its impact on testability: blocking, significant, limited or minor.
 - For each finding, provide textual evidence, rationale and its concrete consequence for test design or execution.
-- Merge overlapping findings.
+- Merge overlapping findings and do not assign multiple IDs to the same issue.
 - Do not invent requirements, test data or expected results.
 - Explicitly distinguish a test idea, a derivable test scenario and a fully executable test case.
+- Count each distinct finding exactly once. The sum of findings by impact category must equal the number of findings actually listed.
+- Use “blocking” only when the issue genuinely prevents a relevant test scenario or reliable acceptance. Missing detail is not automatically blocking.
+- Derive the overall rating from the test scenarios that can actually be specified and their concrete limitations. Explain which tests are already possible and which are not.
 
 Expected output:
 
@@ -659,11 +665,11 @@ A. Testability Summary
 - Most important limitation
 
 B. Testability Matrix
-Rate each of the five dimensions as:
-- Given
-- Partially given
-- Not given
-Justify each rating using the requirement.
+Rate each of the five dimensions as Given, Partially given or Not given where the requirement text supports a reliable assessment.
+- Strictly distinguish “not specified” from “not testable”: if information is absent from the text, initially classify it as an information gap. Do not automatically conclude that the entire dimension or requirement is not testable.
+- If a dimension cannot be assessed reliably because information is missing, label it “insufficiently specified / cannot be conclusively assessed” and explain what information is missing. Do not force a negative rating.
+- Assess testability at the level of individual scenarios. A missing boundary condition must not automatically invalidate tests that are already clearly derivable.
+- Justify every assessment using the requirement.
 
 C. Identified Testability Gaps
 For each finding:
