@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
   <title>QAIORA — The Intelligence Behind Quality</title>
-  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V4, Testability Checker V2.4, Test Case Generator V1.6 -->
+  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V4.1, Testability Checker V2.4, Test Case Generator V1.6 -->
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {
@@ -342,7 +342,7 @@
     <section class="analyzer-section" id="analyzer">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · first module · V4</div>
+          <div class="kicker">QAIORA workspace · first module · V4.1</div>
           <h2>Requirement <span class="gradient-text">Analyzer.</span></h2>
           <p class="analyzer-intro">Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.</p>
         </div>
@@ -920,6 +920,13 @@ Ordne jeden abgeleiteten Testfall einem Status zu:
 
 Weise zusätzlich die fachliche Ableitbarkeit getrennt aus: vollständig ableitbar, teilweise ableitbar oder nicht ableitbar. Unbekannte Testressourcen gelten als unbekannt und nicht automatisch als fehlend. „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“.
 
+6. Konsistenz bei offenen Fragen und abhängigen Testfällen
+- Zähle jede eigenständige offene fachliche Frage genau einmal. Eine Frage, die aus einem Finding entsteht und in Abschnitt C erneut aufgeführt wird, wird nicht erneut gezählt.
+- Die Anzahl in der Management Summary muss exakt der Anzahl der eindeutigen fachlichen Fragen in Abschnitt C entsprechen. Scope-Fragen werden separat gezählt.
+- Optionale Präzisierungen und Empfehlungen zählen nicht als offene fachliche Fragen, solange sie keine notwendige fachliche Entscheidung für Umsetzung oder Abnahme darstellen.
+- Wenn mehrere Testfälle von derselben fachlichen Klärung abhängen, kennzeichne diese gemeinsame Abhängigkeit ausdrücklich (z. B. „abhängig von F-001“). Zähle die zugrunde liegende fachliche Unklarheit nicht mehrfach.
+- Stelle Statusverteilungen in einer kompakten Tabelle mit Status, Bezeichnung und Anzahl dar. Verwende keine isolierten großen Zahlen oder mehrfach wiederholten Statusblöcke.
+
 Analyse und Befundklassifizierung:
 Prüfe mindestens:
 1. Verständlichkeit und Eindeutigkeit
@@ -1057,6 +1064,13 @@ Assign each derived test case one status:
 - D – Not derivable: a reliable test case cannot yet be derived.
 
 Also report business derivability separately: fully derivable, partially derivable or not derivable. Unknown test resources are unknown, not automatically missing. "Not mentioned in the requirement" means "unknown/not evidenced", not "unavailable".
+
+6. Consistency of open questions and dependent test cases
+- Count each distinct open business question exactly once. A question originating from a finding and repeated in section C must not be counted again.
+- The number in the Management Summary must exactly match the number of unique business questions listed in section C. Count scope questions separately.
+- Optional refinements and recommendations are not open business questions unless they require a necessary business decision for implementation or acceptance.
+- If multiple test cases depend on the same business clarification, explicitly identify the shared dependency (e.g. "depends on F-001"). Do not count the underlying business uncertainty more than once.
+- Present status distributions in one compact table with status, label and count. Do not use isolated oversized numbers or repeated status blocks.
 
 Analysis and finding classification:
 Assess at least:
