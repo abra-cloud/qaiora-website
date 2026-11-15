@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
   <title>QAIORA — The Intelligence Behind Quality</title>
-  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V4.1, Testability Checker V2.4, Test Case Generator V1.6 -->
+  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V4.1, Testability Checker V2.5, Test Case Generator V1.6 -->
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {
@@ -568,8 +568,6 @@ Bewerte ausschließlich die Testbarkeit der nachfolgenden fachlichen Anforderung
 Anforderung:
 ${requirement}
 
-Prüfe systematisch diese Dimensionen:${requirement}
-
 Prüfe systematisch diese Dimensionen:
 
 Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
@@ -580,6 +578,8 @@ Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
 - „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“. Zähle praktische Ausführbarkeit nur dann als gegeben oder nicht gegeben, wenn dafür konkrete Informationen vorliegen; andernfalls als „unbekannt/nicht abschließend bewertbar“.
 - Optionale QS-Erweiterungen sind nicht als Befunde oder notwendige Klärungen zu zählen, solange sie nicht ausdrücklich zum Anforderungsumfang gehören. Zähle Befunde und Szenarien konsistent und ohne Doppelzählung.
 - Fachliche Kritikalität, Auswirkung auf Testbarkeit und praktische Ausführbarkeit sind unterschiedliche Bewertungsdimensionen und dürfen nicht gleichgesetzt werden.
+- **Scope-Prüfung vor Befunderstellung:** Prüfe zuerst, ob der fragliche Sachverhalt ausdrücklich oder eindeutig implizit zum beschriebenen Funktionsumfang gehört. Ein nicht beschriebener Nachbarprozess, Sonderfall oder Folgeschritt ist nicht automatisch eine Informationslücke. Wenn die Zugehörigkeit zum Scope unklar ist, führe ihn als offene Scope-Frage bzw. optionale QS-Erweiterung auf, nicht als verpflichtenden Befund.
+- **Keine Scope-Erfindung:** Leite aus üblichen Geschäftsabläufen, vermuteten Erwartungen oder Branchenkonventionen keine zusätzlichen Muss-Regeln ab.
 
 1. Vorbedingungen und Zustände
 - Sind Voraussetzungen, Benutzerrollen, Berechtigungen und relevante Systemzustände beschrieben?
@@ -623,6 +623,8 @@ Befundregeln:
 - Bewerte die Szenarioabdeckung zweigeteilt: (a) Sind relevante Szenarien identifizierbar? und (b) Sind diese Szenarien fachlich vollständig spezifizierbar? Eine hohe Identifizierbarkeit darf eine unvollständige Spezifizierbarkeit nicht verdecken. Eine Dimension darf nicht pauschal als „Gegeben“ gelten, wenn wesentliche Szenarien zwar erkennbar, aber fachlich nicht vollständig spezifiziert sind.
 - Ordne bei jedem Befund zusätzlich die Klärungsart zu: fachliche Klärung, Testdaten/Testvorbereitung, technische Ausführbarkeit/Beobachtbarkeit oder optionale QS-Erweiterung. Zähle technische oder organisatorische Voraussetzungen nicht als fachliche Informationslücken, sofern keine fachliche Regel fehlt.
 - Zähle jeden eindeutigen Befund genau einmal. Die Summe der Befunde je Auswirkungskategorie muss der Anzahl der tatsächlich aufgeführten Befunde entsprechen.
+- **Verbindlicher Szenario-Abgleich:** Erstelle zuerst eine eindeutige Masterliste aller identifizierten fachlichen Szenarien mit stabilen IDs. Zähle jedes Szenario genau einmal. Leite sämtliche Szenariozahlen ausschließlich aus dieser Masterliste ab. Die Zahl „identifizierbare Szenarien“ muss der Anzahl der Szenario-IDs in der Liste entsprechen; vollständig spezifizierbare und nach Klärung spezifizierbare Szenarien müssen zusammen genau diese Zahl ergeben (sofern weitere, ausdrücklich ausgewiesene Statuskategorien nicht erforderlich sind). Testideen, Prozessschritte, Nachbedingungen und einzelne Prüfpunkte sind nicht zusätzlich als Szenarien zu zählen. Prüfe vor Ausgabe, dass Summary, Matrix, Szenariotabelle, Statusübersicht und Fazit dieselben Zahlen verwenden. Bei Abweichungen korrigiere die Zahlen vor der Ausgabe.
+- **Keine künstliche Szenarioaufteilung:** Bestätigungen, Statusänderungen oder E-Mail-Nachbedingungen eines Ablaufs sind grundsätzlich Bestandteile desselben Szenarios, sofern sie nicht eine eigenständige fachliche Ausgangsbedingung oder Entscheidung mit eigenem erwarteten Ergebnis bilden.
 - Weise eine Auswirkung nur dann als „blockierend“ aus, wenn dadurch ein relevantes Testszenario oder eine verlässliche Abnahme tatsächlich verhindert wird. Fehlende Detailinformationen sind nicht automatisch blockierend.
 - Leite die Gesamtbewertung aus den tatsächlich ableitbaren Testszenarien und den konkreten Einschränkungen ab. Begründe, welche Tests bereits möglich sind und welche noch nicht.
 - Kennzeichne bei jedem abgeleiteten Test ausdrücklich den Umsetzungsstatus und unterscheide mindestens diese vier Fälle:
@@ -637,6 +639,12 @@ Befundregeln:
 - Bewerte die praktische Ausführbarkeit anhand der tatsächlich verfügbaren Informationen. Unterscheide dabei ausdrücklich: (a) verfügbar/nachgewiesen, (b) nachweislich nicht verfügbar, (c) unbekannt/nicht angegeben. Wenn keine Informationen zur Testumgebung oder Testvorbereitung vorliegen, darfst du nicht pauschal „0 praktisch ausführbare Testfälle“ behaupten. Verwende stattdessen „praktische Ausführbarkeit nicht abschließend bewertbar“ und kennzeichne die Anzahl der nachweislich ausführbaren Testfälle als „nicht bestimmbar“.
 - Eine Anzahl von 0 ist nur zulässig, wenn ausdrücklich festgestellt wurde, dass kein Testfall die Voraussetzungen erfüllt oder dass erforderliche Voraussetzungen nachweislich fehlen. Erkläre dann die Beleggrundlage.
 - Weise getrennt aus: (a) fachlich vollständig spezifizierbare Szenarien, (b) nach fachlicher Klärung spezifizierbare Szenarien, (c) nachweislich praktisch ausführbare Testfälle, (d) Szenarien, deren praktische Ausführbarkeit mangels Angaben unbekannt ist. Verwechsle „nicht nachgewiesen“ nicht mit „nicht vorhanden“.
+
+Verbindliche Abschlusskontrolle vor der Ausgabe:
+- Vergleiche alle Szenariozahlen in Summary, Matrix, Testideen, Szenariotabelle, Teststatus und Fazit mit der Masterliste.
+- Prüfe: identifizierbare Szenarien = Anzahl eindeutiger Szenario-IDs. Die Statuskategorien müssen diese Szenarien vollständig und überschneidungsfrei abbilden.
+- Prüfe, dass kein nicht bestätigter Scope-Punkt als verpflichtender Befund gezählt wird.
+- Wenn eine Zahl nicht belastbar bestimmbar ist, kennzeichne sie als „nicht bestimmbar“ und erkläre den Grund, statt widersprüchliche Zahlen auszugeben.
 
 Erwartetes Ausgabeformat:
 
@@ -702,8 +710,6 @@ Assess only the testability of the following business requirement. Determine whe
 Requirement:
 ${requirement}
 
-Systematically assess these dimensions:${requirement}
-
 Systematically assess these dimensions:
 
 Shared QAIORA quality assessment rules (apply across all modules):
@@ -714,6 +720,8 @@ Shared QAIORA quality assessment rules (apply across all modules):
 - “Not mentioned in the requirement” means “unknown/not evidenced”, not “unavailable”. Rate practical executability as available or unavailable only when supported by concrete information; otherwise use “unknown/not assessable”.
 - Optional QA extensions are not findings or mandatory clarifications unless they are explicitly within the requirement scope. Keep finding and scenario counts consistent and avoid double counting.
 - Business criticality, impact on testability and practical executability are different assessment dimensions and must not be conflated.
+- **Scope check before creating findings:** First determine whether the issue explicitly or unambiguously belongs to the described functional scope. An undescribed adjacent process, special case or follow-up step is not automatically an information gap. If scope membership is unclear, list it as an open scope question or optional QA extension, not as a mandatory finding.
+- **Do not invent scope:** Do not derive additional mandatory rules from usual business practice, presumed expectations or industry conventions.
 
 1. Preconditions and states
 - Are prerequisites, user roles, permissions and relevant system states described?
@@ -757,6 +765,8 @@ Finding rules:
 - Assess scenario coverage in two parts: (a) Are relevant scenarios identifiable? and (b) Are those scenarios fully specifiable from a business perspective? High identifiability must not conceal incomplete specifiability. Do not rate the dimension simply as “Given” when important scenarios are recognisable but not fully specified.
 - Add a clarification type to each finding: business clarification, test data/test preparation, technical execution/observability or optional QA extension. Do not count technical or organisational prerequisites as business information gaps unless a business rule is actually missing.
 - Count each distinct finding exactly once. The sum of findings by impact category must equal the number of findings actually listed.
+- **Mandatory scenario reconciliation:** First create a unique master list of all identified business scenarios with stable IDs. Count each scenario exactly once. Derive every scenario total exclusively from this master list. The “identifiable scenarios” count must equal the number of scenario IDs in the list; fully specifiable and specifiable-after-clarification scenarios must together equal that total (unless other explicitly stated status categories are necessary). Do not additionally count test ideas, process steps, postconditions or individual checks as scenarios. Before output, verify that the Summary, Matrix, scenario table, status overview and conclusion use the same counts. Correct any discrepancy before responding.
+- **No artificial scenario splitting:** Confirmations, state changes and email postconditions within one flow are normally parts of the same scenario unless they represent an independent business starting condition or decision with its own expected outcome.
 - Use “blocking” only when the issue genuinely prevents a relevant test scenario or reliable acceptance. Missing detail is not automatically blocking.
 - Derive the overall rating from the test scenarios that can actually be specified and their concrete limitations. Explain which tests are already possible and which are not.
 - Explicitly assign an execution-readiness status to every derived test and distinguish at least these four cases:
@@ -771,6 +781,12 @@ Finding rules:
 - Assess practical executability using the information actually available. Explicitly distinguish: (a) available/evidenced, (b) demonstrably unavailable, and (c) unknown/not stated. If there is no information about the test environment or test preparation, do not categorically state “0 practically executable test cases”. Instead use “practical executability cannot be conclusively assessed” and mark the number of demonstrably executable test cases as “undeterminable”.
 - A count of zero is permitted only when it is explicitly established that no test case meets the prerequisites or that required prerequisites are demonstrably unavailable. Explain the evidence.
 - Report separately: (a) scenarios fully specifiable from a business perspective, (b) scenarios specifiable after business clarification, (c) demonstrably practically executable test cases, and (d) scenarios whose practical executability is unknown due to missing information. Do not confuse “not evidenced” with “unavailable”.
+
+Mandatory final consistency check before responding:
+- Reconcile every scenario count in the Summary, Matrix, test ideas, scenario table, execution-status overview and conclusion against the master list.
+- Check: identifiable scenarios = number of unique scenario IDs. Status categories must represent those scenarios completely and without overlap.
+- Ensure that no unconfirmed scope item is counted as a mandatory finding.
+- If a count cannot be reliably determined, state “undeterminable” and explain why instead of providing conflicting totals.
 
 Expected output:
 
@@ -955,6 +971,12 @@ Triff genau eine eindeutige QS-Hauptentscheidung:
 
 Nenne die Entscheidung genau einmal als Haupturteil und begründe sie. Die Testbarkeitsbewertung bleibt eine separate Bewertung und muss nicht automatisch identisch mit dem Reifegrad sein.
 
+Verbindliche Abschlusskontrolle vor der Ausgabe:
+- Vergleiche alle Szenariozahlen in Summary, Matrix, Testideen, Szenariotabelle, Teststatus und Fazit mit der Masterliste.
+- Prüfe: identifizierbare Szenarien = Anzahl eindeutiger Szenario-IDs. Die Statuskategorien müssen diese Szenarien vollständig und überschneidungsfrei abbilden.
+- Prüfe, dass kein nicht bestätigter Scope-Punkt als verpflichtender Befund gezählt wird.
+- Wenn eine Zahl nicht belastbar bestimmbar ist, kennzeichne sie als „nicht bestimmbar“ und erkläre den Grund, statt widersprüchliche Zahlen auszugeben.
+
 Erwartetes Ausgabeformat:
 A. Management Summary
 - Eindeutiges QS-Haupturteil und kurze Begründung
@@ -1099,6 +1121,12 @@ Choose exactly one overall Quality Engineering decision:
 - Not ready for implementation: Essential information is missing or actual contradictions prevent reliable implementation or acceptance.
 
 State this decision once as the primary verdict and explain it. Testability is a separate assessment and does not have to match the readiness decision.
+
+Mandatory final consistency check before responding:
+- Reconcile every scenario count in the Summary, Matrix, test ideas, scenario table, execution-status overview and conclusion against the master list.
+- Check: identifiable scenarios = number of unique scenario IDs. Status categories must represent those scenarios completely and without overlap.
+- Ensure that no unconfirmed scope item is counted as a mandatory finding.
+- If a count cannot be reliably determined, state “undeterminable” and explain why instead of providing conflicting totals.
 
 Expected output:
 A. Management Summary
