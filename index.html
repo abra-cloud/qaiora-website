@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
   <title>QAIORA — The Intelligence Behind Quality</title>
-  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V4.1, Testability Checker V2.5, Test Case Generator V1.6 -->
+  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V4.1, Testability Checker V2.5, Test Case Generator V1.7 -->
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {
@@ -1212,7 +1212,7 @@ Be structured, precise and avoid unnecessary repetition. Do not invent metrics, 
     });
 
 
-    // QAIORA Test Case Generator V1.6: local prompt generation only; no API call.
+    // QAIORA Test Case Generator V1.7: local prompt generation only; no API call.
     const testCaseForm = document.getElementById("testCaseForm");
     const testCaseText = document.getElementById("testCaseText");
     const testCaseLanguage = document.getElementById("testCaseLanguage");
@@ -1227,6 +1227,8 @@ Be structured, precise and avoid unnecessary repetition. Do not invent metrics, 
       const de = testCaseLanguage.value === "de";
       generatedTestCasePrompt.value = de ? `Rolle:
 Du bist ein erfahrener Quality Engineer und Test Analyst mit fundierten Kenntnissen in Requirements Engineering, Testdesign und Softwaretest.
+
+Modul: QAIORA Test Case Generator V1.7
 
 Aufgabe:
 Leite aus der nachfolgenden fachlichen Anforderung und den Akzeptanzkriterien strukturierte Testfälle ab. Arbeite ausschließlich auf Grundlage des bereitgestellten Textes. Erfinde keine fachlichen Regeln, Vorbedingungen, Testdaten, Prozessschritte oder erwarteten Ergebnisse.
@@ -1251,6 +1253,8 @@ Erstelle nachvollziehbare Testfälle in genau diesen drei Kategorien:
 2. Negative Testfälle
 3. Grenzwert- und Sonderfälle
 Ordne einen Testfall nur dann einer Kategorie zu, wenn dies fachlich durch den Text begründet ist. Erzeuge keine künstlichen Grenzwerttests, wenn keine Grenzwerte oder Wertebereiche genannt sind.
+- Klassifiziere konsistent nach Testziel und geprüftem Verhalten, nicht allein danach, ob das System bei erfolgreicher Ausführung korrekt reagiert. Ein Test mit ungültiger Eingabe oder einer unzulässigen Aktion bleibt ein negativer Testfall, auch wenn das erwartete Systemverhalten (z. B. Ablehnung oder Protokollierung) korrekt ist. Beispiel: Ein Anmeldeversuch mit falschem Passwort ist negativ, auch wenn die Erfassung des Fehlversuchs erfolgreich geprüft wird.
+- Positive Testfälle prüfen einen fachlich zulässigen Ablauf bzw. ein gültiges Verhalten. Negative Testfälle prüfen eine ungültige Eingabe, eine unzulässige Aktion oder die fachlich erwartete Zurückweisung. Grenzwert-/Sonderfälle prüfen ausdrücklich belegte Grenzwerte, Zustandsübergänge, Wiederholungen oder besondere Bedingungen. Wähle genau eine passende Hauptkategorie und verwende dieselbe Logik für alle Testfälle.
 
 Verbindliche Regeln:
 - Jeder Testfall muss auf mindestens ein konkretes Akzeptanzkriterium oder eine konkrete Aussage der Anforderung verweisen.
@@ -1259,12 +1263,15 @@ Verbindliche Regeln:
 - Erfinde keine konkreten Testdaten. Verwende bei fehlenden Werten beschreibende Platzhalter und benenne die benötigte Klärung.
 - Erfinde keine erwarteten Ergebnisse. Wenn das Ergebnis nicht aus dem Text hervorgeht, kennzeichne es als offen und leite keinen vollständig ausführbaren Testfall daraus ab.
 - Unterscheide strikt zwischen fachlicher Ableitbarkeit eines Szenarios und seiner tatsächlichen Ausführbarkeit. Ein fachlich ableitbares Szenario darf den Status B erhalten, auch wenn einzelne Ausführungsdetails fehlen.
-- Weise Status A nur zu, wenn Vorbedingungen, Testdaten oder Datenmerkmale, konkrete Schritte und erwartetes Ergebnis vollständig aus dem Text hervorgehen. Ein beschreibender Platzhalter allein macht einen Testfall nicht ausführbar.
-- Weise Status B nur zu, wenn ein konkretes, durch den Text belegtes Szenario existiert und genau benannt werden kann, welche Information zur Ausführung fehlt.
-- Weise Status C zu, wenn kein konkretes Szenario aus dem Text abgeleitet werden kann. Erzeuge dafür keinen künstlichen Testfall und führe den Punkt stattdessen unter den offenen Fragen auf.
+- Weise Status A nur zu, wenn der Testfall mit den belegten Informationen praktisch ausführbar ist: notwendige Vorbedingungen, Testdaten/Datenmerkmale, fachlich konkrete Schritte und erwartetes Ergebnis sind ausreichend bestimmt; notwendige Ausführungs- und Beobachtungsvoraussetzungen sind ebenfalls bekannt. Eine rein fachliche Ableitbarkeit reicht für A nicht aus. Ein beschreibender Platzhalter allein macht einen Testfall nicht ausführbar.
+- Weise Status B zu, wenn ein konkretes, durch den Text belegtes Szenario existiert, aber eine konkret benennbare fachliche Klärung, Testdaten-/Vorbereitung oder technische/UI-Ausführungs- bzw. Beobachtungsvoraussetzung noch fehlt. B bedeutet ausdrücklich „nicht unmittelbar ausführbar“, nicht „fachlich unvollständig“ in jedem Fall.
+- Weise Status C zu, wenn kein konkretes fachliches Testszenario aus dem Text abgeleitet werden kann. Erzeuge dafür keinen künstlichen Testfall.
+- Ein Testfall, der von einem ungeklärten Widerspruch abhängt, darf nicht Status A erhalten. Verwende B, wenn das Szenario erkennbar ist und die fachliche Klärung die konkrete Sperre darstellt; verwende C, wenn noch keine konkrete Testidee bzw. kein konkretes Szenario ableitbar ist. Erzeuge dafür keinen künstlichen Testfall und führe den Punkt stattdessen unter den offenen Fragen auf.
 - Kennzeichne jeden Schritt, der mangels Information nicht konkret beschrieben werden kann, ausdrücklich als „Klärung erforderlich“; formuliere ihn nicht als bereits feststehenden Systemprozess.
 - Verwende eindeutige Testfall-IDs (TC-001, TC-002 …) fortlaufend über alle drei Kategorien hinweg, ohne Lücken und ohne Duplikate.
 - Vermeide redundante Testfälle. Begründe, wenn zwei Fälle unterschiedliche Risiken oder Kriterien abdecken.
+- Wenn ein Testfall von einer ungeklärten fachlichen Regel oder einem Widerspruch abhängt, kennzeichne die Abhängigkeit ausdrücklich mit der betroffenen Befund-/Frage-ID. Kennzeichne den Testfall als „blockiert bis zur Klärung“; stelle ihn nicht als unabhängig ausführbar dar und leite kein erwartetes Ergebnis aus einer der widersprüchlichen Varianten ab.
+- Ein abhängiger Testfall darf nur dann als konkreter Testfall aufgeführt werden, wenn seine Testidee und die zu prüfende Bedingung aus dem Text erkennbar sind. Weise die fachliche Ableitbarkeit und die praktische Ausführbarkeit getrennt aus. Wenn der Widerspruch die erwartete fachliche Regel offenlässt, ist der Testfall mindestens teilweise ableitbar und praktisch erst nach fachlicher Klärung ausführbar.
 - Erzeuge keine Testfälle nur, um alle Kategorien zu füllen. Eine Kategorie darf ausdrücklich „Keine Testfälle ableitbar“ enthalten.
 - Decke positive, negative sowie Grenzwert-/Sonderfälle nur soweit ab, wie es der Anforderungstext erlaubt.
 - Schreibe konkrete, atomare Testschritte. Trenne Vorbedingungen, Testdaten, Aktion und erwartetes Ergebnis.
@@ -1288,7 +1295,10 @@ Verbindliche Regeln:
   4. Sind fachliche Ableitbarkeit und praktische Ausführbarkeit unabhängig voneinander bewertet?
   5. Sind zwingende fachliche Klärungen von optionalen QS-Erweiterungspunkten getrennt?
   6. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
-  7. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
+  7. Sind die Kategorien nach einer einheitlichen Logik vergeben (insbesondere ungültige Eingaben/unerlaubte Aktionen als negative Tests)?
+  8. Sind Abhängigkeiten von ungeklärten Widersprüchen sichtbar markiert und betroffene Testfälle als blockiert statt unabhängig ausführbar gekennzeichnet?
+  9. Wurden Status A/B/C anhand der praktischen Ausführbarkeit und nicht nur anhand der fachlichen Ableitbarkeit vergeben?
+  10. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
 - Entferne oder korrigiere vor der Ausgabe jeden Testschritt, der diese Prüfung nicht besteht.
 
 Bewerte je Testfall zwei getrennte Dimensionen:
@@ -1371,6 +1381,8 @@ Create traceable test cases in exactly these three categories:
 2. Negative test cases
 3. Boundary and special cases
 Assign a case to a category only when supported by the requirement. Do not create artificial boundary tests when no limits or value ranges are specified.
+- Classify consistently by test objective and the behavior under test, not merely by whether the system responds correctly when the test is performed. A test using invalid input or an impermissible action remains a negative test case even when the expected system response (e.g. rejection or logging) is correct. Example: a login attempt with an incorrect password is negative, even when successful recording of the failed attempt is being verified.
+- Positive test cases verify a permitted business flow or valid behavior. Negative test cases verify invalid input, an impermissible action, or the required rejection. Boundary/special cases verify explicitly evidenced limits, state transitions, repetitions or special conditions. Select exactly one primary category and apply the same logic to every test case.
 
 Mandatory rules:
 - Every test case must reference at least one specific acceptance criterion or statement in the requirement.
@@ -1379,12 +1391,15 @@ Mandatory rules:
 - Do not invent concrete test data. Use descriptive placeholders when values are missing and state what must be clarified.
 - Do not invent expected results. If an outcome is not supported by the text, mark it as open and do not present the case as fully executable.
 - Strictly distinguish whether a scenario can be derived from the requirement and whether it is actually executable. A derivable scenario may have status B when execution details are missing.
-- Assign status A only when preconditions, test data or data characteristics, concrete steps and expected result are all supported by the text. A descriptive placeholder alone does not make a test case executable.
-- Assign status B only when a concrete scenario is supported by the text and the exact missing execution information can be named.
-- Assign status C when no concrete scenario can be derived. Do not create an artificial test case; list the point under open questions instead.
+- Assign status A only when the test case is practically executable with the evidenced information: necessary preconditions, test data/data characteristics, concrete business steps and expected result are sufficiently specified; necessary execution and observation prerequisites are also known. Business derivability alone is not sufficient for A. A descriptive placeholder alone does not make a test case executable.
+- Assign status B when a concrete scenario is supported by the text, but a specific business clarification, test data/preparation item, or technical/UI execution or observation prerequisite is still missing. B explicitly means “not immediately executable”, not necessarily “business-incomplete”.
+- Assign status C when no concrete business test scenario can be derived from the text. Do not create an artificial test case.
+- A test case depending on an unresolved contradiction must not receive status A. Use B when the scenario is identifiable and business clarification is the concrete blocker; use C when no concrete test idea or scenario can yet be derived. Do not create an artificial test case; list the point under open questions instead.
 - Explicitly mark any step that cannot be specified due to missing information as “clarification required”; do not present it as an established system process.
 - Use unique test case IDs (TC-001, TC-002 …) sequentially across all three categories, without gaps or duplicates.
 - Avoid redundant test cases. Explain when cases cover different risks or criteria.
+- If a test case depends on an unresolved business rule or contradiction, explicitly identify the dependency by finding/question ID. Mark the case as “blocked pending clarification”; do not present it as independently executable and do not derive an expected result from either conflicting alternative.
+- Include a dependent test case only when its test idea and condition under test are identifiable from the text. Assess business derivability and practical executability separately. If the contradiction leaves the expected business rule unresolved, the case is at least partially derivable and can be practically executed only after business clarification.
 - Do not create test cases merely to populate all categories. A category may explicitly state “No test cases derivable”.
 - Cover positive, negative, and boundary/special cases only to the extent justified by the requirement.
 - Use concrete, atomic test steps. Separate preconditions, test data, action and expected result.
@@ -1408,7 +1423,10 @@ Mandatory rules:
   4. Are business derivability and practical executability assessed independently?
   5. Are mandatory business clarifications separated from optional QA extensions?
   6. Are priorities evidenced or correctly marked “not assessed”?
-  7. Do test case IDs, categories, sources, statuses and counts match?
+  7. Are categories assigned consistently (in particular, invalid inputs/impermissible actions classified as negative tests)?
+  8. Are dependencies on unresolved contradictions visible, with affected cases marked blocked rather than independently executable?
+  9. Are statuses A/B/C assigned based on practical executability, not business derivability alone?
+  10. Do test case IDs, categories, sources, statuses and counts match?
 - Remove or correct every test step that fails this review before producing the output.
 
 Assess two separate dimensions for each test case:
