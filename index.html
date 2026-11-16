@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
   <title>QAIORA — The Intelligence Behind Quality</title>
-  <!-- QAIORA Integrated Quality Suite V1.5: Requirement Analyzer V4.2, Testability Checker V2.6, Test Case Generator V1.8 | Shared Quality Standard V1.1 -->
+  <!-- QAIORA Integrated Quality Suite V1.6: Requirement Analyzer V4.2, Testability Checker V2.6, Test Case Generator V1.9 | Shared Quality Standard V1.1 -->
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {
@@ -422,7 +422,7 @@
     <section class="analyzer-section" id="testcase-generator">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · third module · V1.8</div>
+          <div class="kicker">QAIORA workspace · third module · V1.9</div>
           <h2>Test Case <span class="gradient-text">Generator.</span></h2>
           <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -1236,7 +1236,7 @@ Be structured, precise and avoid unnecessary repetition. Do not invent metrics, 
     });
 
 
-    // QAIORA Test Case Generator V1.8: local prompt generation only; no API call.
+    // QAIORA Test Case Generator V1.9: local prompt generation only; no API call.
     const testCaseForm = document.getElementById("testCaseForm");
     const testCaseText = document.getElementById("testCaseText");
     const testCaseLanguage = document.getElementById("testCaseLanguage");
@@ -1252,7 +1252,7 @@ Be structured, precise and avoid unnecessary repetition. Do not invent metrics, 
       generatedTestCasePrompt.value = de ? `Rolle:
 Du bist ein erfahrener Quality Engineer und Test Analyst mit fundierten Kenntnissen in Requirements Engineering, Testdesign und Softwaretest.
 
-Modul: QAIORA Test Case Generator V1.8
+Modul: QAIORA Test Case Generator V1.9
 
 Aufgabe:
 Leite aus der nachfolgenden fachlichen Anforderung und den Akzeptanzkriterien strukturierte Testfälle ab. Arbeite ausschließlich auf Grundlage des bereitgestellten Textes. Erfinde keine fachlichen Regeln, Vorbedingungen, Testdaten, Prozessschritte oder erwarteten Ergebnisse.
@@ -1273,8 +1273,13 @@ Erstelle nachvollziehbare Testfälle in genau diesen drei Kategorien:
 2. Negative Testfälle
 3. Grenzwert- und Sonderfälle
 Ordne einen Testfall nur dann einer Kategorie zu, wenn dies fachlich durch den Text begründet ist. Erzeuge keine künstlichen Grenzwerttests, wenn keine Grenzwerte oder Wertebereiche genannt sind.
-- Klassifiziere konsistent nach Testziel und geprüftem Verhalten, nicht allein danach, ob das System bei erfolgreicher Ausführung korrekt reagiert. Ein Test mit ungültiger Eingabe oder einer unzulässigen Aktion bleibt ein negativer Testfall, auch wenn das erwartete Systemverhalten (z. B. Ablehnung oder Protokollierung) korrekt ist. Beispiel: Ein Anmeldeversuch mit falschem Passwort ist negativ, auch wenn die Erfassung des Fehlversuchs erfolgreich geprüft wird.
-- Positive Testfälle prüfen einen fachlich zulässigen Ablauf bzw. ein gültiges Verhalten. Negative Testfälle prüfen eine ungültige Eingabe, eine unzulässige Aktion oder die fachlich erwartete Zurückweisung. Grenzwert-/Sonderfälle prüfen ausdrücklich belegte Grenzwerte, Zustandsübergänge, Wiederholungen oder besondere Bedingungen. Wähle genau eine passende Hauptkategorie und verwende dieselbe Logik für alle Testfälle.
+- Klassifiziere jeden Testfall nach seinem primären Prüfziel und dem konkret geprüften Verhalten. Bewerte nicht pauschal alle Aktionen innerhalb eines Testfalls, sondern frage: Welche einzelne fachliche Aussage soll dieser Testfall hauptsächlich nachweisen?
+- Wende diese Entscheidungsreihenfolge an:
+  1. **Negativ:** Das primäre Prüfziel ist eine ungültige Eingabe oder eine unzulässige/verbotene Aktion und deren fachlich erwartete Zurückweisung. Das bleibt negativ, auch wenn die korrekte Ablehnung, Protokollierung oder Fehlererfassung geprüft wird. Beispiele: Anmeldung mit falschem Passwort; Anmeldeversuch während einer aktiven Kontosperrung.
+  2. **Grenzwert/Sonderfall:** Das primäre Prüfziel ist ausdrücklich ein definierter Schwellenwert, eine Zeitgrenze, eine Wiederholungsgrenze oder ein besonderer Zustandsübergang. Beispiele: Sperrung genau nach drei Fehlversuchen; automatische Freigabe nach 30 Minuten; manuelle Entsperrung durch einen Administrator.
+  3. **Positiv:** Das primäre Prüfziel ist ein zulässiger, erfolgreicher fachlicher Ablauf, der nicht selbst eine ausdrücklich definierte Grenze oder einen besonderen Zustandsübergang prüft. Beispiel: erfolgreiche Anmeldung mit korrektem Passwort und das dabei geforderte Zurücksetzen des Fehlerzählers.
+- Ein Testfall erhält genau eine Hauptkategorie. Eine ungültige oder verbotene Aktion wird nicht deshalb positiv, weil das System korrekt reagiert. Ein erfolgreicher Ablauf wird nicht automatisch zum Grenzwerttest, nur weil sich dabei ein Zustand ändert. Entscheidend ist, ob der Schwellenwert bzw. besondere Zustandsübergang selbst das primäre Prüfziel ist.
+- Wenn mehrere Kategorien zunächst plausibel erscheinen, bestimme das primäre Prüfziel anhand von Testziel, erwarteter fachlicher Aussage und Akzeptanzkriterium. Dokumentiere die Entscheidung knapp. Erzwinge keine Kategorie allein anhand eines einzelnen Schritts oder einer Nebenwirkung.
 
 Verbindliche Regeln:
 - Jeder Testfall muss auf mindestens ein konkretes Akzeptanzkriterium oder eine konkrete Aussage der Anforderung verweisen.
@@ -1315,10 +1320,11 @@ Verbindliche Regeln:
   4. Sind fachliche Ableitbarkeit und praktische Ausführbarkeit unabhängig voneinander bewertet?
   5. Sind zwingende fachliche Klärungen von optionalen QS-Erweiterungspunkten getrennt?
   6. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
-  7. Sind die Kategorien nach einer einheitlichen Logik vergeben (insbesondere ungültige Eingaben/unerlaubte Aktionen als negative Tests)?
-  8. Sind Abhängigkeiten von ungeklärten Widersprüchen sichtbar markiert und betroffene Testfälle als blockiert statt unabhängig ausführbar gekennzeichnet?
-  9. Wurden Status A/B/C/D anhand der praktischen Ausführbarkeit und fachlichen Klärung gemäß Quality Standard vergeben?
-  10. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
+  7. Ist jeder Testfall anhand seines primären Prüfziels nach der E2E-04-Entscheidungsreihenfolge klassifiziert? Sind ungültige/unzulässige Aktionen negativ, ausdrücklich geprüfte Schwellen/Zeitgrenzen/besondere Zustandsübergänge Grenzwert/Sonderfall und zulässige erfolgreiche Abläufe positiv?
+  8. Wurden zunächst mehrdeutige Kategorien anhand des primären Prüfziels aufgelöst und die Begründung knapp dokumentiert?
+  9. Sind Abhängigkeiten von ungeklärten Widersprüchen sichtbar markiert und betroffene Testfälle als blockiert statt unabhängig ausführbar gekennzeichnet?
+  10. Wurden Status A/B/C/D anhand der praktischen Ausführbarkeit und fachlichen Klärung gemäß Quality Standard vergeben?
+  11. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
 - Entferne oder korrigiere vor der Ausgabe jeden Testschritt, der diese Prüfung nicht besteht.
 
 Bewerte je Testfall zwei getrennte Dimensionen:
@@ -1380,8 +1386,9 @@ Verbindliche Harmonisierung nach QAIORA Quality Standard V1.1 (E2E-01 bis E2E-04
 - Einheitliches Statusmodell (E2E-02): A = fachlich spezifiziert und praktisch ausführbar, praktische Voraussetzungen bestätigt; B = fachliche Klärung erforderlich; C = fachlich vollständig spezifizierbar, aber praktische Testvorbereitung/technische Voraussetzungen erforderlich; D = kein belastbares Testszenario ableitbar. Verwende nicht mehr das alte A/B/C-Schema. Wenn fachliche Klärung und praktische Vorbereitung zugleich nötig sind, zunächst B vergeben; nach Klärung neu bewerten, ob C verbleibt. Fachliche Ableitbarkeit und praktische Ausführbarkeit immer separat ausweisen.
 - Widerspruchsabhängigkeiten: Ein Fall, dessen erwartetes Ergebnis von einem ungeklärten Widerspruch abhängt, bleibt blockiert und erhält B; kennzeichne die konkrete Abhängigkeit. Erfinde keine erwartete Variante. D nur verwenden, wenn kein konkretes Szenario ableitbar ist.
 - Fehlermeldungen (E2E-03): Vorhandensein einer geforderten Fehlermeldung und genauer Wortlaut sind getrennt zu bewerten. Keinen Wortlaut erfinden. Eine unspezifische Forderung wie „verständliche Fehlermeldung“ ist nicht automatisch ein Blocker oder zwingende fachliche Klärung.
-- Kategorien (E2E-04): Positiv = zulässiger/erfolgreicher Ablauf; Negativ = ungültige Eingabe oder unzulässige Aktion, auch wenn die erwartete Zurückweisung korrekt ist; Grenzwert/Sonderfall = ausdrücklich belegte Grenzen, Zustandswechsel, Wiederholungen oder Sonderbedingungen. Führe pro Testfall genau eine Kategorie und wende die Logik konsistent an.
-- Abschlusskontrolle: Statusverteilung A/B/C/D muss exakt der Zahl der Testfall-IDs entsprechen; Kategorien und fachliche Ableitbarkeit müssen ebenfalls vollständig und überschneidungsfrei aufgehen.
+- Kategorien (E2E-04): Bestimme die Kategorie nach dem primären Prüfziel und wende diese Reihenfolge an: (1) ungültige Eingabe/unzulässige Aktion mit erwarteter Zurückweisung = Negativ; (2) ausdrücklich geprüfter Schwellenwert, Zeit-/Wiederholungsgrenze oder besonderer Zustandsübergang = Grenzwert/Sonderfall; (3) zulässiger erfolgreicher Ablauf ohne primäres Grenz-/Sonderziel = Positiv. Eine korrekte Systemreaktion macht einen negativen Test nicht positiv; ein beliebiger Zustandswechsel macht einen Test nicht automatisch zum Sonderfall. Genau eine Kategorie je Testfall.
+- Verbindliche Selbstkorrektur vor Ausgabe: Prüfe jeden Testfall gegen die E2E-04-Entscheidungsreihenfolge. Korrigiere jede unpassende Kategorie und ihre Begründung, bevor du die Antwort ausgibst. Berechne danach die Anzahl positiver, negativer und Grenzwert-/Sonderfälle ausschließlich aus den endgültig kategorisierten Testfall-IDs neu. Übernimm keine zuvor berechneten Summen ungeprüft.
+- Abschlusskontrolle: Statusverteilung A/B/C/D muss exakt der Zahl der Testfall-IDs entsprechen; Kategorien und fachliche Ableitbarkeit müssen ebenfalls vollständig und überschneidungsfrei aufgehen. Prüfe zusätzlich, dass die Summe der drei Kategorien exakt der Zahl aller Testfall-IDs entspricht.
 
 Prüfe abschließend die Konsistenz: IDs, Kategorien, Zählungen, Quellenverweise und Ausführungsstatus müssen übereinstimmen.` : `Role:
 You are an experienced Quality Engineer and Test Analyst with strong knowledge of requirements engineering, test design and software testing.
@@ -1405,8 +1412,13 @@ Create traceable test cases in exactly these three categories:
 2. Negative test cases
 3. Boundary and special cases
 Assign a case to a category only when supported by the requirement. Do not create artificial boundary tests when no limits or value ranges are specified.
-- Classify consistently by test objective and the behavior under test, not merely by whether the system responds correctly when the test is performed. A test using invalid input or an impermissible action remains a negative test case even when the expected system response (e.g. rejection or logging) is correct. Example: a login attempt with an incorrect password is negative, even when successful recording of the failed attempt is being verified.
-- Positive test cases verify a permitted business flow or valid behavior. Negative test cases verify invalid input, an impermissible action, or the required rejection. Boundary/special cases verify explicitly evidenced limits, state transitions, repetitions or special conditions. Select exactly one primary category and apply the same logic to every test case.
+- Classify each test case by its primary test objective and the specific behavior being verified. Do not classify every action within a test case independently. Ask: Which single business statement is this test case primarily intended to prove?
+- Apply this decision order:
+  1. **Negative:** The primary objective is an invalid input or an impermissible/prohibited action and its required business rejection. It remains negative even when correct rejection, logging or error recording is being verified. Examples: login with an incorrect password; attempting to log in while an account is actively locked.
+  2. **Boundary/special:** The primary objective explicitly verifies a defined threshold, time limit, repetition limit or special state transition. Examples: locking exactly after three failed attempts; automatic release after 30 minutes; manual unlocking by an administrator.
+  3. **Positive:** The primary objective is a permitted, successful business flow that is not itself testing an explicitly defined limit or special state transition. Example: successful login with the correct password and the required reset of the failed-attempt counter.
+- Assign exactly one primary category per test case. An invalid or prohibited action does not become positive merely because the system responds correctly. A successful flow does not automatically become a boundary test merely because a state changes. The threshold or special state transition must itself be the primary test objective.
+- If more than one category initially appears plausible, determine the primary objective from the test objective, expected business statement and acceptance criterion. Briefly document the decision. Do not force a category based only on one step or a side effect.
 
 Mandatory rules:
 - Every test case must reference at least one specific acceptance criterion or statement in the requirement.
@@ -1447,10 +1459,11 @@ Mandatory rules:
   4. Are business derivability and practical executability assessed independently?
   5. Are mandatory business clarifications separated from optional QA extensions?
   6. Are priorities evidenced or correctly marked “not assessed”?
-  7. Are categories assigned consistently (in particular, invalid inputs/impermissible actions classified as negative tests)?
-  8. Are dependencies on unresolved contradictions visible, with affected cases marked blocked rather than independently executable?
-  9. Are statuses A/B/C/D assigned according to practical executability and business clarification under the Quality Standard?
-  10. Do test case IDs, categories, sources, statuses and counts match?
+  7. Is each case classified by its primary test objective using the E2E-04 decision order? Are invalid/impermissible actions negative, explicitly tested thresholds/time limits/special state transitions boundary/special, and permitted successful flows positive?
+  8. Were initially ambiguous categories resolved by the primary test objective, with a brief rationale documented?
+  9. Are dependencies on unresolved contradictions visible, with affected cases marked blocked rather than independently executable?
+  10. Are statuses A/B/C/D assigned according to practical executability and business clarification under the Quality Standard?
+  11. Do test case IDs, categories, sources, statuses and counts match?
 - Remove or correct every test step that fails this review before producing the output.
 
 Assess two separate dimensions for each test case:
@@ -1512,8 +1525,9 @@ Mandatory harmonization under QAIORA Quality Standard V1.1 (E2E-01 to E2E-04):
 - Unified status model (E2E-02): A = business-specified and practically executable, practical prerequisites confirmed; B = business clarification required; C = fully business-specifiable but practical test preparation/technical prerequisites required; D = no reliable test scenario derivable. Do not use the old A/B/C scheme. If business clarification and practical preparation are both needed, assign B first; after clarification reassess whether C remains. Always report business derivability and practical executability separately.
 - Contradiction dependencies: A case whose expected result depends on an unresolved contradiction remains blocked and receives B; identify the exact dependency. Do not invent an expected variant. Use D only when no concrete scenario is derivable.
 - Error messages (E2E-03): Assess the presence of a required error message separately from its exact wording. Do not invent wording. A vague requirement such as “understandable error message” is not automatically a blocker or mandatory business clarification.
-- Categories (E2E-04): Positive = permitted/successful flow; negative = invalid input or impermissible action, even when the expected rejection is correct; boundary/special = explicitly evidenced limits, state transitions, repetitions or special conditions. Assign exactly one category per case and apply the rule consistently.
-- Final check: the A/B/C/D status distribution must exactly equal the number of test case IDs; categories and business-derivability totals must also reconcile without overlap.
+- Categories (E2E-04): Determine the category from the primary test objective using this order: (1) invalid input/impermissible action with expected rejection = negative; (2) explicitly tested threshold, time/repetition limit or special state transition = boundary/special; (3) permitted successful flow without a primary boundary/special objective = positive. A correct system response does not make a negative test positive; any state change does not automatically make a test a special case. Assign exactly one category per test case.
+- Mandatory self-correction before output: Review every case against the E2E-04 decision order. Correct any unsuitable category and its rationale before producing the answer. Then recalculate positive, negative and boundary/special totals only from the final categorized test case IDs. Do not reuse previously calculated totals without rechecking them.
+- Final check: the A/B/C/D status distribution must exactly equal the number of test case IDs; categories and business-derivability totals must also reconcile without overlap. Also verify that the sum of the three category counts exactly equals the total number of test case IDs.
 
 Finally, check consistency: IDs, categories, counts, source references and execution statuses must match.`;
       testCaseOutput.hidden = false;
