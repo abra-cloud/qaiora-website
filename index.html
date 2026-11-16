@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
   <title>QAIORA — The Intelligence Behind Quality</title>
-  <!-- Harmonized Quality Suite V1.0: Requirement Analyzer V4.1, Testability Checker V2.5, Test Case Generator V1.7 -->
+  <!-- QAIORA Integrated Quality Suite V1.5: Requirement Analyzer V4.2, Testability Checker V2.6, Test Case Generator V1.8 | Shared Quality Standard V1.1 -->
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root {
@@ -342,7 +342,7 @@
     <section class="analyzer-section" id="analyzer">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · first module · V4.1</div>
+          <div class="kicker">QAIORA workspace · first module · V4.2</div>
           <h2>Requirement <span class="gradient-text">Analyzer.</span></h2>
           <p class="analyzer-intro">Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.</p>
         </div>
@@ -382,7 +382,7 @@
     <section class="analyzer-section" id="testability">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · second module · V2.1</div>
+          <div class="kicker">QAIORA workspace · second module · V2.6</div>
           <h2>Testability <span class="gradient-text">Checker.</span></h2>
           <p class="analyzer-intro">Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -422,7 +422,7 @@
     <section class="analyzer-section" id="testcase-generator">
       <div class="wrap">
         <div class="section-head">
-          <div class="kicker">QAIORA workspace · third module · V1.5</div>
+          <div class="kicker">QAIORA workspace · third module · V1.8</div>
           <h2>Test Case <span class="gradient-text">Generator.</span></h2>
           <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
         </div>
@@ -700,6 +700,12 @@ Gib eine klare Empfehlung:
 - Derzeit nicht ausreichend testbar
 Begründe die Empfehlung. Diese Testbarkeitsempfehlung ist keine Aussage über die gesamte Umsetzungsreife der Anforderung.
 
+Verbindliche Harmonisierung nach QAIORA Quality Standard V1.1 (E2E-01 bis E2E-03):
+- Scope zuerst prüfen: Unbestätigte Nachbarprozesse und nicht bestätigte Funktionen als Scope-Frage führen, nicht als Pflicht-Finding oder verpflichtendes Testszenario zählen.
+- Verwende für jedes Szenario ein einheitliches Statusmodell: A = fachlich spezifiziert und praktisch ausführbar, Voraussetzungen bestätigt; B = notwendige fachliche Klärung; C = fachlich spezifizierbar, aber Testvorbereitung/technische Voraussetzungen erforderlich; D = kein belastbares Szenario ableitbar. Fachliche Ableitbarkeit (vollständig/teilweise/nicht) und praktische Ausführbarkeit getrennt ausweisen. Wenn fachliche Klärung und Vorbereitung zugleich nötig sind, zunächst B vergeben und nach Klärung neu bewerten.
+- Fehlermeldungen getrennt betrachten: Vorhandensein einer geforderten Meldung und genauer Meldungsinhalt sind unterschiedliche Prüfpunkte. Keinen Wortlaut erfinden. „Verständliche Fehlermeldung“ ist ohne konkrete Qualitätskriterien nicht automatisch ein Blocker; als Präzisierung/Optimierung kennzeichnen, sofern kein konkreter fachlicher Prüfbedarf belegt ist.
+- Erstelle zuerst eine eindeutige Szenario-Masterliste und leite alle Zahlen ausschließlich daraus ab.
+
 Arbeite präzise, nachvollziehbar und ohne unnötige Wiederholungen. Bewerte die Testbarkeit unabhängig von sprachlicher Qualität und allgemeiner Umsetzungsreife.`
         : `Role:
 You are an experienced Quality Engineer with strong expertise in requirements engineering, test analysis and software testing.
@@ -842,6 +848,12 @@ Give a clear recommendation:
 - Currently not sufficiently testable
 Explain the recommendation. This testability recommendation is not a verdict on the overall implementation readiness of the requirement.
 
+Mandatory harmonization under QAIORA Quality Standard V1.1 (E2E-01 to E2E-03):
+- Check scope first: unconfirmed adjacent processes and unconfirmed features remain scope questions; do not count them as mandatory findings or mandatory test scenarios.
+- Use one status model for every scenario: A = business-specified and practically executable, prerequisites confirmed; B = necessary business clarification; C = business-specifiable but test preparation/technical prerequisites required; D = no reliable scenario derivable. Report business derivability (fully/partially/not derivable) separately from practical executability. If both business clarification and preparation appear necessary, assign B first and reassess after clarification.
+- Assess error messages separately: the presence of a required message and the exact message content are different checks. Do not invent wording. “Understandable error message” without concrete quality criteria is not automatically a blocker; treat it as refinement/improvement unless a concrete business test need is evidenced.
+- Create one unique scenario master list first and derive all counts exclusively from it.
+
 Be precise, traceable and avoid unnecessary repetition. Assess testability independently of wording quality and overall implementation readiness.`;
       testabilityOutput.hidden = false;
       testabilityCopyStatus.textContent = "";
@@ -893,7 +905,7 @@ Analysiere die folgende fachliche Anforderung systematisch aus QS-Sicht. Erfinde
 Anforderung:
 ${requirement}
 
-Gemeinsamer QAIORA Quality Standard V1.0:
+Gemeinsamer QAIORA Quality Standard V1.1:
 1. Belegpflicht und Nachvollziehbarkeit
 - Jedes Finding benötigt einen konkreten Textbeleg oder einen eindeutigen Verweis auf eine Aussage der Anforderung.
 - Jeder abgeleitete Testfall muss auf eine fachliche Aussage oder ein Akzeptanzkriterium zurückführbar sein.
@@ -942,6 +954,12 @@ Weise zusätzlich die fachliche Ableitbarkeit getrennt aus: vollständig ableitb
 - Optionale Präzisierungen und Empfehlungen zählen nicht als offene fachliche Fragen, solange sie keine notwendige fachliche Entscheidung für Umsetzung oder Abnahme darstellen.
 - Wenn mehrere Testfälle von derselben fachlichen Klärung abhängen, kennzeichne diese gemeinsame Abhängigkeit ausdrücklich (z. B. „abhängig von F-001“). Zähle die zugrunde liegende fachliche Unklarheit nicht mehrfach.
 - Stelle Statusverteilungen in einer kompakten Tabelle mit Status, Bezeichnung und Anzahl dar. Verwende keine isolierten großen Zahlen oder mehrfach wiederholten Statusblöcke.
+
+7. Verbindliche E2E-Regeln aus Quality Standard V1.1
+- Scope (E2E-01): Unbestätigte Scope-Themen bleiben separate Scope-Fragen. Zähle sie weder als verpflichtendes Finding noch als verpflichtendes Testszenario, bis der Scope bestätigt ist.
+- Statusmodell (E2E-02): A = unmittelbar praktisch ausführbar, fachliche Regeln und praktische Voraussetzungen bestätigt; B = fachliche Klärung erforderlich; C = fachlich spezifizierbar, aber praktische Testvorbereitung oder technische Voraussetzungen fehlen/ sind noch zu klären; D = kein belastbares Testszenario ableitbar. Wenn B und C zugleich relevant erscheinen, verwende zunächst B; nach fachlicher Klärung ist neu zu bewerten, ob C verbleibt. Weise fachliche Ableitbarkeit zusätzlich separat aus.
+- Fehlermeldungen (E2E-03): Prüfe getrennt, ob eine Fehlermeldung gefordert ist und ob ihr genauer Inhalt spezifiziert ist. Erfinde keinen Wortlaut. Eine Forderung nach einer „verständlichen“ Meldung kann ein Präzisierungshinweis sein, ist aber nicht automatisch ein fachlicher Blocker.
+- Testkategorien (E2E-04): Positiv = zulässiges/erfolgreiches Verhalten; Negativ = ungültige Eingabe oder unzulässige Aktion mit erwarteter Zurückweisung; Grenzwert/Sonderfall = ausdrücklich belegte Grenzwerte, Zustandswechsel, Wiederholungen oder Sonderbedingungen. Klassifiziere nach Prüfziel und Eingabe/Verhalten, nicht danach, ob die Systemreaktion korrekt ist.
 
 Analyse und Befundklassifizierung:
 Prüfe mindestens:
@@ -1044,7 +1062,7 @@ Analyse the following business requirement systematically from a Quality Enginee
 Requirement:
 ${requirement}
 
-Shared QAIORA Quality Standard V1.0:
+Shared QAIORA Quality Standard V1.1:
 1. Evidence and traceability
 - Every finding must include specific textual evidence or a clear reference to a statement in the requirement.
 - Every derived test case must be traceable to a business statement or acceptance criterion.
@@ -1093,6 +1111,12 @@ Also report business derivability separately: fully derivable, partially derivab
 - Optional refinements and recommendations are not open business questions unless they require a necessary business decision for implementation or acceptance.
 - If multiple test cases depend on the same business clarification, explicitly identify the shared dependency (e.g. "depends on F-001"). Do not count the underlying business uncertainty more than once.
 - Present status distributions in one compact table with status, label and count. Do not use isolated oversized numbers or repeated status blocks.
+
+7. Mandatory E2E rules from Quality Standard V1.1
+- Scope (E2E-01): Unconfirmed scope topics remain separate scope questions. Do not count them as mandatory findings or mandatory test scenarios until scope is confirmed.
+- Status model (E2E-02): A = immediately practically executable, with business rules and practical prerequisites confirmed; B = business clarification required; C = business-specifiable, but practical test preparation or technical prerequisites are missing/still need clarification; D = no reliable test scenario can be derived. If both B and C appear relevant, use B first; after business clarification reassess whether C remains. Report business derivability separately.
+- Error messages (E2E-03): Assess separately whether an error message is required and whether its exact content is specified. Do not invent wording. A requirement for an “understandable” message may warrant refinement but is not automatically a business blocker.
+- Test categories (E2E-04): Positive = permitted/successful behavior; negative = invalid input or impermissible action with expected rejection; boundary/special = explicitly evidenced limits, state transitions, repetitions or special conditions. Classify by test objective and input/behavior, not merely by whether the system response is correct.
 
 Analysis and finding classification:
 Assess at least:
@@ -1212,7 +1236,7 @@ Be structured, precise and avoid unnecessary repetition. Do not invent metrics, 
     });
 
 
-    // QAIORA Test Case Generator V1.7: local prompt generation only; no API call.
+    // QAIORA Test Case Generator V1.8: local prompt generation only; no API call.
     const testCaseForm = document.getElementById("testCaseForm");
     const testCaseText = document.getElementById("testCaseText");
     const testCaseLanguage = document.getElementById("testCaseLanguage");
@@ -1228,17 +1252,13 @@ Be structured, precise and avoid unnecessary repetition. Do not invent metrics, 
       generatedTestCasePrompt.value = de ? `Rolle:
 Du bist ein erfahrener Quality Engineer und Test Analyst mit fundierten Kenntnissen in Requirements Engineering, Testdesign und Softwaretest.
 
-Modul: QAIORA Test Case Generator V1.7
+Modul: QAIORA Test Case Generator V1.8
 
 Aufgabe:
 Leite aus der nachfolgenden fachlichen Anforderung und den Akzeptanzkriterien strukturierte Testfälle ab. Arbeite ausschließlich auf Grundlage des bereitgestellten Textes. Erfinde keine fachlichen Regeln, Vorbedingungen, Testdaten, Prozessschritte oder erwarteten Ergebnisse.
 
 Anforderung:
 ${requirement}
-
-Ziel:${requirement}
-
-Ziel:
 
 Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
 - Belege jede fachliche Feststellung mit einer konkreten Textstelle oder kennzeichne ausdrücklich, dass eine Information nicht angegeben ist. Trenne Feststellungen, Annahmen und offene Fragen.
@@ -1264,9 +1284,9 @@ Verbindliche Regeln:
 - Erfinde keine erwarteten Ergebnisse. Wenn das Ergebnis nicht aus dem Text hervorgeht, kennzeichne es als offen und leite keinen vollständig ausführbaren Testfall daraus ab.
 - Unterscheide strikt zwischen fachlicher Ableitbarkeit eines Szenarios und seiner tatsächlichen Ausführbarkeit. Ein fachlich ableitbares Szenario darf den Status B erhalten, auch wenn einzelne Ausführungsdetails fehlen.
 - Weise Status A nur zu, wenn der Testfall mit den belegten Informationen praktisch ausführbar ist: notwendige Vorbedingungen, Testdaten/Datenmerkmale, fachlich konkrete Schritte und erwartetes Ergebnis sind ausreichend bestimmt; notwendige Ausführungs- und Beobachtungsvoraussetzungen sind ebenfalls bekannt. Eine rein fachliche Ableitbarkeit reicht für A nicht aus. Ein beschreibender Platzhalter allein macht einen Testfall nicht ausführbar.
-- Weise Status B zu, wenn ein konkretes, durch den Text belegtes Szenario existiert, aber eine konkret benennbare fachliche Klärung, Testdaten-/Vorbereitung oder technische/UI-Ausführungs- bzw. Beobachtungsvoraussetzung noch fehlt. B bedeutet ausdrücklich „nicht unmittelbar ausführbar“, nicht „fachlich unvollständig“ in jedem Fall.
-- Weise Status C zu, wenn kein konkretes fachliches Testszenario aus dem Text abgeleitet werden kann. Erzeuge dafür keinen künstlichen Testfall.
-- Ein Testfall, der von einem ungeklärten Widerspruch abhängt, darf nicht Status A erhalten. Verwende B, wenn das Szenario erkennbar ist und die fachliche Klärung die konkrete Sperre darstellt; verwende C, wenn noch keine konkrete Testidee bzw. kein konkretes Szenario ableitbar ist. Erzeuge dafür keinen künstlichen Testfall und führe den Punkt stattdessen unter den offenen Fragen auf.
+- Weise Status B ausschließlich zu, wenn eine notwendige fachliche Klärung fehlt. Wenn zugleich praktische Vorbereitung nötig ist, zunächst B vergeben und nach fachlicher Klärung neu bewerten.
+- Weise Status C zu, wenn das Szenario fachlich vollständig spezifizierbar ist, aber Testdaten, Testvorbereitung oder technische Ausführungs-/Beobachtungsvoraussetzungen noch fehlen. Weise Status D zu, wenn kein konkretes fachliches Testszenario aus dem Text abgeleitet werden kann. Erzeuge dafür keinen künstlichen Testfall.
+- Ein Testfall, der von einem ungeklärten Widerspruch abhängt, darf nicht Status A erhalten. Verwende B, wenn das Szenario erkennbar ist und die fachliche Klärung die konkrete Sperre darstellt; verwende D, wenn noch keine konkrete Testidee bzw. kein konkretes Szenario ableitbar ist. Erzeuge dafür keinen künstlichen Testfall und führe den Punkt stattdessen unter den offenen Fragen auf.
 - Kennzeichne jeden Schritt, der mangels Information nicht konkret beschrieben werden kann, ausdrücklich als „Klärung erforderlich“; formuliere ihn nicht als bereits feststehenden Systemprozess.
 - Verwende eindeutige Testfall-IDs (TC-001, TC-002 …) fortlaufend über alle drei Kategorien hinweg, ohne Lücken und ohne Duplikate.
 - Vermeide redundante Testfälle. Begründe, wenn zwei Fälle unterschiedliche Risiken oder Kriterien abdecken.
@@ -1297,7 +1317,7 @@ Verbindliche Regeln:
   6. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
   7. Sind die Kategorien nach einer einheitlichen Logik vergeben (insbesondere ungültige Eingaben/unerlaubte Aktionen als negative Tests)?
   8. Sind Abhängigkeiten von ungeklärten Widersprüchen sichtbar markiert und betroffene Testfälle als blockiert statt unabhängig ausführbar gekennzeichnet?
-  9. Wurden Status A/B/C anhand der praktischen Ausführbarkeit und nicht nur anhand der fachlichen Ableitbarkeit vergeben?
+  9. Wurden Status A/B/C/D anhand der praktischen Ausführbarkeit und fachlichen Klärung gemäß Quality Standard vergeben?
   10. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
 - Entferne oder korrigiere vor der Ausgabe jeden Testschritt, der diese Prüfung nicht besteht.
 
@@ -1320,7 +1340,7 @@ Ordne offene Punkte außerdem ein:
 Ausgabeformat:
 1. Kurzüberblick
 - Anzahl der Testfälle je Kategorie
-- Anzahl je Ausführungsstatus A, B und C
+- Anzahl je Ausführungsstatus A, B, C und D
 - Anzahl je fachlicher Ableitbarkeit (vollständig, teilweise, nicht ableitbar)
 - Zähle ausschließlich tatsächlich beschriebene Testfälle; offene Fragen ohne Testfall-ID nicht mitzählen.
 - Wichtigste Einschränkungen und offene Punkte
@@ -1355,6 +1375,14 @@ Stelle jeden Testfall mit diesen Feldern dar:
 - Welche Punkte sind zwingende fachliche Klärungen, welche nur technische/UI-Klärungen und welche optionale QS-Erweiterungen?
 - Trenne ausdrücklich fachliche Ableitbarkeit von praktischer Ausführbarkeit.
 
+Verbindliche Harmonisierung nach QAIORA Quality Standard V1.1 (E2E-01 bis E2E-04):
+- Scope (E2E-01): Nicht bestätigte Scope-Themen bleiben offene Scope-Fragen und werden nicht als verpflichtende Testfälle gezählt.
+- Einheitliches Statusmodell (E2E-02): A = fachlich spezifiziert und praktisch ausführbar, praktische Voraussetzungen bestätigt; B = fachliche Klärung erforderlich; C = fachlich vollständig spezifizierbar, aber praktische Testvorbereitung/technische Voraussetzungen erforderlich; D = kein belastbares Testszenario ableitbar. Verwende nicht mehr das alte A/B/C-Schema. Wenn fachliche Klärung und praktische Vorbereitung zugleich nötig sind, zunächst B vergeben; nach Klärung neu bewerten, ob C verbleibt. Fachliche Ableitbarkeit und praktische Ausführbarkeit immer separat ausweisen.
+- Widerspruchsabhängigkeiten: Ein Fall, dessen erwartetes Ergebnis von einem ungeklärten Widerspruch abhängt, bleibt blockiert und erhält B; kennzeichne die konkrete Abhängigkeit. Erfinde keine erwartete Variante. D nur verwenden, wenn kein konkretes Szenario ableitbar ist.
+- Fehlermeldungen (E2E-03): Vorhandensein einer geforderten Fehlermeldung und genauer Wortlaut sind getrennt zu bewerten. Keinen Wortlaut erfinden. Eine unspezifische Forderung wie „verständliche Fehlermeldung“ ist nicht automatisch ein Blocker oder zwingende fachliche Klärung.
+- Kategorien (E2E-04): Positiv = zulässiger/erfolgreicher Ablauf; Negativ = ungültige Eingabe oder unzulässige Aktion, auch wenn die erwartete Zurückweisung korrekt ist; Grenzwert/Sonderfall = ausdrücklich belegte Grenzen, Zustandswechsel, Wiederholungen oder Sonderbedingungen. Führe pro Testfall genau eine Kategorie und wende die Logik konsistent an.
+- Abschlusskontrolle: Statusverteilung A/B/C/D muss exakt der Zahl der Testfall-IDs entsprechen; Kategorien und fachliche Ableitbarkeit müssen ebenfalls vollständig und überschneidungsfrei aufgehen.
+
 Prüfe abschließend die Konsistenz: IDs, Kategorien, Zählungen, Quellenverweise und Ausführungsstatus müssen übereinstimmen.` : `Role:
 You are an experienced Quality Engineer and Test Analyst with strong knowledge of requirements engineering, test design and software testing.
 
@@ -1363,10 +1391,6 @@ Derive structured test cases from the following business requirement and accepta
 
 Requirement:
 ${requirement}
-
-Objective:${requirement}
-
-Objective:
 
 Shared QAIORA quality assessment rules (apply across all modules):
 - Support every business finding with a specific text reference, or explicitly state that the information is not provided. Separate evidence-based findings, assumptions and open questions.
@@ -1392,9 +1416,9 @@ Mandatory rules:
 - Do not invent expected results. If an outcome is not supported by the text, mark it as open and do not present the case as fully executable.
 - Strictly distinguish whether a scenario can be derived from the requirement and whether it is actually executable. A derivable scenario may have status B when execution details are missing.
 - Assign status A only when the test case is practically executable with the evidenced information: necessary preconditions, test data/data characteristics, concrete business steps and expected result are sufficiently specified; necessary execution and observation prerequisites are also known. Business derivability alone is not sufficient for A. A descriptive placeholder alone does not make a test case executable.
-- Assign status B when a concrete scenario is supported by the text, but a specific business clarification, test data/preparation item, or technical/UI execution or observation prerequisite is still missing. B explicitly means “not immediately executable”, not necessarily “business-incomplete”.
-- Assign status C when no concrete business test scenario can be derived from the text. Do not create an artificial test case.
-- A test case depending on an unresolved contradiction must not receive status A. Use B when the scenario is identifiable and business clarification is the concrete blocker; use C when no concrete test idea or scenario can yet be derived. Do not create an artificial test case; list the point under open questions instead.
+- Assign status B only when a necessary business clarification is missing. If practical preparation is also needed, assign B first and reassess after the business clarification.
+- Assign status C when the scenario is fully specifiable from a business perspective, but test data, test preparation, or technical execution/observation prerequisites are still missing. Assign status D when no concrete business test scenario can be derived from the text. Do not create an artificial test case.
+- A test case depending on an unresolved contradiction must not receive status A. Use B when the scenario is identifiable and business clarification is the concrete blocker; use D when no concrete test idea or scenario can yet be derived. Do not create an artificial test case; list the point under open questions instead.
 - Explicitly mark any step that cannot be specified due to missing information as “clarification required”; do not present it as an established system process.
 - Use unique test case IDs (TC-001, TC-002 …) sequentially across all three categories, without gaps or duplicates.
 - Avoid redundant test cases. Explain when cases cover different risks or criteria.
@@ -1425,7 +1449,7 @@ Mandatory rules:
   6. Are priorities evidenced or correctly marked “not assessed”?
   7. Are categories assigned consistently (in particular, invalid inputs/impermissible actions classified as negative tests)?
   8. Are dependencies on unresolved contradictions visible, with affected cases marked blocked rather than independently executable?
-  9. Are statuses A/B/C assigned based on practical executability, not business derivability alone?
+  9. Are statuses A/B/C/D assigned according to practical executability and business clarification under the Quality Standard?
   10. Do test case IDs, categories, sources, statuses and counts match?
 - Remove or correct every test step that fails this review before producing the output.
 
@@ -1448,7 +1472,7 @@ Also classify open points:
 Output format:
 1. Short overview
 - Number of test cases per category
-- Number per execution status A, B and C
+- Number per execution status A, B, C and D
 - Number per business derivability (fully, partially, not derivable)
 - Count only test cases actually described; do not count open questions without a test case ID.
 - Most important limitations and open points
@@ -1482,6 +1506,14 @@ For each test case provide:
 - Which coverage remains open due to missing information?
 - Which points are mandatory business clarifications, technical/UI clarifications, or optional QA extensions?
 - Explicitly distinguish business derivability from practical executability.
+
+Mandatory harmonization under QAIORA Quality Standard V1.1 (E2E-01 to E2E-04):
+- Scope (E2E-01): Unconfirmed scope topics remain open scope questions and are not counted as mandatory test cases.
+- Unified status model (E2E-02): A = business-specified and practically executable, practical prerequisites confirmed; B = business clarification required; C = fully business-specifiable but practical test preparation/technical prerequisites required; D = no reliable test scenario derivable. Do not use the old A/B/C scheme. If business clarification and practical preparation are both needed, assign B first; after clarification reassess whether C remains. Always report business derivability and practical executability separately.
+- Contradiction dependencies: A case whose expected result depends on an unresolved contradiction remains blocked and receives B; identify the exact dependency. Do not invent an expected variant. Use D only when no concrete scenario is derivable.
+- Error messages (E2E-03): Assess the presence of a required error message separately from its exact wording. Do not invent wording. A vague requirement such as “understandable error message” is not automatically a blocker or mandatory business clarification.
+- Categories (E2E-04): Positive = permitted/successful flow; negative = invalid input or impermissible action, even when the expected rejection is correct; boundary/special = explicitly evidenced limits, state transitions, repetitions or special conditions. Assign exactly one category per case and apply the rule consistently.
+- Final check: the A/B/C/D status distribution must exactly equal the number of test case IDs; categories and business-derivability totals must also reconcile without overlap.
 
 Finally, check consistency: IDs, categories, counts, source references and execution statuses must match.`;
       testCaseOutput.hidden = false;
