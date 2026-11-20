@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "qaiora-auth-test",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-11-20",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "vars": {
+    "SUPABASE_URL": "https://feljpsrmlkwpabzgmbrx.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_fsmlio2uCWd932eQUQ7A-w_qwhI5qOH"
+  }
+}

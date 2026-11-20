@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.">
+  <title>QAIORA — The Intelligence Behind Quality</title>
+  <!-- QAIORA Integrated Quality Suite V1.6: Requirement Analyzer V4.2, Testability Checker V2.6, Test Case Generator V1.9 | Shared Quality Standard V1.1 -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1929;
+      --panel: rgba(17, 35, 54, .72);
+      --line: rgba(167, 203, 218, .15);
+      --text: #f4f8fb;
+      --muted: #a8b8c8;
+      --teal: #62d8ce;
+      --teal-2: #2baea8;
+      --blue: #83baff;
+      --max: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 80% 4%, rgba(38, 154, 160, .18), transparent 34rem),
+        radial-gradient(ellipse at 5% 34%, rgba(50, 104, 168, .13), transparent 34rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+    .nav-shell {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 17, 31, .78);
+      border-bottom: 1px solid var(--line);
+    }
+    nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 1.2rem; font-weight: 800; letter-spacing: .16em; }
+    .brand-mark {
+      width: 37px; height: 37px; border-radius: 12px; display: grid; place-items: center;
+      color: #06131e; background: linear-gradient(135deg, #8cf0df, #35aaa9);
+      box-shadow: 0 0 30px rgba(98,216,206,.22);
+    }
+    .brand-mark svg { width: 23px; height: 23px; }
+    .brand span { color: var(--teal); }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: #c0ccd8; font-size: .9rem; }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta, .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      border-radius: 999px; padding: 11px 19px; font-weight: 700; font-size: .9rem;
+      border: 1px solid rgba(98,216,206,.5); color: #06151e;
+      background: linear-gradient(135deg, #8ce8dc, #48c5bc);
+      box-shadow: 0 8px 28px rgba(48,177,170,.18);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(48,177,170,.27); }
+    .button.secondary { color: var(--text); background: rgba(255,255,255,.035); border-color: var(--line); box-shadow: none; }
+    .language-control {
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px;
+      border: 1px solid var(--line); border-radius: 999px; color: var(--teal);
+      background: rgba(255,255,255,.025);
+    }
+    .language-icon { font-size: .85rem; }
+    .language-control select {
+      color: #e7f1f6; background: transparent; border: 0; outline: 0;
+      font: inherit; font-size: .78rem; font-weight: 800; cursor: pointer;
+    }
+    .language-control select option { color: #102030; }
+    .menu-button { display: none; border: 1px solid var(--line); background: transparent; color: white; padding: 9px 12px; border-radius: 10px; }
+    .hero { position: relative; padding: 104px 0 92px; }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; gap: 64px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; color: var(--teal);
+      border: 1px solid rgba(98,216,206,.24); background: rgba(98,216,206,.07);
+      padding: 7px 12px; border-radius: 999px; text-transform: uppercase;
+      letter-spacing: .13em; font-size: .7rem; font-weight: 800;
+    }
+    .pulse { width: 7px; height: 7px; background: var(--teal); border-radius: 50%; box-shadow: 0 0 0 5px rgba(98,216,206,.12); }
+    h1 { font-size: clamp(3.1rem, 6vw, 5.6rem); line-height: .99; letter-spacing: -.065em; margin: 24px 0 24px; max-width: 760px; }
+    .gradient-text { background: linear-gradient(100deg, #f7fbff 5%, #8fe8df 62%, #8abaff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-copy { max-width: 590px; color: var(--muted); font-size: 1.12rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 32px; }
+    .micro-note { color: #8296a9; font-size: .78rem; margin-top: 20px; }
+    .visual { min-height: 430px; position: relative; display: grid; place-items: center; }
+    .orbit {
+      position: absolute; width: min(420px, 95%); aspect-ratio: 1; border-radius: 50%;
+      border: 1px solid rgba(98,216,206,.17);
+      box-shadow: 0 0 90px rgba(48,177,170,.08), inset 0 0 90px rgba(48,177,170,.04);
+    }
+    .orbit:before, .orbit:after { content: ""; position: absolute; border: 1px solid rgba(131,186,255,.15); border-radius: 50%; inset: 34px; }
+    .orbit:after { inset: 76px; border-color: rgba(98,216,206,.19); }
+    .core {
+      width: 190px; height: 190px; border-radius: 42px; transform: rotate(-8deg);
+      display: grid; place-items: center; position: relative; z-index: 2;
+      background: linear-gradient(145deg, rgba(103,228,215,.22), rgba(40,93,133,.18));
+      border: 1px solid rgba(146,239,229,.48);
+      box-shadow: 0 0 80px rgba(64,195,187,.2), inset 0 0 40px rgba(124,231,220,.08);
+    }
+    .core-inner { transform: rotate(8deg); text-align: center; }
+    .core-symbol { font-size: 4.4rem; line-height: 1; font-weight: 900; letter-spacing: -.1em; color: var(--teal); text-shadow: 0 0 30px rgba(98,216,206,.4); }
+    .core-label { color: #c5d7e5; font-size: .66rem; letter-spacing: .24em; margin-top: 10px; }
+    .float-card {
+      position: absolute; z-index: 3; border: 1px solid var(--line); background: rgba(11,25,41,.88);
+      backdrop-filter: blur(12px); border-radius: 14px; padding: 13px 15px; box-shadow: 0 16px 45px rgba(0,0,0,.22);
+      color: #dce8f0; font-size: .77rem;
+    }
+    .float-card strong { display: block; font-size: .82rem; margin-bottom: 3px; }
+    .float-card small { color: #8fa5b7; }
+    .float-one { top: 48px; right: 0; }
+    .float-two { bottom: 55px; left: -4px; }
+    .float-three { bottom: 12px; right: 25px; }
+    .tiny-icon { color: var(--teal); margin-right: 6px; }
+    .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.018); }
+    .trust-inner { display: flex; justify-content: space-between; gap: 20px; padding: 23px 0; color: #91a5b7; font-size: .82rem; flex-wrap: wrap; }
+    .trust-inner span { display: inline-flex; align-items: center; gap: 9px; }
+    .dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; }
+    section { padding: 94px 0; }
+    .section-head { max-width: 720px; margin-bottom: 42px; }
+    .kicker { color: var(--teal); font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h2 { font-size: clamp(2.15rem, 4vw, 3.5rem); letter-spacing: -.045em; line-height: 1.08; margin: 13px 0 16px; }
+    .section-head p { color: var(--muted); font-size: 1.02rem; margin: 0; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+    .card {
+      min-height: 255px; padding: 25px 22px; border: 1px solid var(--line); border-radius: 18px;
+      background: linear-gradient(155deg, rgba(19,42,62,.78), rgba(10,24,39,.72));
+      transition: transform .22s ease, border-color .22s ease;
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(98,216,206,.42); }
+    .icon-box { width: 43px; height: 43px; border-radius: 13px; display: grid; place-items: center; color: var(--teal); background: rgba(98,216,206,.1); border: 1px solid rgba(98,216,206,.16); margin-bottom: 22px; }
+    .icon-box svg { width: 21px; height: 21px; }
+    .card h3 { font-size: 1.04rem; margin: 0 0 10px; }
+    .card p { color: #9fb1c1; font-size: .88rem; margin: 0; }
+    .platform { background: linear-gradient(180deg, transparent, rgba(16,39,58,.5), transparent); }
+    .platform-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: center; }
+    .platform-copy p { color: var(--muted); }
+    .check-list { list-style: none; padding: 0; margin: 25px 0 0; display: grid; gap: 13px; color: #cbd8e2; }
+    .check-list li:before { content: "✓"; color: var(--teal); font-weight: 900; margin-right: 11px; }
+    .workflow { border: 1px solid var(--line); border-radius: 22px; padding: 27px; background: rgba(12,29,46,.7); }
+    .workflow-top { display: flex; justify-content: space-between; align-items: center; color: #a6b8c7; font-size: .76rem; border-bottom: 1px solid var(--line); padding-bottom: 17px; }
+    .workflow-top strong { color: #e8f2f7; font-size: .9rem; }
+    .step { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 14px; padding: 17px 0; border-bottom: 1px solid rgba(167,203,218,.1); }
+    .step:last-child { border-bottom: 0; }
+    .step-num { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; background: rgba(98,216,206,.1); color: var(--teal); font-weight: 800; font-size: .82rem; }
+    .step strong { display: block; font-size: .9rem; }
+    .step small { color: #8ea3b5; font-size: .76rem; }
+    .step-tag { color: var(--teal); font-size: .68rem; border: 1px solid rgba(98,216,206,.2); padding: 5px 8px; border-radius: 99px; white-space: nowrap; }
+    .vision-box {
+      padding: 55px; border-radius: 26px; border: 1px solid rgba(98,216,206,.2);
+      background: radial-gradient(ellipse at 85% 0%, rgba(62,173,169,.17), transparent 40%), linear-gradient(135deg, #10283b, #0a1929);
+      display: flex; justify-content: space-between; align-items: center; gap: 40px;
+    }
+    .vision-box h2 { max-width: 650px; margin-bottom: 12px; }
+    .vision-box p { color: var(--muted); max-width: 650px; margin: 0; }
+    .vision-mark { flex: 0 0 120px; width: 120px; height: 120px; border-radius: 34px; display: grid; place-items: center; border: 1px solid rgba(98,216,206,.4); color: var(--teal); font-size: 3.8rem; font-weight: 900; box-shadow: 0 0 60px rgba(98,216,206,.1); }
+    .contact { text-align: center; padding-bottom: 105px; }
+    .contact .section-head { margin: 0 auto 28px; }
+    .contact .section-head p { max-width: 620px; margin: auto; }
+    footer { border-top: 1px solid var(--line); padding: 27px 0; color: #8196a8; font-size: .78rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .footer-brand { color: #dce9f1; font-weight: 800; letter-spacing: .15em; }
+    .footer-brand span { color: var(--teal); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a:hover { color: var(--teal); }
+    @media (max-width: 900px) {
+      .hero-grid, .platform-grid { grid-template-columns: 1fr; gap: 35px; }
+      .hero { padding-top: 75px; }
+      .visual { min-height: 390px; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .platform-grid { gap: 35px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 34px, var(--max)); }
+      nav { min-height: 68px; }
+      .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 20px 24px; background: #0a1929; border-bottom: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: 17px; }
+      .nav-links.open { display: flex; }
+      .menu-button { display: inline-flex; }
+      .nav-cta { display: none; }
+      .language-control { margin-left: auto; }
+      .hero { padding: 65px 0 60px; }
+      h1 { font-size: clamp(2.8rem, 14vw, 4.3rem); }
+      .hero-copy { font-size: 1rem; }
+      .visual { min-height: 330px; }
+      .orbit { width: 300px; }
+      .core { width: 145px; height: 145px; border-radius: 32px; }
+      .core-symbol { font-size: 3.5rem; }
+      .float-card { padding: 10px 11px; font-size: .68rem; }
+      .float-one { top: 15px; right: -3px; }
+      .float-two { bottom: 45px; left: -5px; }
+      .float-three { bottom: 5px; right: 0; }
+      section { padding: 70px 0; }
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: auto; }
+      .vision-box { padding: 30px 24px; display: block; }
+      .vision-mark { width: 76px; height: 76px; border-radius: 23px; font-size: 2.5rem; margin-top: 27px; }
+      .step { grid-template-columns: 34px 1fr; }
+      .step-tag { grid-column: 2; justify-self: start; }
+      .workflow { padding: 19px; }
+      .trust-inner { gap: 12px 20px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    html[lang="ar"] body { direction: rtl; text-align: right; }
+    html[lang="ar"] nav,
+    html[lang="ar"] .hero-grid,
+    html[lang="ar"] .platform-grid,
+    html[lang="ar"] .vision-box,
+    html[lang="ar"] .footer-inner { direction: rtl; }
+    html[lang="ar"] .nav-links,
+    html[lang="ar"] .hero-actions,
+    html[lang="ar"] .footer-links { direction: rtl; }
+    html[lang="ar"] .check-list li:before { margin-right: 0; margin-left: 11px; }
+    html[lang="ar"] .step { direction: rtl; }
+    html[lang="ar"] .language-control { direction: ltr; }
+    html[lang="ar"] .eyebrow { letter-spacing: 0; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+
+    /* QAIORA Requirement Analyzer */
+    .analyzer-section { background: linear-gradient(180deg, rgba(16,39,58,.42), transparent); }
+    .analyzer-panel { border:1px solid rgba(98,216,206,.22); border-radius:22px; padding:clamp(20px,4vw,36px); background:rgba(12,29,46,.78); box-shadow:0 20px 60px rgba(0,0,0,.18); }
+    .analyzer-intro { color:var(--muted); max-width:760px; }
+    .analyzer-form { display:grid; gap:16px; margin-top:26px; }
+    .analyzer-form label { display:block; color:#dce8f0; font-weight:700; margin-bottom:8px; }
+    .analyzer-form textarea, .analyzer-form select { width:100%; border:1px solid rgba(167,203,218,.24); border-radius:12px; background:#091a2a; color:var(--text); padding:14px 15px; font:inherit; }
+    .analyzer-form textarea { min-height:190px; resize:vertical; }
+    .analyzer-form textarea:focus, .analyzer-form select:focus { outline:2px solid rgba(98,216,206,.45); border-color:var(--teal); }
+    .analyzer-actions { display:flex; flex-wrap:wrap; gap:12px; }
+    .analyzer-output { margin-top:24px; }
+    .analyzer-output[hidden] { display:none; }
+    .analyzer-output textarea { width:100%; min-height:360px; padding:16px; border:1px solid rgba(98,216,206,.22); border-radius:12px; background:#061421; color:#dce8f0; font: .88rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; resize:vertical; }
+    .analyzer-note { color:#91a5b7; font-size:.82rem; margin-top:12px; }
+    .analyzer-status { color:var(--teal); min-height:1.5em; font-size:.88rem; }
+    html[lang="ar"] .analyzer-form { text-align:right; }
+    @media(max-width:640px) { .analyzer-actions .button { width:100%; } }
+
+  </style>
+</head>
+<body>
+  <div class="nav-shell">
+    <div class="wrap">
+      <nav aria-label="Main navigation">
+     <a class="brand" href="#home" aria-label="QAIORA home">
+  <img src="qaiora-logo.png"
+       alt="QAIORA Logo"
+       style="height:55px; width:auto; display:block;">
+</a>
+        <div class="nav-links" id="navLinks">
+          <a href="#analyzer">Requirement Analyzer</a>
+          <a href="#testability">Testability Checker</a>
+          <a href="#testcase-generator">Test Case Generator</a>
+          <a href="#platform">Platform</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#approach">Our approach</a>
+          <a href="#vision">Vision</a>
+        </div>
+        <a class="nav-cta" href="#contact">Get in touch <span aria-hidden="true">↗</span></a>
+        <label class="language-control" aria-label="Choose language">
+          <span class="language-icon" aria-hidden="true">文</span>
+          <select id="languageSelect" aria-label="Choose language">
+            <option value="en">EN</option>
+            <option value="de">DE</option>
+            <option value="fr">FR</option>
+            <option value="ar">AR</option>
+          </select>
+        </label>
+        <button class="menu-button" id="menuButton" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+      </nav>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> The next perspective on quality</div>
+          <h1><span class="gradient-text">The Intelligence</span><br>Behind Quality.</h1>
+          <p class="hero-copy">Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.</p>
+          <div class="hero-actions">
+            <a class="button" href="#platform">Discover the platform <span aria-hidden="true">→</span></a>
+            <a class="button secondary" href="#capabilities">Explore capabilities</a>
+          </div>
+          <div class="micro-note">A new approach to AI-powered Quality Assurance &amp; Engineering.</div>
+        </div>
+        <div class="visual" aria-label="Abstract QAIORA intelligence visual">
+          <div class="orbit"></div>
+          <div class="core"><div class="core-inner"><div class="core-symbol">Q</div><div class="core-label">INTELLIGENCE</div></div></div>
+          <div class="float-card float-one"><strong><span class="tiny-icon">✳</span>Requirement insight</strong><small>Understand what matters</small></div>
+          <div class="float-card float-two"><strong><span class="tiny-icon">◇</span>Quality by design</strong><small>Make quality actionable</small></div>
+          <div class="float-card float-three"><strong><span class="tiny-icon">⌁</span>AI-assisted testing</strong><small>From insight to confidence</small></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="trust-strip">
+      <div class="wrap trust-inner">
+        <span><i class="dot"></i> Intelligent requirement analysis</span>
+        <span><i class="dot"></i> Testability-focused thinking</span>
+        <span><i class="dot"></i> AI-assisted quality engineering</span>
+        <span><i class="dot"></i> Human expertise at the centre</span>
+      </div>
+    </div>
+
+    <section id="capabilities">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">What QAIORA is about</div>
+          <h2>Quality engineering, <span class="gradient-text">amplified by AI.</span></h2>
+          <p>Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5M8 10.8h5.6M10.8 8v5.6"/></svg></div>
+            <h3>Requirement Analysis</h3>
+            <p>Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5h16v13H4z"/><path d="m7.5 12 2.8 2.8 6.2-6.2"/><path d="M8 3v2.5M16 3v2.5"/></svg></div>
+            <h3>Testability Assessment</h3>
+            <p>Evaluate whether requirements are specific, measurable, consistent and ready to be tested.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4.5h14v15H5z"/><path d="M8 8h8M8 12h5M8 16h8"/><path d="m16 10 2 2-2 2"/></svg></div>
+            <h3>Test Case Generation</h3>
+            <p>Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></svg></div>
+            <h3>Test Data Support</h3>
+            <p>Support the creation of realistic, relevant test data for meaningful and repeatable testing.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="analyzer-section" id="analyzer">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">QAIORA workspace · first module · V4.2</div>
+          <h2>Requirement <span class="gradient-text">Analyzer.</span></h2>
+          <p class="analyzer-intro">Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.</p>
+        </div>
+        <div class="analyzer-panel">
+          <form class="analyzer-form" id="requirementForm">
+            <div>
+              <label for="requirementText">Your requirement</label>
+              <textarea id="requirementText" required minlength="20" placeholder="Example: As a user, I want to reset my password so that I can regain access to my account if I forget it."></textarea>
+            </div>
+            <div>
+              <label for="promptLanguage">Prompt language</label>
+              <select id="promptLanguage">
+                <option value="de">Deutsch</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="analyzer-actions">
+              <button class="button" type="submit">Create analysis prompt <span aria-hidden="true">→</span></button>
+              <button class="button secondary" type="button" id="clearRequirement">Clear</button>
+            </div>
+          </form>
+          <div class="analyzer-output" id="promptOutput" hidden>
+            <label for="generatedPrompt">Your QAIORA prompt</label>
+            <textarea id="generatedPrompt" readonly></textarea>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button class="button" type="button" id="copyPrompt">Copy prompt</button>
+              <a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT ↗</a>
+            </div>
+            <p class="analyzer-note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
+            <div class="analyzer-status" id="copyStatus" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="analyzer-section" id="testability">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">QAIORA workspace · second module · V2.6</div>
+          <h2>Testability <span class="gradient-text">Checker.</span></h2>
+          <p class="analyzer-intro">Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
+        </div>
+        <div class="analyzer-panel">
+          <form class="analyzer-form" id="testabilityForm">
+            <div>
+              <label for="testabilityText">Requirement and acceptance criteria</label>
+              <textarea id="testabilityText" required minlength="20" placeholder="Paste the requirement and its acceptance criteria here. Include relevant business rules if available."></textarea>
+            </div>
+            <div>
+              <label for="testabilityLanguage">Prompt language</label>
+              <select id="testabilityLanguage">
+                <option value="de">Deutsch</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="analyzer-actions">
+              <button class="button" type="submit">Create testability prompt <span aria-hidden="true">→</span></button>
+              <button class="button secondary" type="button" id="clearTestability">Clear</button>
+            </div>
+          </form>
+          <div class="analyzer-output" id="testabilityOutput" hidden>
+            <label for="generatedTestabilityPrompt">Your QAIORA testability prompt</label>
+            <textarea id="generatedTestabilityPrompt" readonly></textarea>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button class="button" type="button" id="copyTestabilityPrompt">Copy prompt</button>
+              <a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Open ChatGPT ↗</a>
+            </div>
+            <p class="analyzer-note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
+            <div class="analyzer-status" id="testabilityCopyStatus" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="analyzer-section" id="testcase-generator">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">QAIORA workspace · third module · V1.9</div>
+          <h2>Test Case <span class="gradient-text">Generator.</span></h2>
+          <p class="analyzer-intro" data-m3="intro">Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.</p>
+        </div>
+        <div class="analyzer-panel">
+          <form class="analyzer-form" id="testCaseForm">
+            <div>
+              <label for="testCaseText" data-m3="reqLabel">Requirement and acceptance criteria</label>
+              <textarea id="testCaseText" required minlength="20" placeholder="Paste the requirement and its acceptance criteria here." data-m3-placeholder="reqPlaceholder"></textarea>
+            </div>
+            <div>
+              <label for="testCaseLanguage" data-m3="promptLang">Prompt language</label>
+              <select id="testCaseLanguage"><option value="en">English</option><option value="de">Deutsch</option></select>
+            </div>
+            <div class="analyzer-actions">
+              <button class="button" type="submit" data-m3="create">Create test case prompt <span aria-hidden="true">→</span></button>
+              <button class="button secondary" type="button" id="clearTestCases" data-m3="clear">Clear</button>
+            </div>
+          </form>
+          <div class="analyzer-output" id="testCaseOutput" hidden>
+            <label for="generatedTestCasePrompt" data-m3="outputLabel">Your QAIORA test case prompt</label>
+            <textarea id="generatedTestCasePrompt" readonly></textarea>
+            <div class="analyzer-actions" style="margin-top:12px">
+              <button class="button" type="button" id="copyTestCasePrompt" data-m3="copy">Copy prompt</button>
+              <a class="button secondary" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" data-m3="open">Open ChatGPT ↗</a>
+            </div>
+            <p class="analyzer-note" data-m3="note">Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.</p>
+            <div class="analyzer-status" id="testCaseCopyStatus" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="platform" id="platform">
+      <div class="wrap platform-grid">
+        <div class="platform-copy">
+          <div class="kicker">One connected perspective</div>
+          <h2>From requirements to <span class="gradient-text">quality confidence.</span></h2>
+          <p>QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.</p>
+          <ul class="check-list">
+            <li>Find gaps and ambiguities earlier</li>
+            <li>Improve requirement clarity and testability</li>
+            <li>Generate structured testing ideas faster</li>
+            <li>Keep human judgement in the loop</li>
+          </ul>
+        </div>
+        <div class="workflow">
+          <div class="workflow-top"><strong>QAIORA quality workflow</strong><span>Concept overview</span></div>
+          <div class="step"><div class="step-num">01</div><div><strong>Understand</strong><small>Analyse requirements and context</small></div><span class="step-tag">Insight</span></div>
+          <div class="step"><div class="step-num">02</div><div><strong>Assess</strong><small>Check completeness and testability</small></div><span class="step-tag">Clarity</span></div>
+          <div class="step"><div class="step-num">03</div><div><strong>Design</strong><small>Derive scenarios and test cases</small></div><span class="step-tag">Coverage</span></div>
+          <div class="step"><div class="step-num">04</div><div><strong>Prepare</strong><small>Support meaningful test data</small></div><span class="step-tag">Readiness</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Our approach</div>
+          <h2>AI supports expertise.<br><span class="gradient-text">People create quality.</span></h2>
+          <p>Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">◎</span></div>
+            <h3>Clarity</h3>
+            <p>Make requirements and quality expectations easier to understand.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">⌘</span></div>
+            <h3>Consistency</h3>
+            <p>Encourage repeatable methods and structured quality practices.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">↗</span></div>
+            <h3>Efficiency</h3>
+            <p>Reduce repetitive effort and give teams more room for critical thinking.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box"><span aria-hidden="true">◇</span></div>
+            <h3>Human oversight</h3>
+            <p>Keep professional judgement, review and accountability at the centre.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="wrap">
+        <div class="vision-box">
+          <div>
+            <div class="kicker">The QAIORA vision</div>
+            <h2>Make quality a smarter part of every decision.</h2>
+            <p>We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.</p>
+          </div>
+          <div class="vision-mark" aria-hidden="true">Q.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Stay connected</div>
+          <h2>Quality is evolving.<br><span class="gradient-text">Be part of the journey.</span></h2>
+          <p>QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance &amp; Engineering.</p>
+        </div>
+        <a class="button" href="#home">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div><span class="footer-brand">QAI<span>ORA</span></span><br> The Intelligence Behind Quality.</div>
+      <div class="footer-links"><a href="#platform">Platform</a><a href="#capabilities">Capabilities</a><a href="#vision">Vision</a></div>
+      <div>© <span id="year">2026</span> QAIORA. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+
+
+    // QAIORA Testability Checker: prompt generation only; no API call.
+    const testabilityForm = document.getElementById("testabilityForm");
+    const testabilityText = document.getElementById("testabilityText");
+    const testabilityLanguage = document.getElementById("testabilityLanguage");
+    const testabilityOutput = document.getElementById("testabilityOutput");
+    const generatedTestabilityPrompt = document.getElementById("generatedTestabilityPrompt");
+    const testabilityCopyStatus = document.getElementById("testabilityCopyStatus");
+
+    testabilityForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const requirement = testabilityText.value.trim();
+      if (requirement.length < 20) { testabilityText.focus(); return; }
+      const de = testabilityLanguage.value === "de";
+      generatedTestabilityPrompt.value = de
+        ? `Rolle:
+Du bist ein erfahrener Quality Engineer mit fundierten Kenntnissen in Requirements Engineering, Testanalyse und Softwaretest.
+
+Aufgabe:
+Bewerte ausschließlich die Testbarkeit der nachfolgenden fachlichen Anforderung. Prüfe, ob daraus objektive, eindeutige, reproduzierbare und ausführbare Testfälle abgeleitet werden können. Erfinde keine fachlichen Regeln und keine erwarteten Ergebnisse. Eine fehlende Information ist nicht automatisch ein Fehler. Trenne belegbare Feststellungen, Annahmen und offene Fragen.
+
+Anforderung:
+${requirement}
+
+Prüfe systematisch diese Dimensionen:
+
+Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
+- Belege jede fachliche Feststellung mit einer konkreten Textstelle oder kennzeichne ausdrücklich, dass eine Information nicht angegeben ist. Trenne Feststellungen, Annahmen und offene Fragen.
+- Verwende für Befunde genau eine Hauptkategorie: „Informationslücke“, „fachlicher Fehler/Widerspruch“ (nur mit konkretem Textbeleg) oder „Optimierungspotenzial“. Ein Optimierungspotenzial ist nicht automatisch ein fachlicher Fehler oder eine fehlende Geschäftsregel.
+- Ordne Klärungsbedarf eindeutig zu: „fachliche Klärung“, „Testdaten/Testvorbereitung“, „technische Ausführbarkeit/Beobachtbarkeit“ oder „optionale QS-Erweiterung“. Technische und organisatorische Voraussetzungen sind keine fachlichen Anforderungslücken.
+- Unterscheide konsequent drei Reifegrade: (1) Testidee identifizierbar, (2) fachliches Testszenario vollständig spezifizierbar, (3) Testfall praktisch ausführbar. Eine erkennbare Testidee darf nicht als „nicht ableitbar“ bezeichnet werden, nur weil fachliche Details fehlen.
+- „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“. Zähle praktische Ausführbarkeit nur dann als gegeben oder nicht gegeben, wenn dafür konkrete Informationen vorliegen; andernfalls als „unbekannt/nicht abschließend bewertbar“.
+- Optionale QS-Erweiterungen sind nicht als Befunde oder notwendige Klärungen zu zählen, solange sie nicht ausdrücklich zum Anforderungsumfang gehören. Zähle Befunde und Szenarien konsistent und ohne Doppelzählung.
+- Fachliche Kritikalität, Auswirkung auf Testbarkeit und praktische Ausführbarkeit sind unterschiedliche Bewertungsdimensionen und dürfen nicht gleichgesetzt werden.
+- **Scope-Prüfung vor Befunderstellung:** Prüfe zuerst, ob der fragliche Sachverhalt ausdrücklich oder eindeutig implizit zum beschriebenen Funktionsumfang gehört. Ein nicht beschriebener Nachbarprozess, Sonderfall oder Folgeschritt ist nicht automatisch eine Informationslücke. Wenn die Zugehörigkeit zum Scope unklar ist, führe ihn als offene Scope-Frage bzw. optionale QS-Erweiterung auf, nicht als verpflichtenden Befund.
+- **Keine Scope-Erfindung:** Leite aus üblichen Geschäftsabläufen, vermuteten Erwartungen oder Branchenkonventionen keine zusätzlichen Muss-Regeln ab.
+
+1. Vorbedingungen und Zustände
+- Sind Voraussetzungen, Benutzerrollen, Berechtigungen und relevante Systemzustände beschrieben?
+- Ist klar, in welchem Ausgangszustand ein Test beginnt?
+
+2. Auslöser, Eingaben und Prozess
+- Sind Auslöser, Eingabedaten, Aktionen und Prozessschritte eindeutig?
+- Sind erforderliche Datenformate, Wertebereiche und Randwerte definiert?
+
+3. Erwartete Ergebnisse und Beobachtbarkeit
+- Sind erwartete Ergebnisse konkret, messbar und überprüfbar?
+- Ist beschrieben, woran ein Tester Erfolg oder Misserfolg erkennt?
+- Sind Zustandsänderungen und Seiteneffekte eindeutig?
+
+4. Szenarioabdeckung
+- Lassen sich positive, negative und alternative Szenarien ableiten?
+- Sind Entscheidungspunkte und relevante Geschäftsregeln abgedeckt?
+
+5. Randbedingungen und Fehlerfälle
+- Sind Grenzwerte, Ausnahmen, Fehlerreaktionen und Abbruchbedingungen beschrieben?
+- Sind Zeitverhalten, Wiederholungen oder parallele Vorgänge relevant und spezifiziert?
+- Bewerte nur Randbedingungen und Fehlerfälle, die aus dem beschriebenen fachlichen Umfang oder ausdrücklich genannten Risiken hervorgehen. Behandle nicht erwähnte Robustheits- und Sonderfälle nicht automatisch als Lücke. Wenn zusätzliche Szenarien denkbare QS-Erweiterungen sind, kennzeichne sie als optional und bewerte Dimension 5 für den aktuellen Umfang als „nicht anwendbar / nicht bewertet“, sofern keine konkrete fachliche Randbedingung fehlt.
+
+Befundregeln:
+- Ordne jeden Befund einer Kategorie zu: Informationslücke, fachlicher Widerspruch (nur mit konkretem Textbeleg) oder Optimierungspotenzial.
+- Bewerte die Auswirkung auf die Testbarkeit: blockierend, wesentlich, begrenzt oder gering.
+- Nenne für jeden Befund den Textbeleg, die Begründung und die konkrete Folge für Testdesign oder Testausführung.
+- Fasse überlappende Befunde zusammen und vergebe keine mehrfachen IDs für denselben Sachverhalt.
+- Erfinde keine Anforderungen, Testdaten oder erwarteten Ergebnisse.
+- Unterscheide ausdrücklich und konsequent zwischen drei Reifegraden:
+  1. Testidee identifizierbar: Ein möglicher Prüfgegenstand lässt sich aus der Anforderung erkennen.
+  2. Testszenario spezifizierbar: Vorbedingungen, fachliche Aktion und erwartetes fachliches Ergebnis sind ausreichend beschrieben. Fehlt eine notwendige Regel oder ein erwartetes Ergebnis, kennzeichne das Szenario als teilweise spezifizierbar.
+  3. Testfall ausführbar: Zusätzlich sind die für die konkrete Testausführung erforderlichen Testdaten, Zugänge und Beobachtungsmöglichkeiten verfügbar.
+- Ein Szenario darf nicht als „Noch nicht ableitbar“ bezeichnet werden, wenn zumindest eine konkrete Testidee aus dem Text hervorgeht. Verwende „Testidee ableitbar, Szenario noch nicht vollständig spezifizierbar“, wenn das Prüfziel erkennbar ist, aber das erwartete Ergebnis oder eine notwendige fachliche Regel fehlt.
+- Trenne fachliche Spezifikationslücken von Voraussetzungen der Testvorbereitung und technischen Ausführung:
+  - „Fachliche Klärung“: Eine Geschäftsregel, ein Pflichtfeld, ein Zustand oder ein erwartetes fachliches Verhalten fehlt.
+  - „Testdaten/Testvorbereitung“: Benötigte Testkonten, konkrete Daten oder Ausgangszustände müssen bereitgestellt werden.
+  - „Technische Ausführbarkeit/Beobachtbarkeit“: Bedienweg, Schnittstelle, Protokoll oder Prüfmöglichkeit fehlt.
+  - „Optionale QS-Erweiterung“: Ein zusätzliches Risiko- oder Robustheitsszenario ist nicht Teil des beschriebenen Umfangs.
+- Fehlende UI-Beschreibung oder technische Beobachtungsmöglichkeit ist nicht automatisch eine fachliche Anforderungslücke und darf nicht als fachlicher Mangel oder als wesentlicher Befund bewertet werden, sofern die fachliche Regel selbst eindeutig ist. Führe solche Punkte bei Bedarf separat als Ausführungs-/Testvorbereitung auf.
+- Bewerte die Szenarioabdeckung zweigeteilt: (a) Sind relevante Szenarien identifizierbar? und (b) Sind diese Szenarien fachlich vollständig spezifizierbar? Eine hohe Identifizierbarkeit darf eine unvollständige Spezifizierbarkeit nicht verdecken. Eine Dimension darf nicht pauschal als „Gegeben“ gelten, wenn wesentliche Szenarien zwar erkennbar, aber fachlich nicht vollständig spezifiziert sind.
+- Ordne bei jedem Befund zusätzlich die Klärungsart zu: fachliche Klärung, Testdaten/Testvorbereitung, technische Ausführbarkeit/Beobachtbarkeit oder optionale QS-Erweiterung. Zähle technische oder organisatorische Voraussetzungen nicht als fachliche Informationslücken, sofern keine fachliche Regel fehlt.
+- Zähle jeden eindeutigen Befund genau einmal. Die Summe der Befunde je Auswirkungskategorie muss der Anzahl der tatsächlich aufgeführten Befunde entsprechen.
+- **Verbindlicher Szenario-Abgleich:** Erstelle zuerst eine eindeutige Masterliste aller identifizierten fachlichen Szenarien mit stabilen IDs. Zähle jedes Szenario genau einmal. Leite sämtliche Szenariozahlen ausschließlich aus dieser Masterliste ab. Die Zahl „identifizierbare Szenarien“ muss der Anzahl der Szenario-IDs in der Liste entsprechen; vollständig spezifizierbare und nach Klärung spezifizierbare Szenarien müssen zusammen genau diese Zahl ergeben (sofern weitere, ausdrücklich ausgewiesene Statuskategorien nicht erforderlich sind). Testideen, Prozessschritte, Nachbedingungen und einzelne Prüfpunkte sind nicht zusätzlich als Szenarien zu zählen. Prüfe vor Ausgabe, dass Summary, Matrix, Szenariotabelle, Statusübersicht und Fazit dieselben Zahlen verwenden. Bei Abweichungen korrigiere die Zahlen vor der Ausgabe.
+- **Keine künstliche Szenarioaufteilung:** Bestätigungen, Statusänderungen oder E-Mail-Nachbedingungen eines Ablaufs sind grundsätzlich Bestandteile desselben Szenarios, sofern sie nicht eine eigenständige fachliche Ausgangsbedingung oder Entscheidung mit eigenem erwarteten Ergebnis bilden.
+- Weise eine Auswirkung nur dann als „blockierend“ aus, wenn dadurch ein relevantes Testszenario oder eine verlässliche Abnahme tatsächlich verhindert wird. Fehlende Detailinformationen sind nicht automatisch blockierend.
+- Leite die Gesamtbewertung aus den tatsächlich ableitbaren Testszenarien und den konkreten Einschränkungen ab. Begründe, welche Tests bereits möglich sind und welche noch nicht.
+- Kennzeichne bei jedem abgeleiteten Test ausdrücklich den Umsetzungsstatus und unterscheide mindestens diese vier Fälle:
+  1. „Mit den vorhandenen Informationen ausführbar“: Fachliche Vorbedingungen, Aktion und erwartetes Ergebnis sind ausreichend festgelegt; Testdaten und technische Ausführungsmöglichkeiten sind vorhanden.
+  2. „Nach Testvorbereitung/technischer Bereitstellung ausführbar“: Das Szenario ist fachlich vollständig spezifizierbar; es fehlen ausschließlich Testdaten, Testkonten, Zugänge, ein Bedienweg oder technische Beobachtungsmöglichkeiten.
+  3. „Nach fachlicher Klärung ausführbar“: Das Szenario ist erkennbar, aber mindestens eine notwendige fachliche Regel, Vorbedingung oder ein erwartetes Ergebnis fehlt.
+  4. „Noch nicht ableitbar“: Der Anforderungstext bietet keine ausreichende Grundlage für eine konkrete Testidee oder ein konkretes Szenario. Verwende diesen Status nicht, wenn eine konkrete Testidee erkennbar ist.
+- Weise zusätzlich getrennt aus: (a) Anzahl fachlich vollständig spezifizierbarer Szenarien, (b) Anzahl nach fachlicher Klärung spezifizierbarer Szenarien und (c) Anzahl praktisch ausführbarer Testfälle. Zähle ein fachlich spezifizierbares Szenario nicht als fachlich unvollständig, nur weil Testdaten oder technische Voraussetzungen fehlen.
+- Gib diese Einordnung zusätzlich in einer übersichtlichen Testübersicht aus. Nenne bei jedem Test mit Klärungsbedarf die konkret fehlende Information und ordne sie eindeutig fachlicher Klärung oder Testvorbereitung/technischer Bereitstellung zu.
+- Behaupte nicht, dass ein Test vollständig ausführbar ist, wenn Testdaten, Vorbedingungen, Prozessschritte oder erwartete Ergebnisse dafür erst angenommen werden müssten.
+- WICHTIG: Leite aus dem Anforderungstext allein niemals ab, dass Testdaten, Testkonten, Zugänge, Testumgebungen oder Beobachtungsmöglichkeiten tatsächlich fehlen oder nicht vorhanden sind. „Im Anforderungstext nicht erwähnt“ bedeutet ausschließlich „Verfügbarkeit unbekannt / nicht nachgewiesen“ und nicht „nicht vorhanden“.
+- Bewerte die praktische Ausführbarkeit anhand der tatsächlich verfügbaren Informationen. Unterscheide dabei ausdrücklich: (a) verfügbar/nachgewiesen, (b) nachweislich nicht verfügbar, (c) unbekannt/nicht angegeben. Wenn keine Informationen zur Testumgebung oder Testvorbereitung vorliegen, darfst du nicht pauschal „0 praktisch ausführbare Testfälle“ behaupten. Verwende stattdessen „praktische Ausführbarkeit nicht abschließend bewertbar“ und kennzeichne die Anzahl der nachweislich ausführbaren Testfälle als „nicht bestimmbar“.
+- Eine Anzahl von 0 ist nur zulässig, wenn ausdrücklich festgestellt wurde, dass kein Testfall die Voraussetzungen erfüllt oder dass erforderliche Voraussetzungen nachweislich fehlen. Erkläre dann die Beleggrundlage.
+- Weise getrennt aus: (a) fachlich vollständig spezifizierbare Szenarien, (b) nach fachlicher Klärung spezifizierbare Szenarien, (c) nachweislich praktisch ausführbare Testfälle, (d) Szenarien, deren praktische Ausführbarkeit mangels Angaben unbekannt ist. Verwechsle „nicht nachgewiesen“ nicht mit „nicht vorhanden“.
+
+Verbindliche Abschlusskontrolle vor der Ausgabe:
+- Vergleiche alle Szenariozahlen in Summary, Matrix, Testideen, Szenariotabelle, Teststatus und Fazit mit der Masterliste.
+- Prüfe: identifizierbare Szenarien = Anzahl eindeutiger Szenario-IDs. Die Statuskategorien müssen diese Szenarien vollständig und überschneidungsfrei abbilden.
+- Prüfe, dass kein nicht bestätigter Scope-Punkt als verpflichtender Befund gezählt wird.
+- Wenn eine Zahl nicht belastbar bestimmbar ist, kennzeichne sie als „nicht bestimmbar“ und erkläre den Grund, statt widersprüchliche Zahlen auszugeben.
+
+Erwartetes Ausgabeformat:
+
+A. Testability Summary
+- Gesamtbewertung: testbar / teilweise testbar / nicht testbar
+- Kurze Begründung
+- Anzahl der blockierenden, wesentlichen, begrenzten und geringen Befunde
+- Wichtigste Einschränkung
+- Status der praktischen Voraussetzungen: verfügbar/nachgewiesen, nachweislich nicht verfügbar oder unbekannt/nicht angegeben
+- Anzahl praktisch ausführbarer Testfälle nur dann numerisch angeben, wenn sie anhand konkreter Informationen bestimmbar ist; andernfalls „nicht bestimmbar“
+
+B. Testbarkeitsmatrix
+Bewerte jede der fünf Dimensionen mit „Gegeben“, „Teilweise gegeben“ oder „Nicht gegeben“, soweit der Anforderungstext eine belastbare Bewertung zulässt. Bewerte Dimension 4 zusätzlich getrennt nach „Szenarien identifizierbar“ und „Szenarien fachlich vollständig spezifizierbar“.
+- Unterscheide strikt zwischen „nicht spezifiziert“ und „nicht testbar“: Fehlt eine Information im Text, kennzeichne sie zunächst als Informationslücke. Leite daraus nicht automatisch ab, dass die gesamte Dimension oder Anforderung nicht testbar ist.
+- Kann eine Dimension mangels Informationen nicht zuverlässig bewertet werden, kennzeichne sie als „nicht ausreichend spezifiziert / nicht abschließend bewertbar“ und erläutere, welche Information fehlt. Erzwinge keine negative Bewertung.
+- Bewerte die Testbarkeit auf Ebene der konkreten Szenarien. Eine fehlende Randbedingung darf bereits klar beschriebene Tests nicht pauschal entwerten.
+- Begründe jede Bewertung anhand der Anforderung.
+
+C. Erkannte Testbarkeitslücken
+Für jeden Befund:
+- Eindeutige ID
+- Textbeleg oder Hinweis, dass keine entsprechende Information vorhanden ist
+- Kategorie
+- Klärungsart: fachliche Klärung / Testdaten und Testvorbereitung / technische Ausführbarkeit und Beobachtbarkeit / optionale QS-Erweiterung
+- Auswirkung auf Testbarkeit
+- Begründung
+- Welche Information konkret fehlt
+
+D. Ableitbare Tests
+Trenne klar:
+1. Testideen
+2. Testszenarien mit definierten Vorbedingungen und Ergebnissen
+3. Vollständig spezifizierbare, ausführbare Testfälle
+Erstelle nur so viele, wie durch den Anforderungstext gedeckt sind. Wenn keine vollständigen Testfälle möglich sind, sage das ausdrücklich.
+
+E. Nicht ableitbare Tests und offene Fragen
+- Trenne fachlich nicht vollständig spezifizierbare Szenarien von bereits fachlich spezifizierbaren Szenarien, bei denen nur Testdaten oder technische Ausführungs-/Beobachtungsmöglichkeiten fehlen.
+- Führe Testdaten/Testvorbereitung und technische Ausführungs-/Beobachtungsvoraussetzungen separat von fachlichen Fragen auf.
+- Welche Tests können noch nicht spezifiziert werden?
+- Welche konkrete Information fehlt jeweils?
+- Formuliere gezielte Fragen an den Anforderungsgeber.
+- Priorisiere nach Auswirkung auf Testdesign und Abnahme.
+
+F. Verbesserungsvorschläge
+- Konkrete Ergänzungen für bessere Testbarkeit
+- Trenne notwendige fachliche Klärungen von optionalen Präzisierungen.
+- Formuliere keine neuen fachlichen Regeln als bereits beschlossen.
+
+G. QS-Empfehlung
+Gib eine klare Empfehlung:
+- Testbar
+- Mit Einschränkungen testbar
+- Derzeit nicht ausreichend testbar
+Begründe die Empfehlung. Diese Testbarkeitsempfehlung ist keine Aussage über die gesamte Umsetzungsreife der Anforderung.
+
+Verbindliche Harmonisierung nach QAIORA Quality Standard V1.1 (E2E-01 bis E2E-03):
+- Scope zuerst prüfen: Unbestätigte Nachbarprozesse und nicht bestätigte Funktionen als Scope-Frage führen, nicht als Pflicht-Finding oder verpflichtendes Testszenario zählen.
+- Verwende für jedes Szenario ein einheitliches Statusmodell: A = fachlich spezifiziert und praktisch ausführbar, Voraussetzungen bestätigt; B = notwendige fachliche Klärung; C = fachlich spezifizierbar, aber Testvorbereitung/technische Voraussetzungen erforderlich; D = kein belastbares Szenario ableitbar. Fachliche Ableitbarkeit (vollständig/teilweise/nicht) und praktische Ausführbarkeit getrennt ausweisen. Wenn fachliche Klärung und Vorbereitung zugleich nötig sind, zunächst B vergeben und nach Klärung neu bewerten.
+- Fehlermeldungen getrennt betrachten: Vorhandensein einer geforderten Meldung und genauer Meldungsinhalt sind unterschiedliche Prüfpunkte. Keinen Wortlaut erfinden. „Verständliche Fehlermeldung“ ist ohne konkrete Qualitätskriterien nicht automatisch ein Blocker; als Präzisierung/Optimierung kennzeichnen, sofern kein konkreter fachlicher Prüfbedarf belegt ist.
+- Erstelle zuerst eine eindeutige Szenario-Masterliste und leite alle Zahlen ausschließlich daraus ab.
+
+Arbeite präzise, nachvollziehbar und ohne unnötige Wiederholungen. Bewerte die Testbarkeit unabhängig von sprachlicher Qualität und allgemeiner Umsetzungsreife.`
+        : `Role:
+You are an experienced Quality Engineer with strong expertise in requirements engineering, test analysis and software testing.
+
+Task:
+Assess only the testability of the following business requirement. Determine whether objective, unambiguous, reproducible and executable test cases can be derived. Do not invent business rules or expected results. Missing information is not automatically a defect. Separate evidence-based findings, assumptions and open questions.
+
+Requirement:
+${requirement}
+
+Systematically assess these dimensions:
+
+Shared QAIORA quality assessment rules (apply across all modules):
+- Support every business finding with a specific text reference, or explicitly state that the information is not provided. Separate evidence-based findings, assumptions and open questions.
+- Assign exactly one primary category to each finding: “information gap”, “business defect/contradiction” (only with specific textual evidence), or “improvement opportunity”. An improvement opportunity is not automatically a business defect or a missing business rule.
+- Classify clarification needs as “business clarification”, “test data/test preparation”, “technical execution/observability”, or “optional QA extension”. Technical and organizational prerequisites are not business requirement gaps.
+- Consistently distinguish three maturity levels: (1) test idea identifiable, (2) business test scenario fully specifiable, and (3) test case practically executable. Do not label an identifiable test idea “not derivable” merely because business details are missing.
+- “Not mentioned in the requirement” means “unknown/not evidenced”, not “unavailable”. Rate practical executability as available or unavailable only when supported by concrete information; otherwise use “unknown/not assessable”.
+- Optional QA extensions are not findings or mandatory clarifications unless they are explicitly within the requirement scope. Keep finding and scenario counts consistent and avoid double counting.
+- Business criticality, impact on testability and practical executability are different assessment dimensions and must not be conflated.
+- **Scope check before creating findings:** First determine whether the issue explicitly or unambiguously belongs to the described functional scope. An undescribed adjacent process, special case or follow-up step is not automatically an information gap. If scope membership is unclear, list it as an open scope question or optional QA extension, not as a mandatory finding.
+- **Do not invent scope:** Do not derive additional mandatory rules from usual business practice, presumed expectations or industry conventions.
+
+1. Preconditions and states
+- Are prerequisites, user roles, permissions and relevant system states described?
+- Is the initial state for a test clear?
+
+2. Triggers, inputs and process
+- Are triggers, input data, actions and process steps unambiguous?
+- Are required data formats, value ranges and boundary values defined?
+
+3. Expected results and observability
+- Are expected results concrete, measurable and verifiable?
+- Can a tester identify success or failure?
+- Are state changes and side effects clear?
+
+4. Scenario coverage
+- Can positive, negative and alternative scenarios be derived?
+- Are decision points and relevant business rules covered?
+
+5. Constraints and error cases
+- Are boundaries, exceptions, error responses and abort conditions described?
+- Are timing, retries or concurrent operations relevant and specified?
+- Assess only constraints and error cases that arise from the stated business scope or explicitly mentioned risks. Do not automatically treat unmentioned robustness or special cases as gaps. If additional scenarios are optional QA extensions, mark dimension 5 as “not applicable / not assessed” for the current scope unless a concrete business constraint is missing.
+
+Finding rules:
+- Assign each finding a category: information gap, business contradiction (only with specific textual evidence), or improvement opportunity.
+- Rate its impact on testability: blocking, significant, limited or minor.
+- For each finding, provide textual evidence, rationale and its concrete consequence for test design or execution.
+- Merge overlapping findings and do not assign multiple IDs to the same issue.
+- Do not invent requirements, test data or expected results.
+- Explicitly and consistently distinguish three maturity levels:
+  1. Test idea identifiable: a possible test objective can be recognised from the requirement.
+  2. Test scenario specifiable: preconditions, business action and expected business outcome are sufficiently defined. If a necessary rule or expected outcome is missing, mark the scenario as partially specifiable.
+  3. Test case executable: in addition, the test data, access and observability needed for concrete execution are available.
+- Do not label a scenario “Not yet derivable” if at least one concrete test idea can be identified from the text. Use “Test idea derivable, scenario not yet fully specifiable” when the test objective is recognisable but the expected outcome or a necessary business rule is missing.
+- Separate business specification gaps from test-preparation and technical-execution prerequisites:
+  - “Business clarification”: a business rule, required field, state or expected business behaviour is missing.
+  - “Test data/test preparation”: test accounts, concrete data or initial states must be provided.
+  - “Technical execution/observability”: the interaction path, interface, log or verification method is missing.
+  - “Optional QA extension”: an additional risk or robustness scenario is outside the stated scope.
+- Missing UI description or technical observability is not automatically a business requirement gap and must not be rated as a business defect or significant finding when the business rule itself is clear. List such items separately as execution/test-preparation prerequisites where appropriate.
+- Assess scenario coverage in two parts: (a) Are relevant scenarios identifiable? and (b) Are those scenarios fully specifiable from a business perspective? High identifiability must not conceal incomplete specifiability. Do not rate the dimension simply as “Given” when important scenarios are recognisable but not fully specified.
+- Add a clarification type to each finding: business clarification, test data/test preparation, technical execution/observability or optional QA extension. Do not count technical or organisational prerequisites as business information gaps unless a business rule is actually missing.
+- Count each distinct finding exactly once. The sum of findings by impact category must equal the number of findings actually listed.
+- **Mandatory scenario reconciliation:** First create a unique master list of all identified business scenarios with stable IDs. Count each scenario exactly once. Derive every scenario total exclusively from this master list. The “identifiable scenarios” count must equal the number of scenario IDs in the list; fully specifiable and specifiable-after-clarification scenarios must together equal that total (unless other explicitly stated status categories are necessary). Do not additionally count test ideas, process steps, postconditions or individual checks as scenarios. Before output, verify that the Summary, Matrix, scenario table, status overview and conclusion use the same counts. Correct any discrepancy before responding.
+- **No artificial scenario splitting:** Confirmations, state changes and email postconditions within one flow are normally parts of the same scenario unless they represent an independent business starting condition or decision with its own expected outcome.
+- Use “blocking” only when the issue genuinely prevents a relevant test scenario or reliable acceptance. Missing detail is not automatically blocking.
+- Derive the overall rating from the test scenarios that can actually be specified and their concrete limitations. Explain which tests are already possible and which are not.
+- Explicitly assign an execution-readiness status to every derived test and distinguish at least these four cases:
+  1. “Executable with the information provided”: business preconditions, action and expected outcome are sufficiently specified, and test data and technical execution facilities are available.
+  2. “Executable after test preparation / technical provision”: the scenario is fully specifiable from a business perspective; only test data, test accounts, access, an interaction path or technical observability is missing.
+  3. “Executable after business clarification”: the scenario is identifiable, but at least one necessary business rule, precondition or expected outcome is missing.
+  4. “Not yet derivable”: the requirement does not provide a sufficient basis for a concrete test idea or scenario. Do not use this status when a concrete test idea is recognisable.
+- Separately report: (a) number of scenarios fully specifiable from a business perspective, (b) number of scenarios specifiable after business clarification, and (c) number of practically executable test cases. Do not count a business-specifiable scenario as business-incomplete merely because test data or technical prerequisites are missing.
+- Also show this classification in a concise test overview. For every test requiring clarification, state the specific missing information and classify it clearly as business clarification or test preparation / technical provision.
+- Do not claim that a test is fully executable if its test data, preconditions, process steps or expected outcomes would need to be assumed.
+- IMPORTANT: Never infer from the requirement text alone that test data, test accounts, access, test environments or observability facilities are actually missing or unavailable. “Not mentioned in the requirement” means only “availability unknown / not evidenced”, not “unavailable”.
+- Assess practical executability using the information actually available. Explicitly distinguish: (a) available/evidenced, (b) demonstrably unavailable, and (c) unknown/not stated. If there is no information about the test environment or test preparation, do not categorically state “0 practically executable test cases”. Instead use “practical executability cannot be conclusively assessed” and mark the number of demonstrably executable test cases as “undeterminable”.
+- A count of zero is permitted only when it is explicitly established that no test case meets the prerequisites or that required prerequisites are demonstrably unavailable. Explain the evidence.
+- Report separately: (a) scenarios fully specifiable from a business perspective, (b) scenarios specifiable after business clarification, (c) demonstrably practically executable test cases, and (d) scenarios whose practical executability is unknown due to missing information. Do not confuse “not evidenced” with “unavailable”.
+
+Mandatory final consistency check before responding:
+- Reconcile every scenario count in the Summary, Matrix, test ideas, scenario table, execution-status overview and conclusion against the master list.
+- Check: identifiable scenarios = number of unique scenario IDs. Status categories must represent those scenarios completely and without overlap.
+- Ensure that no unconfirmed scope item is counted as a mandatory finding.
+- If a count cannot be reliably determined, state “undeterminable” and explain why instead of providing conflicting totals.
+
+Expected output:
+
+A. Testability Summary
+- Overall rating: testable / partially testable / not testable
+- Brief rationale
+- Number of blocking, significant, limited and minor findings
+- Most important limitation
+- Status of practical prerequisites: available/evidenced, demonstrably unavailable, or unknown/not stated
+- Give a numeric count of practically executable test cases only when it can be determined from concrete information; otherwise state “undeterminable”
+
+B. Testability Matrix
+Rate each of the five dimensions as Given, Partially given or Not given where the requirement text supports a reliable assessment. For dimension 4, separately rate “scenarios identifiable” and “scenarios fully specifiable from a business perspective”.
+- Strictly distinguish “not specified” from “not testable”: if information is absent from the text, initially classify it as an information gap. Do not automatically conclude that the entire dimension or requirement is not testable.
+- If a dimension cannot be assessed reliably because information is missing, label it “insufficiently specified / cannot be conclusively assessed” and explain what information is missing. Do not force a negative rating.
+- Assess testability at the level of individual scenarios. A missing boundary condition must not automatically invalidate tests that are already clearly derivable.
+- Justify every assessment using the requirement.
+
+C. Identified Testability Gaps
+For each finding:
+- Unique ID
+- Textual evidence or note that the information is absent
+- Category
+- Clarification type: business clarification / test data and test preparation / technical execution and observability / optional QA extension
+- Impact on testability
+- Rationale
+- Specific missing information
+
+D. Derivable Tests
+Clearly separate:
+1. Test ideas
+2. Test scenarios with defined preconditions and outcomes
+3. Fully specifiable, executable test cases
+Create only what is supported by the requirement. Explicitly state when complete test cases cannot be produced.
+
+E. Tests That Cannot Yet Be Derived and Open Questions
+- Separate scenarios that are not fully specifiable from a business perspective from scenarios that are already business-specifiable but lack only test data or technical execution/observability prerequisites.
+- List test data/test preparation and technical execution/observability prerequisites separately from business questions.
+- Which tests cannot yet be specified?
+- What specific information is missing for each?
+- Formulate targeted questions for the requirement owner.
+- Prioritise by impact on test design and acceptance.
+
+F. Improvement Recommendations
+- Concrete additions to improve testability
+- Distinguish mandatory business clarifications from optional refinements.
+- Do not present new business rules as already agreed.
+
+G. QE Recommendation
+Give a clear recommendation:
+- Testable
+- Testable with limitations
+- Currently not sufficiently testable
+Explain the recommendation. This testability recommendation is not a verdict on the overall implementation readiness of the requirement.
+
+Mandatory harmonization under QAIORA Quality Standard V1.1 (E2E-01 to E2E-03):
+- Check scope first: unconfirmed adjacent processes and unconfirmed features remain scope questions; do not count them as mandatory findings or mandatory test scenarios.
+- Use one status model for every scenario: A = business-specified and practically executable, prerequisites confirmed; B = necessary business clarification; C = business-specifiable but test preparation/technical prerequisites required; D = no reliable scenario derivable. Report business derivability (fully/partially/not derivable) separately from practical executability. If both business clarification and preparation appear necessary, assign B first and reassess after clarification.
+- Assess error messages separately: the presence of a required message and the exact message content are different checks. Do not invent wording. “Understandable error message” without concrete quality criteria is not automatically a blocker; treat it as refinement/improvement unless a concrete business test need is evidenced.
+- Create one unique scenario master list first and derive all counts exclusively from it.
+
+Be precise, traceable and avoid unnecessary repetition. Assess testability independently of wording quality and overall implementation readiness.`;
+      testabilityOutput.hidden = false;
+      testabilityCopyStatus.textContent = "";
+      testabilityOutput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    document.getElementById("clearTestability").addEventListener("click", function() {
+      testabilityText.value = "";
+      generatedTestabilityPrompt.value = "";
+      testabilityOutput.hidden = true;
+      testabilityCopyStatus.textContent = "";
+      testabilityText.focus();
+    });
+
+    document.getElementById("copyTestabilityPrompt").addEventListener("click", async function() {
+      try {
+        await navigator.clipboard.writeText(generatedTestabilityPrompt.value);
+        testabilityCopyStatus.textContent = testabilityLanguage.value === "de" ? "Prompt wurde kopiert." : "Prompt copied.";
+      } catch (error) {
+        generatedTestabilityPrompt.focus();
+        generatedTestabilityPrompt.select();
+        testabilityCopyStatus.textContent = testabilityLanguage.value === "de" ? "Bitte kopiere den markierten Prompt manuell." : "Please copy the selected prompt manually.";
+      }
+    });
+
+    // QAIORA Requirement Analyzer: prompt generation only; no API call.
+    const requirementForm = document.getElementById("requirementForm");
+    const requirementText = document.getElementById("requirementText");
+    const promptLanguage = document.getElementById("promptLanguage");
+    const promptOutput = document.getElementById("promptOutput");
+    const generatedPrompt = document.getElementById("generatedPrompt");
+    const copyStatus = document.getElementById("copyStatus");
+
+    requirementForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const requirement = requirementText.value.trim();
+      if (requirement.length < 20) {
+        requirementText.focus();
+        return;
+      }
+      const isGerman = promptLanguage.value === "de";
+      generatedPrompt.value = isGerman
+        ? `Rolle:
+Du bist ein erfahrener Quality Engineer und Requirements Analyst mit fundierten Kenntnissen in Software Engineering, Requirements Engineering und Softwaretest.
+
+Aufgabe:
+Analysiere die folgende fachliche Anforderung systematisch aus QS-Sicht. Erfinde keine fachlichen Regeln. Unterscheide klar zwischen belegbaren Feststellungen, Annahmen und offenen Fragen. Eine fehlende Information ist nicht automatisch ein fachlicher Fehler. Behaupte einen Fehler oder Widerspruch nur mit konkretem Textbeleg.
+
+Anforderung:
+${requirement}
+
+Gemeinsamer QAIORA Quality Standard V1.1:
+1. Belegpflicht und Nachvollziehbarkeit
+- Jedes Finding benötigt einen konkreten Textbeleg oder einen eindeutigen Verweis auf eine Aussage der Anforderung.
+- Jeder abgeleitete Testfall muss auf eine fachliche Aussage oder ein Akzeptanzkriterium zurückführbar sein.
+- Kennzeichne Annahmen ausdrücklich. Stelle Annahmen niemals als Fakten dar.
+- Wenn keine ausreichende Textgrundlage existiert, formuliere keine fachliche Tatsachenbehauptung und erfinde keine Regel.
+
+2. Einheitliche Kategorien
+Ordne jedes eigenständige Finding genau einer Hauptkategorie zu:
+- Informationslücke: Eine für die fachliche Spezifikation relevante Information fehlt.
+- Fachlicher Widerspruch: Zwei oder mehrere Aussagen sind anhand des Textes nachweislich nicht miteinander vereinbar. Zitiere die widersprüchlichen Textstellen.
+- Verbesserungspotenzial: Die Aussage ist grundsätzlich verständlich, könnte aber präziser oder besser testbar sein.
+- Scope-Klärung erforderlich: Es ist unklar, ob ein Sachverhalt zum fachlichen Geltungsbereich gehört.
+
+Scope-Fragen sind zunächst Klärungsbedarf zum Geltungsbereich. Zähle sie nicht automatisch als fachlichen Fehler oder verbindliches Finding und leite daraus keine verpflichtenden Tests ab, solange der Scope nicht bestätigt ist.
+
+3. Kritikalität und Dringlichkeit getrennt bewerten
+Bewerte die fachliche Kritikalität jedes belegbaren Findings:
+- Blocking: Eine zentrale fachliche Entscheidung, Umsetzung oder Prüfung ist ohne Klärung nicht möglich.
+- Significant: Wesentliche fachliche Abläufe oder deren Prüfung sind erheblich beeinträchtigt.
+- Limited: Ein begrenzter Teil der Spezifikation oder Testbarkeit ist betroffen.
+- Minor: Geringfügiges Präzisions- oder Verbesserungspotenzial.
+
+Bewerte die Dringlichkeit separat von der Kritikalität. Leite sie nur aus belegtem zeitlichem oder lieferbezogenem Kontext ab. Wenn kein solcher Kontext vorliegt, kennzeichne sie als „nicht bewertbar“. Setze Kritikalität, Auswirkung auf Testbarkeit und Dringlichkeit nicht gleich.
+
+4. Einheitliche Testbegriffe und Zählweise
+- Testidee: allgemeiner Prüfgedanke – was soll geprüft werden?
+- Testszenario: fachlicher Prüfablauf mit nachvollziehbarer Aktion und erwartetem Ergebnis.
+- Testfall: reproduzierbarer Test mit Voraussetzungen, konkreten Testdaten, Schritten und erwarteten Ergebnissen.
+- Zähle Prozessschritte innerhalb eines Szenarios nicht automatisch als separate Szenarien.
+- Unterschiedliche fachliche Bedingungen oder erwartete Ergebnisse können eigenständige Szenarien rechtfertigen.
+- Weise Testideen, Testszenarien und vollständig spezifizierbare Testfälle getrennt aus.
+- Zähle denselben Sachverhalt nicht mehrfach.
+
+5. Einheitliche Testfallstatus
+Ordne jeden abgeleiteten Testfall einem Status zu:
+- A – Ausführbar: fachlich spezifiziert und praktische Voraussetzungen sind bestätigt.
+- B – Fachliche Klärung erforderlich: notwendige fachliche Informationen fehlen.
+- C – Vorbereitung erforderlich: Testdaten, Umgebung oder technische Voraussetzungen müssen vorbereitet werden.
+- D – Nicht ableitbar: Ein belastbarer Testfall lässt sich noch nicht erstellen.
+
+Weise zusätzlich die fachliche Ableitbarkeit getrennt aus: vollständig ableitbar, teilweise ableitbar oder nicht ableitbar. Unbekannte Testressourcen gelten als unbekannt und nicht automatisch als fehlend. „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“.
+
+6. Konsistenz bei offenen Fragen und abhängigen Testfällen
+- Zähle jede eigenständige offene fachliche Frage genau einmal. Eine Frage, die aus einem Finding entsteht und in Abschnitt C erneut aufgeführt wird, wird nicht erneut gezählt.
+- Die Anzahl in der Management Summary muss exakt der Anzahl der eindeutigen fachlichen Fragen in Abschnitt C entsprechen. Scope-Fragen werden separat gezählt.
+- Optionale Präzisierungen und Empfehlungen zählen nicht als offene fachliche Fragen, solange sie keine notwendige fachliche Entscheidung für Umsetzung oder Abnahme darstellen.
+- Wenn mehrere Testfälle von derselben fachlichen Klärung abhängen, kennzeichne diese gemeinsame Abhängigkeit ausdrücklich (z. B. „abhängig von F-001“). Zähle die zugrunde liegende fachliche Unklarheit nicht mehrfach.
+- Stelle Statusverteilungen in einer kompakten Tabelle mit Status, Bezeichnung und Anzahl dar. Verwende keine isolierten großen Zahlen oder mehrfach wiederholten Statusblöcke.
+
+7. Verbindliche E2E-Regeln aus Quality Standard V1.1
+- Scope (E2E-01): Unbestätigte Scope-Themen bleiben separate Scope-Fragen. Zähle sie weder als verpflichtendes Finding noch als verpflichtendes Testszenario, bis der Scope bestätigt ist.
+- Statusmodell (E2E-02): A = unmittelbar praktisch ausführbar, fachliche Regeln und praktische Voraussetzungen bestätigt; B = fachliche Klärung erforderlich; C = fachlich spezifizierbar, aber praktische Testvorbereitung oder technische Voraussetzungen fehlen/ sind noch zu klären; D = kein belastbares Testszenario ableitbar. Wenn B und C zugleich relevant erscheinen, verwende zunächst B; nach fachlicher Klärung ist neu zu bewerten, ob C verbleibt. Weise fachliche Ableitbarkeit zusätzlich separat aus.
+- Fehlermeldungen (E2E-03): Prüfe getrennt, ob eine Fehlermeldung gefordert ist und ob ihr genauer Inhalt spezifiziert ist. Erfinde keinen Wortlaut. Eine Forderung nach einer „verständlichen“ Meldung kann ein Präzisierungshinweis sein, ist aber nicht automatisch ein fachlicher Blocker.
+- Testkategorien (E2E-04): Positiv = zulässiges/erfolgreiches Verhalten; Negativ = ungültige Eingabe oder unzulässige Aktion mit erwarteter Zurückweisung; Grenzwert/Sonderfall = ausdrücklich belegte Grenzwerte, Zustandswechsel, Wiederholungen oder Sonderbedingungen. Klassifiziere nach Prüfziel und Eingabe/Verhalten, nicht danach, ob die Systemreaktion korrekt ist.
+
+Analyse und Befundklassifizierung:
+Prüfe mindestens:
+1. Verständlichkeit und Eindeutigkeit
+2. Vollständigkeit und fachlichen Kontext
+3. Mehrdeutigkeiten und unklare Begriffe
+4. Tatsächliche Widersprüche und Inkonsistenzen
+5. Geschäftsregeln, Vorbedingungen und Randbedingungen
+6. Akzeptanzkriterien und messbare erwartete Ergebnisse
+7. Risiken für Umsetzung, Betrieb und Test
+
+Testability Assessment:
+Bewerte separat und ausdrücklich:
+- Vorbedingungen und betroffene Benutzer-/Systemzustände
+- Auslöser, Eingaben und Prozessschritte
+- Beobachtbare und überprüfbare erwartete Ergebnisse
+- Ableitbarkeit positiver, negativer und alternativer Szenarien
+- Rand- und Fehlerfälle, soweit sie zum beschriebenen Scope gehören
+
+Unterscheide zwischen identifizierbaren Testideen, fachlich spezifizierbaren Testszenarien und praktisch ausführbaren Testfällen. Eine erkennbare Testidee darf nicht als „nicht ableitbar“ bezeichnet werden, nur weil Details fehlen. Fehlende UI- oder technische Beobachtungsinformationen sind nicht automatisch fachliche Anforderungslücken.
+
+Einheitliche Reifegradentscheidung:
+Triff genau eine eindeutige QS-Hauptentscheidung:
+- Umsetzungsreif: Die wesentlichen fachlichen Regeln und überprüfbaren Ergebnisse sind ausreichend beschrieben.
+- Bedingt umsetzungsreif: Die Kernfunktion ist ausreichend klar; begrenzte, nicht blockierende Punkte sind noch zu klären.
+- Nicht umsetzungsreif: Wesentliche Informationen fehlen oder echte Widersprüche verhindern eine verlässliche Umsetzung oder Abnahme.
+
+Nenne die Entscheidung genau einmal als Haupturteil und begründe sie. Die Testbarkeitsbewertung bleibt eine separate Bewertung und muss nicht automatisch identisch mit dem Reifegrad sein.
+
+Verbindliche Abschlusskontrolle vor der Ausgabe:
+- Vergleiche alle Szenariozahlen in Summary, Matrix, Testideen, Szenariotabelle, Teststatus und Fazit mit der Masterliste.
+- Prüfe: identifizierbare Szenarien = Anzahl eindeutiger Szenario-IDs. Die Statuskategorien müssen diese Szenarien vollständig und überschneidungsfrei abbilden.
+- Prüfe, dass kein nicht bestätigter Scope-Punkt als verpflichtender Befund gezählt wird.
+- Wenn eine Zahl nicht belastbar bestimmbar ist, kennzeichne sie als „nicht bestimmbar“ und erkläre den Grund, statt widersprüchliche Zahlen auszugeben.
+
+Erwartetes Ausgabeformat:
+A. Management Summary
+- Eindeutiges QS-Haupturteil und kurze Begründung
+- Testbarkeitsstatus
+- Anzahl der Findings je Kritikalität (Blocking/Significant/Limited/Minor)
+- Dringlichkeit separat, sofern anhand des Kontexts bewertbar; andernfalls „nicht bewertbar“
+- Anzahl der offenen fachlichen Fragen und Scope-Fragen
+- Wichtigste nächste Maßnahme
+
+B. Erkannte Findings
+Für jedes Finding:
+- Eindeutige ID
+- Konkreter Textbeleg
+- Hauptkategorie
+- Kritikalität
+- Dringlichkeit oder „nicht bewertbar“
+- Status: belegbare Feststellung / Annahme / offene Frage
+- Begründung und konkrete Auswirkung
+- Notwendige Klärung oder Empfehlung
+Zähle jedes eigenständige Finding genau einmal. Erzeuge keine künstlichen Findings, nur um alle Kategorien zu füllen.
+
+C. Offene Fragen
+- Fachliche Klärungsfragen getrennt von Scope-Fragen
+- Nach Kritikalität bzw. Umsetzungsrelevanz priorisiert
+- Jeweils mit kurzer Begründung
+- Keine Frage wiederholen, die bereits eindeutig beantwortet ist
+
+D. Konkrete Verbesserungsvorschläge
+- Auf die relevanten Findings beziehen
+- Notwendige fachliche Klärungen von optionalen Formulierungsverbesserungen trennen
+- Keine neuen fachlichen Regeln als bereits beschlossen formulieren
+
+E. Vorschlag für eine präzisierte Anforderung
+- Nur soweit ohne unbelegte Annahmen möglich
+- Offene Punkte als Platzhalter kennzeichnen
+
+F. Testability Assessment
+- Einzelbewertung der Testbarkeitsdimensionen
+- Gesamtbewertung der Testbarkeit
+- Testideen, Testszenarien und vollständig spezifizierbare Testfälle getrennt ausweisen
+- Fachliche Ableitbarkeit und praktische Ausführbarkeit getrennt bewerten
+- Für jeden abgeleiteten Testfall Status A, B, C oder D vergeben
+- Bei B die konkrete fachliche Klärung nennen; bei C die konkrete Vorbereitung bzw. technische Voraussetzung nennen
+- Praktische Ausführbarkeit als unbekannt kennzeichnen, wenn dazu keine belastbaren Informationen vorliegen
+
+G. QS-Gesamtbewertung und nächste Schritte
+- Das eindeutige QS-Haupturteil aus A wiederaufgreifen, nicht neu oder abweichend bewerten
+- Konkrete nächste Schritte in sinnvoller Reihenfolge
+
+Konsistenzprüfung vor der Ausgabe:
+- Stimmen die Anzahl der Findings und die Anzahl je Kritikalitätsstufe mit den tatsächlich aufgeführten Findings überein?
+- Wurden Scope-Fragen nicht automatisch als Fehler oder verbindliche Tests gezählt?
+- Wurden Testideen, Testszenarien und Testfälle nach denselben Definitionen gezählt?
+- Wurden Prozessschritte nicht künstlich als separate Szenarien gezählt?
+- Wurden fachliche Ableitbarkeit und praktische Ausführbarkeit getrennt bewertet?
+- Sind alle Findings und Testfälle durch konkrete Textbelege nachvollziehbar?
+
+Arbeite strukturiert, präzise und ohne unnötige Wiederholungen. Erfinde keine Kennzahlen, fachlichen Regeln, Testdaten oder erwarteten Ergebnisse.`
+        : `Role:
+You are an experienced Quality Engineer and Requirements Analyst with strong knowledge of software engineering, requirements engineering and software testing.
+
+Task:
+Analyse the following business requirement systematically from a Quality Engineering perspective. Do not invent business rules. Clearly distinguish evidence-based findings, assumptions and open questions. Missing information is not automatically a business defect. Claim a defect or contradiction only with specific textual evidence.
+
+Requirement:
+${requirement}
+
+Shared QAIORA Quality Standard V1.1:
+1. Evidence and traceability
+- Every finding must include specific textual evidence or a clear reference to a statement in the requirement.
+- Every derived test case must be traceable to a business statement or acceptance criterion.
+- Explicitly label assumptions. Never present assumptions as facts.
+- If there is no sufficient textual basis, do not make a factual business claim or invent a rule.
+
+2. Shared categories
+Assign exactly one primary category to each distinct finding:
+- Information gap: Information relevant to the business specification is missing.
+- Business contradiction: Two or more statements are demonstrably incompatible based on the text. Quote the conflicting statements.
+- Improvement opportunity: The statement is understandable in principle but could be more precise or testable.
+- Scope clarification required: It is unclear whether an issue belongs to the business scope.
+
+Scope questions initially clarify applicability or boundaries. Do not automatically count them as business defects or mandatory findings, and do not derive mandatory tests from them until scope is confirmed.
+
+3. Assess criticality and urgency separately
+Rate the business criticality of each evidence-based finding:
+- Blocking: A central business decision, implementation or test cannot proceed without clarification.
+- Significant: Essential business flows or their testing are substantially affected.
+- Limited: A limited part of the specification or testability is affected.
+- Minor: A minor precision or improvement opportunity.
+
+Assess urgency separately from criticality. Derive urgency only from evidenced timing or delivery context. If no such context is provided, label urgency as "not assessable". Do not conflate criticality, impact on testability and urgency.
+
+4. Shared test terminology and counting
+- Test idea: a general thought about what should be checked.
+- Test scenario: a business flow with a traceable action and expected result.
+- Test case: a reproducible test with preconditions, concrete test data, steps and expected results.
+- Do not automatically count process steps within one scenario as separate scenarios.
+- Different business conditions or expected results may justify separate scenarios.
+- Report test ideas, test scenarios and fully specifiable test cases separately.
+- Do not count the same issue more than once.
+
+5. Shared test case statuses
+Assign each derived test case one status:
+- A – Executable: specified from a business perspective and practical prerequisites are confirmed.
+- B – Business clarification required: necessary business information is missing.
+- C – Preparation required: test data, environment or technical prerequisites must be prepared.
+- D – Not derivable: a reliable test case cannot yet be derived.
+
+Also report business derivability separately: fully derivable, partially derivable or not derivable. Unknown test resources are unknown, not automatically missing. "Not mentioned in the requirement" means "unknown/not evidenced", not "unavailable".
+
+6. Consistency of open questions and dependent test cases
+- Count each distinct open business question exactly once. A question originating from a finding and repeated in section C must not be counted again.
+- The number in the Management Summary must exactly match the number of unique business questions listed in section C. Count scope questions separately.
+- Optional refinements and recommendations are not open business questions unless they require a necessary business decision for implementation or acceptance.
+- If multiple test cases depend on the same business clarification, explicitly identify the shared dependency (e.g. "depends on F-001"). Do not count the underlying business uncertainty more than once.
+- Present status distributions in one compact table with status, label and count. Do not use isolated oversized numbers or repeated status blocks.
+
+7. Mandatory E2E rules from Quality Standard V1.1
+- Scope (E2E-01): Unconfirmed scope topics remain separate scope questions. Do not count them as mandatory findings or mandatory test scenarios until scope is confirmed.
+- Status model (E2E-02): A = immediately practically executable, with business rules and practical prerequisites confirmed; B = business clarification required; C = business-specifiable, but practical test preparation or technical prerequisites are missing/still need clarification; D = no reliable test scenario can be derived. If both B and C appear relevant, use B first; after business clarification reassess whether C remains. Report business derivability separately.
+- Error messages (E2E-03): Assess separately whether an error message is required and whether its exact content is specified. Do not invent wording. A requirement for an “understandable” message may warrant refinement but is not automatically a business blocker.
+- Test categories (E2E-04): Positive = permitted/successful behavior; negative = invalid input or impermissible action with expected rejection; boundary/special = explicitly evidenced limits, state transitions, repetitions or special conditions. Classify by test objective and input/behavior, not merely by whether the system response is correct.
+
+Analysis and finding classification:
+Assess at least:
+1. Clarity and unambiguity
+2. Completeness and business context
+3. Ambiguous or undefined terms
+4. Actual contradictions and inconsistencies
+5. Business rules, preconditions and constraints
+6. Acceptance criteria and measurable expected outcomes
+7. Risks for implementation, operation and testing
+
+Testability assessment:
+Assess separately:
+- Preconditions and relevant user/system states
+- Triggers, inputs and process steps
+- Observable and verifiable expected outcomes
+- Derivation of positive, negative and alternative scenarios
+- Boundary and error cases, where they belong to the stated scope
+
+Distinguish identifiable test ideas, business-specifiable test scenarios and practically executable test cases. Do not label an identifiable test idea "not derivable" merely because details are missing. Missing UI or technical observability information is not automatically a business requirement gap.
+
+Consistent readiness decision:
+Choose exactly one overall Quality Engineering decision:
+- Ready for implementation: Essential business rules and verifiable outcomes are sufficiently described.
+- Conditionally ready: The core functionality is sufficiently clear; only limited, non-blocking points remain.
+- Not ready for implementation: Essential information is missing or actual contradictions prevent reliable implementation or acceptance.
+
+State this decision once as the primary verdict and explain it. Testability is a separate assessment and does not have to match the readiness decision.
+
+Mandatory final consistency check before responding:
+- Reconcile every scenario count in the Summary, Matrix, test ideas, scenario table, execution-status overview and conclusion against the master list.
+- Check: identifiable scenarios = number of unique scenario IDs. Status categories must represent those scenarios completely and without overlap.
+- Ensure that no unconfirmed scope item is counted as a mandatory finding.
+- If a count cannot be reliably determined, state “undeterminable” and explain why instead of providing conflicting totals.
+
+Expected output:
+A. Management Summary
+- Clear overall QE verdict and brief rationale
+- Testability status
+- Number of findings by criticality (Blocking/Significant/Limited/Minor)
+- Urgency separately where assessable; otherwise "not assessable"
+- Number of open business questions and scope questions
+- Most important next action
+
+B. Findings
+For each finding:
+- Unique ID
+- Specific textual evidence
+- Primary category
+- Criticality
+- Urgency or "not assessable"
+- Status: evidence-based finding / assumption / open question
+- Rationale and concrete impact
+- Required clarification or recommendation
+Count each distinct finding exactly once. Do not create artificial findings to populate every category.
+
+C. Open questions
+- Separate business clarification questions from scope questions
+- Prioritise by criticality or implementation relevance
+- Give a brief rationale for each
+- Do not repeat questions already answered unambiguously
+
+D. Concrete improvement recommendations
+- Link recommendations to relevant findings
+- Distinguish mandatory business clarification from optional wording improvements
+- Do not present new business rules as already agreed
+
+E. Suggested refined requirement
+- Only where possible without unsupported assumptions
+- Mark unresolved items as placeholders
+
+F. Testability assessment
+- Individual ratings for the testability dimensions
+- Overall testability rating
+- Report test ideas, test scenarios and fully specifiable test cases separately
+- Assess business derivability separately from practical executability
+- Assign status A, B, C or D to every derived test case
+- For B, state the specific business clarification; for C, state the specific preparation or technical prerequisite
+- Mark practical executability as unknown where no reliable information is available
+
+G. Overall QE assessment and next steps
+- Repeat the same primary verdict from A; do not introduce a different verdict
+- Give concrete next steps in a sensible order
+
+Consistency check before responding:
+- Do finding totals and criticality counts match the findings actually listed?
+- Were scope questions kept separate from defects and mandatory tests?
+- Were test ideas, test scenarios and test cases counted using the shared definitions?
+- Were process steps prevented from becoming artificial separate scenarios?
+- Were business derivability and practical executability assessed separately?
+- Are all findings and test cases traceable to specific textual evidence?
+
+Be structured, precise and avoid unnecessary repetition. Do not invent metrics, business rules, test data or expected outcomes.`
+;
+      promptOutput.hidden = false;
+      copyStatus.textContent = "";
+      promptOutput.scrollIntoView({behavior:"smooth", block:"nearest"});
+    });
+
+    document.getElementById("copyPrompt").addEventListener("click", async function() {
+      try {
+        await navigator.clipboard.writeText(generatedPrompt.value);
+        copyStatus.textContent = promptLanguage.value === "de" ? "Prompt wurde kopiert. Öffne ChatGPT und füge ihn in eine neue Unterhaltung ein." : "Prompt copied. Open ChatGPT and paste it into a new conversation.";
+      } catch (error) {
+        generatedPrompt.focus();
+        generatedPrompt.select();
+        copyStatus.textContent = promptLanguage.value === "de" ? "Automatisches Kopieren wurde blockiert. Der Prompt ist markiert; bitte Strg+C drücken." : "Automatic copy was blocked. The prompt is selected; use Ctrl+C.";
+      }
+    });
+
+    document.getElementById("clearRequirement").addEventListener("click", function() {
+      requirementText.value = "";
+      generatedPrompt.value = "";
+      promptOutput.hidden = true;
+      copyStatus.textContent = "";
+      requirementText.focus();
+    });
+
+
+    // QAIORA Test Case Generator V1.9: local prompt generation only; no API call.
+    const testCaseForm = document.getElementById("testCaseForm");
+    const testCaseText = document.getElementById("testCaseText");
+    const testCaseLanguage = document.getElementById("testCaseLanguage");
+    const testCaseOutput = document.getElementById("testCaseOutput");
+    const generatedTestCasePrompt = document.getElementById("generatedTestCasePrompt");
+    const testCaseCopyStatus = document.getElementById("testCaseCopyStatus");
+
+    testCaseForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const requirement = testCaseText.value.trim();
+      if (requirement.length < 20) { testCaseText.focus(); return; }
+      const de = testCaseLanguage.value === "de";
+      generatedTestCasePrompt.value = de ? `Rolle:
+Du bist ein erfahrener Quality Engineer und Test Analyst mit fundierten Kenntnissen in Requirements Engineering, Testdesign und Softwaretest.
+
+Modul: QAIORA Test Case Generator V1.9
+
+Aufgabe:
+Leite aus der nachfolgenden fachlichen Anforderung und den Akzeptanzkriterien strukturierte Testfälle ab. Arbeite ausschließlich auf Grundlage des bereitgestellten Textes. Erfinde keine fachlichen Regeln, Vorbedingungen, Testdaten, Prozessschritte oder erwarteten Ergebnisse.
+
+Anforderung:
+${requirement}
+
+Gemeinsame QS-Bewertungslogik (gilt für alle QAIORA-Module):
+- Belege jede fachliche Feststellung mit einer konkreten Textstelle oder kennzeichne ausdrücklich, dass eine Information nicht angegeben ist. Trenne Feststellungen, Annahmen und offene Fragen.
+- Verwende für Befunde genau eine Hauptkategorie: „Informationslücke“, „fachlicher Fehler/Widerspruch“ (nur mit konkretem Textbeleg) oder „Optimierungspotenzial“. Ein Optimierungspotenzial ist nicht automatisch ein fachlicher Fehler oder eine fehlende Geschäftsregel.
+- Ordne Klärungsbedarf eindeutig zu: „fachliche Klärung“, „Testdaten/Testvorbereitung“, „technische Ausführbarkeit/Beobachtbarkeit“ oder „optionale QS-Erweiterung“. Technische und organisatorische Voraussetzungen sind keine fachlichen Anforderungslücken.
+- Unterscheide konsequent drei Reifegrade: (1) Testidee identifizierbar, (2) fachliches Testszenario vollständig spezifizierbar, (3) Testfall praktisch ausführbar. Eine erkennbare Testidee darf nicht als „nicht ableitbar“ bezeichnet werden, nur weil fachliche Details fehlen.
+- „Im Anforderungstext nicht erwähnt“ bedeutet „unbekannt/nicht nachgewiesen“, nicht „nicht vorhanden“. Zähle praktische Ausführbarkeit nur dann als gegeben oder nicht gegeben, wenn dafür konkrete Informationen vorliegen; andernfalls als „unbekannt/nicht abschließend bewertbar“.
+- Optionale QS-Erweiterungen sind nicht als Befunde oder notwendige Klärungen zu zählen, solange sie nicht ausdrücklich zum Anforderungsumfang gehören. Zähle Befunde und Szenarien konsistent und ohne Doppelzählung.
+- Fachliche Kritikalität, Auswirkung auf Testbarkeit und praktische Ausführbarkeit sind unterschiedliche Bewertungsdimensionen und dürfen nicht gleichgesetzt werden.
+Erstelle nachvollziehbare Testfälle in genau diesen drei Kategorien:
+1. Positive Testfälle
+2. Negative Testfälle
+3. Grenzwert- und Sonderfälle
+Ordne einen Testfall nur dann einer Kategorie zu, wenn dies fachlich durch den Text begründet ist. Erzeuge keine künstlichen Grenzwerttests, wenn keine Grenzwerte oder Wertebereiche genannt sind.
+- Klassifiziere jeden Testfall nach seinem primären Prüfziel und dem konkret geprüften Verhalten. Bewerte nicht pauschal alle Aktionen innerhalb eines Testfalls, sondern frage: Welche einzelne fachliche Aussage soll dieser Testfall hauptsächlich nachweisen?
+- Wende diese Entscheidungsreihenfolge an:
+  1. **Negativ:** Das primäre Prüfziel ist eine ungültige Eingabe oder eine unzulässige/verbotene Aktion und deren fachlich erwartete Zurückweisung. Das bleibt negativ, auch wenn die korrekte Ablehnung, Protokollierung oder Fehlererfassung geprüft wird. Beispiele: Anmeldung mit falschem Passwort; Anmeldeversuch während einer aktiven Kontosperrung.
+  2. **Grenzwert/Sonderfall:** Das primäre Prüfziel ist ausdrücklich ein definierter Schwellenwert, eine Zeitgrenze, eine Wiederholungsgrenze oder ein besonderer Zustandsübergang. Beispiele: Sperrung genau nach drei Fehlversuchen; automatische Freigabe nach 30 Minuten; manuelle Entsperrung durch einen Administrator.
+  3. **Positiv:** Das primäre Prüfziel ist ein zulässiger, erfolgreicher fachlicher Ablauf, der nicht selbst eine ausdrücklich definierte Grenze oder einen besonderen Zustandsübergang prüft. Beispiel: erfolgreiche Anmeldung mit korrektem Passwort und das dabei geforderte Zurücksetzen des Fehlerzählers.
+- Ein Testfall erhält genau eine Hauptkategorie. Eine ungültige oder verbotene Aktion wird nicht deshalb positiv, weil das System korrekt reagiert. Ein erfolgreicher Ablauf wird nicht automatisch zum Grenzwerttest, nur weil sich dabei ein Zustand ändert. Entscheidend ist, ob der Schwellenwert bzw. besondere Zustandsübergang selbst das primäre Prüfziel ist.
+- Wenn mehrere Kategorien zunächst plausibel erscheinen, bestimme das primäre Prüfziel anhand von Testziel, erwarteter fachlicher Aussage und Akzeptanzkriterium. Dokumentiere die Entscheidung knapp. Erzwinge keine Kategorie allein anhand eines einzelnen Schritts oder einer Nebenwirkung.
+
+Verbindliche Regeln:
+- Jeder Testfall muss auf mindestens ein konkretes Akzeptanzkriterium oder eine konkrete Aussage der Anforderung verweisen.
+- Unterscheide strikt zwischen belegbaren Angaben, notwendigen Annahmen und offenen Fragen.
+- Fehlende Informationen sind nicht automatisch fachliche Fehler. Kennzeichne sie als Klärungsbedarf.
+- Erfinde keine konkreten Testdaten. Verwende bei fehlenden Werten beschreibende Platzhalter und benenne die benötigte Klärung.
+- Erfinde keine erwarteten Ergebnisse. Wenn das Ergebnis nicht aus dem Text hervorgeht, kennzeichne es als offen und leite keinen vollständig ausführbaren Testfall daraus ab.
+- Unterscheide strikt zwischen fachlicher Ableitbarkeit eines Szenarios und seiner tatsächlichen Ausführbarkeit. Ein fachlich ableitbares Szenario darf den Status B erhalten, auch wenn einzelne Ausführungsdetails fehlen.
+- Weise Status A nur zu, wenn der Testfall mit den belegten Informationen praktisch ausführbar ist: notwendige Vorbedingungen, Testdaten/Datenmerkmale, fachlich konkrete Schritte und erwartetes Ergebnis sind ausreichend bestimmt; notwendige Ausführungs- und Beobachtungsvoraussetzungen sind ebenfalls bekannt. Eine rein fachliche Ableitbarkeit reicht für A nicht aus. Ein beschreibender Platzhalter allein macht einen Testfall nicht ausführbar.
+- Weise Status B ausschließlich zu, wenn eine notwendige fachliche Klärung fehlt. Wenn zugleich praktische Vorbereitung nötig ist, zunächst B vergeben und nach fachlicher Klärung neu bewerten.
+- Weise Status C zu, wenn das Szenario fachlich vollständig spezifizierbar ist, aber Testdaten, Testvorbereitung oder technische Ausführungs-/Beobachtungsvoraussetzungen noch fehlen. Weise Status D zu, wenn kein konkretes fachliches Testszenario aus dem Text abgeleitet werden kann. Erzeuge dafür keinen künstlichen Testfall.
+- Ein Testfall, der von einem ungeklärten Widerspruch abhängt, darf nicht Status A erhalten. Verwende B, wenn das Szenario erkennbar ist und die fachliche Klärung die konkrete Sperre darstellt; verwende D, wenn noch keine konkrete Testidee bzw. kein konkretes Szenario ableitbar ist. Erzeuge dafür keinen künstlichen Testfall und führe den Punkt stattdessen unter den offenen Fragen auf.
+- Kennzeichne jeden Schritt, der mangels Information nicht konkret beschrieben werden kann, ausdrücklich als „Klärung erforderlich“; formuliere ihn nicht als bereits feststehenden Systemprozess.
+- Verwende eindeutige Testfall-IDs (TC-001, TC-002 …) fortlaufend über alle drei Kategorien hinweg, ohne Lücken und ohne Duplikate.
+- Vermeide redundante Testfälle. Begründe, wenn zwei Fälle unterschiedliche Risiken oder Kriterien abdecken.
+- Wenn ein Testfall von einer ungeklärten fachlichen Regel oder einem Widerspruch abhängt, kennzeichne die Abhängigkeit ausdrücklich mit der betroffenen Befund-/Frage-ID. Kennzeichne den Testfall als „blockiert bis zur Klärung“; stelle ihn nicht als unabhängig ausführbar dar und leite kein erwartetes Ergebnis aus einer der widersprüchlichen Varianten ab.
+- Ein abhängiger Testfall darf nur dann als konkreter Testfall aufgeführt werden, wenn seine Testidee und die zu prüfende Bedingung aus dem Text erkennbar sind. Weise die fachliche Ableitbarkeit und die praktische Ausführbarkeit getrennt aus. Wenn der Widerspruch die erwartete fachliche Regel offenlässt, ist der Testfall mindestens teilweise ableitbar und praktisch erst nach fachlicher Klärung ausführbar.
+- Erzeuge keine Testfälle nur, um alle Kategorien zu füllen. Eine Kategorie darf ausdrücklich „Keine Testfälle ableitbar“ enthalten.
+- Decke positive, negative sowie Grenzwert-/Sonderfälle nur soweit ab, wie es der Anforderungstext erlaubt.
+- Schreibe konkrete, atomare Testschritte. Trenne Vorbedingungen, Testdaten, Aktion und erwartetes Ergebnis.
+- Ein Testschritt muss eine konkrete, beobachtbare Aktion oder Zustandsänderung beschreiben. Eine Absicht wie „Der Benutzer möchte seine E-Mail-Adresse ändern“ ist kein Testschritt.
+- Wiederhole keine Vorbedingung, Akzeptanzkriterien oder erwarteten Ergebnisse als nummerierte Testschritte.
+- Unterscheide zwischen einer fachlich beschriebenen Testaktion und dem konkreten technischen oder UI-Bedienweg. Eine abstrakte Aktion wie „einen Anmeldeversuch mit falschen Zugangsdaten durchführen“ ist zulässig, wenn der Anforderungstext ausdrücklich fehlgeschlagene Anmeldeversuche voraussetzt. Erfinde daraus aber keine konkreten Klicks, Masken, URLs, Buttons oder technischen Aufrufe.
+- Formuliere fachlich belegte Aktionen als nummerierte, abstrakte Testschritte. Beispiel: „Drei aufeinanderfolgende fehlgeschlagene Anmeldeversuche durchführen.“ Ergänze keine nicht beschriebenen UI- oder Systemdetails.
+- Wenn nur der konkrete Bedienweg fehlt, darf der fachliche Testschritt trotzdem formuliert werden. Kennzeichne ausschließlich den fehlenden Bedienweg separat als „Technischer/UI-Klärungsbedarf“; erkläre den gesamten Testfall nicht allein deshalb für fachlich nicht ableitbar.
+- Wenn nicht einmal eine fachliche Aktion aus dem Text hervorgeht, erfinde keine Ersatzaktion. Schreibe dann: „Keine fachlich konkrete Testaktion aus dem bereitgestellten Text ableitbar.“
+- Nummeriere ausschließlich fachlich belegte Testaktionen. Eine Klärungsfrage, ein technischer Bedienweg oder eine Prüfidee darf niemals als ausgeführter Schritt ausgegeben werden.
+- Führe fehlende technische/UI-Aktionen separat auf, z. B. „Über welche Schnittstelle oder Benutzeroberfläche wird der Anmeldeversuch ausgelöst?“ Vermeide redundante Fragen zum selben Bedienweg.
+- Verwende keine allgemeinen Pseudo-Schritte wie „Validierung auslösen“, „Prüfung durchführen“, „Bestätigungsprozess starten“ oder „Systemverhalten prüfen“, wenn die fachliche Aktion selbst nicht beschrieben ist.
+- Trenne sichtbar: (1) fachlich belegte Testaktionen, (2) technische/UI-Ausführungsdetails, die noch geklärt werden müssen, und (3) fachliche Regeln bzw. erwartete Ergebnisse.
+- Ein fehlender technischer Bedienweg darf den Status der fachlichen Ableitbarkeit nicht herabsetzen. Er kann jedoch die praktische Ausführbarkeit in einer konkreten Testumgebung einschränken.
+- Schreibe beim erwarteten Ergebnis nur das fachlich zugesicherte Verhalten. Trenne davon technische oder UI-Prüfmethoden, sofern diese nicht spezifiziert sind.
+- Vergib Prioritäten grundsätzlich als „nicht bewertet“, sofern der Anforderungstext keine konkrete Priorität, Kritikalität oder belastbare Risikoinformation enthält. Die allgemeine Bedeutung einer Kernfunktion reicht allein nicht aus, um „Hoch“ zu vergeben.
+- Führe vor der Ausgabe eine verpflichtende Qualitätssicherung jedes Testfalls durch:
+  1. Ist jeder nummerierte Schritt eine fachlich belegte Testaktion und kein Wunsch, keine Vorbedingung, keine Regel und kein erwartetes Ergebnis?
+  2. Wurden abstrakte fachliche Aktionen genutzt, ohne nicht belegte UI- oder technische Details zu erfinden?
+  3. Sind fehlende technische/UI-Ausführungsdetails getrennt vom fachlichen Szenario aufgeführt?
+  4. Sind fachliche Ableitbarkeit und praktische Ausführbarkeit unabhängig voneinander bewertet?
+  5. Sind zwingende fachliche Klärungen von optionalen QS-Erweiterungspunkten getrennt?
+  6. Sind Prioritäten belegt oder korrekt als „nicht bewertet“ ausgewiesen?
+  7. Ist jeder Testfall anhand seines primären Prüfziels nach der E2E-04-Entscheidungsreihenfolge klassifiziert? Sind ungültige/unzulässige Aktionen negativ, ausdrücklich geprüfte Schwellen/Zeitgrenzen/besondere Zustandsübergänge Grenzwert/Sonderfall und zulässige erfolgreiche Abläufe positiv?
+  8. Wurden zunächst mehrdeutige Kategorien anhand des primären Prüfziels aufgelöst und die Begründung knapp dokumentiert?
+  9. Sind Abhängigkeiten von ungeklärten Widersprüchen sichtbar markiert und betroffene Testfälle als blockiert statt unabhängig ausführbar gekennzeichnet?
+  10. Wurden Status A/B/C/D anhand der praktischen Ausführbarkeit und fachlichen Klärung gemäß Quality Standard vergeben?
+  11. Stimmen Testfall-IDs, Kategorien, Quellen, Status und Zählungen überein?
+- Entferne oder korrigiere vor der Ausgabe jeden Testschritt, der diese Prüfung nicht besteht.
+
+Bewerte je Testfall zwei getrennte Dimensionen:
+1. Fachliche Ableitbarkeit:
+   - „Vollständig ableitbar“: Szenario, relevante Bedingung und erwartetes fachliches Verhalten sind durch den Text belegt.
+   - „Teilweise ableitbar“: Ein Teil des Szenarios ist belegt, aber eine notwendige fachliche Regel oder ein erwartetes Ergebnis fehlt.
+   - „Nicht ableitbar“: Es gibt keine ausreichende Textgrundlage für ein konkretes fachliches Szenario.
+2. Praktische Ausführbarkeit:
+   A. „Mit den vorhandenen Informationen ausführbar“: Die fachliche Aktion, notwendige Vorbedingungen/Testdaten und das erwartete Ergebnis sind ausreichend beschrieben. Ein nicht spezifizierter UI-Bedienweg verhindert Status A nicht, wenn die fachliche Aktion abstrakt und eindeutig ausführbar ist.
+   B. „Nach Klärung ausführbar“: Das fachliche Szenario ist ableitbar, aber eine notwendige fachliche Voraussetzung, ein Datenmerkmal, ein Testzugang oder ein für die gewählte Testumgebung erforderlicher Ausführungs-/Beobachtungsweg fehlt. Benenne genau, was fehlt. Unterscheide fachliche Klärung von technischer/UI-Klärung.
+   C. „Noch nicht ableitbar“: Es lässt sich kein konkretes fachliches Testszenario aus dem Text ableiten. Erzeuge keinen Ersatzfall.
+Wichtig: Ein Testfall kann fachlich vollständig ableitbar sein und dennoch praktische Ausführungsdetails benötigen. Setze ihn nicht allein wegen fehlender UI-Details auf „fachlich teilweise ableitbar“.
+
+Ordne offene Punkte außerdem ein:
+- „Zwingende fachliche Klärung“: Ohne diese Information ist eine fachliche Erwartung oder ein notwendiger Testzustand nicht eindeutig.
+- „Technische/UI-Klärung“: Betrifft nur den konkreten Ausführungs- oder Beobachtungsweg, nicht die fachliche Regel.
+- „Optionale QS-Erweiterung“: Zusätzliche Robustheits-, Betriebs- oder Randfallprüfung, die nicht aus dem aktuellen Umfang gefordert ist. Nicht als Anforderungsmangel, Blocker oder notwendige Klärung darstellen.
+
+Ausgabeformat:
+1. Kurzüberblick
+- Anzahl der Testfälle je Kategorie
+- Anzahl je Ausführungsstatus A, B, C und D
+- Anzahl je fachlicher Ableitbarkeit (vollständig, teilweise, nicht ableitbar)
+- Zähle ausschließlich tatsächlich beschriebene Testfälle; offene Fragen ohne Testfall-ID nicht mitzählen.
+- Wichtigste Einschränkungen und offene Punkte
+
+2. Positive Testfälle
+3. Negative Testfälle
+4. Grenzwert- und Sonderfälle
+
+Stelle jeden Testfall mit diesen Feldern dar:
+- Testfall-ID
+- Titel
+- Testziel
+- Quelle (Akzeptanzkriterium / Textstelle)
+- Vorbedingungen
+- Testdaten
+- Testschritte (nummeriert)
+- Erwartetes Ergebnis
+- Ausführungsstatus
+- Klärungsbedarf (falls vorhanden)
+- Priorität nur dann, wenn sie aus dem fachlichen Risiko ableitbar ist; andernfalls „nicht bewertet“.
+
+5. Nicht ableitbare Testfälle und offene Fragen
+- Benenne die fehlende Information konkret.
+- Formuliere eine gezielte Frage an den Anforderungsgeber.
+- Erzeuge aus offenen Fragen keine erfundenen Testfälle.
+
+6. QS-Abschlusseinschätzung
+- Sind die Testfälle fachlich nachvollziehbar und durch den Text belegt?
+- Welche Fälle sind unmittelbar ausführbar?
+- Welche benötigen Klärung?
+- Welche Testabdeckung bleibt aufgrund fehlender Informationen offen?
+- Welche Punkte sind zwingende fachliche Klärungen, welche nur technische/UI-Klärungen und welche optionale QS-Erweiterungen?
+- Trenne ausdrücklich fachliche Ableitbarkeit von praktischer Ausführbarkeit.
+
+Verbindliche Harmonisierung nach QAIORA Quality Standard V1.1 (E2E-01 bis E2E-04):
+- Scope (E2E-01): Nicht bestätigte Scope-Themen bleiben offene Scope-Fragen und werden nicht als verpflichtende Testfälle gezählt.
+- Einheitliches Statusmodell (E2E-02): A = fachlich spezifiziert und praktisch ausführbar, praktische Voraussetzungen bestätigt; B = fachliche Klärung erforderlich; C = fachlich vollständig spezifizierbar, aber praktische Testvorbereitung/technische Voraussetzungen erforderlich; D = kein belastbares Testszenario ableitbar. Verwende nicht mehr das alte A/B/C-Schema. Wenn fachliche Klärung und praktische Vorbereitung zugleich nötig sind, zunächst B vergeben; nach Klärung neu bewerten, ob C verbleibt. Fachliche Ableitbarkeit und praktische Ausführbarkeit immer separat ausweisen.
+- Widerspruchsabhängigkeiten: Ein Fall, dessen erwartetes Ergebnis von einem ungeklärten Widerspruch abhängt, bleibt blockiert und erhält B; kennzeichne die konkrete Abhängigkeit. Erfinde keine erwartete Variante. D nur verwenden, wenn kein konkretes Szenario ableitbar ist.
+- Fehlermeldungen (E2E-03): Vorhandensein einer geforderten Fehlermeldung und genauer Wortlaut sind getrennt zu bewerten. Keinen Wortlaut erfinden. Eine unspezifische Forderung wie „verständliche Fehlermeldung“ ist nicht automatisch ein Blocker oder zwingende fachliche Klärung.
+- Kategorien (E2E-04): Bestimme die Kategorie nach dem primären Prüfziel und wende diese Reihenfolge an: (1) ungültige Eingabe/unzulässige Aktion mit erwarteter Zurückweisung = Negativ; (2) ausdrücklich geprüfter Schwellenwert, Zeit-/Wiederholungsgrenze oder besonderer Zustandsübergang = Grenzwert/Sonderfall; (3) zulässiger erfolgreicher Ablauf ohne primäres Grenz-/Sonderziel = Positiv. Eine korrekte Systemreaktion macht einen negativen Test nicht positiv; ein beliebiger Zustandswechsel macht einen Test nicht automatisch zum Sonderfall. Genau eine Kategorie je Testfall.
+- Verbindliche Selbstkorrektur vor Ausgabe: Prüfe jeden Testfall gegen die E2E-04-Entscheidungsreihenfolge. Korrigiere jede unpassende Kategorie und ihre Begründung, bevor du die Antwort ausgibst. Berechne danach die Anzahl positiver, negativer und Grenzwert-/Sonderfälle ausschließlich aus den endgültig kategorisierten Testfall-IDs neu. Übernimm keine zuvor berechneten Summen ungeprüft.
+- Abschlusskontrolle: Statusverteilung A/B/C/D muss exakt der Zahl der Testfall-IDs entsprechen; Kategorien und fachliche Ableitbarkeit müssen ebenfalls vollständig und überschneidungsfrei aufgehen. Prüfe zusätzlich, dass die Summe der drei Kategorien exakt der Zahl aller Testfall-IDs entspricht.
+
+Prüfe abschließend die Konsistenz: IDs, Kategorien, Zählungen, Quellenverweise und Ausführungsstatus müssen übereinstimmen.` : `Role:
+You are an experienced Quality Engineer and Test Analyst with strong knowledge of requirements engineering, test design and software testing.
+
+Task:
+Derive structured test cases from the following business requirement and acceptance criteria. Work only from the supplied text. Do not invent business rules, preconditions, test data, process steps or expected results.
+
+Requirement:
+${requirement}
+
+Shared QAIORA quality assessment rules (apply across all modules):
+- Support every business finding with a specific text reference, or explicitly state that the information is not provided. Separate evidence-based findings, assumptions and open questions.
+- Assign exactly one primary category to each finding: “information gap”, “business defect/contradiction” (only with specific textual evidence), or “improvement opportunity”. An improvement opportunity is not automatically a business defect or a missing business rule.
+- Classify clarification needs as “business clarification”, “test data/test preparation”, “technical execution/observability”, or “optional QA extension”. Technical and organizational prerequisites are not business requirement gaps.
+- Consistently distinguish three maturity levels: (1) test idea identifiable, (2) business test scenario fully specifiable, and (3) test case practically executable. Do not label an identifiable test idea “not derivable” merely because business details are missing.
+- “Not mentioned in the requirement” means “unknown/not evidenced”, not “unavailable”. Rate practical executability as available or unavailable only when supported by concrete information; otherwise use “unknown/not assessable”.
+- Optional QA extensions are not findings or mandatory clarifications unless they are explicitly within the requirement scope. Keep finding and scenario counts consistent and avoid double counting.
+- Business criticality, impact on testability and practical executability are different assessment dimensions and must not be conflated.
+Create traceable test cases in exactly these three categories:
+1. Positive test cases
+2. Negative test cases
+3. Boundary and special cases
+Assign a case to a category only when supported by the requirement. Do not create artificial boundary tests when no limits or value ranges are specified.
+- Classify each test case by its primary test objective and the specific behavior being verified. Do not classify every action within a test case independently. Ask: Which single business statement is this test case primarily intended to prove?
+- Apply this decision order:
+  1. **Negative:** The primary objective is an invalid input or an impermissible/prohibited action and its required business rejection. It remains negative even when correct rejection, logging or error recording is being verified. Examples: login with an incorrect password; attempting to log in while an account is actively locked.
+  2. **Boundary/special:** The primary objective explicitly verifies a defined threshold, time limit, repetition limit or special state transition. Examples: locking exactly after three failed attempts; automatic release after 30 minutes; manual unlocking by an administrator.
+  3. **Positive:** The primary objective is a permitted, successful business flow that is not itself testing an explicitly defined limit or special state transition. Example: successful login with the correct password and the required reset of the failed-attempt counter.
+- Assign exactly one primary category per test case. An invalid or prohibited action does not become positive merely because the system responds correctly. A successful flow does not automatically become a boundary test merely because a state changes. The threshold or special state transition must itself be the primary test objective.
+- If more than one category initially appears plausible, determine the primary objective from the test objective, expected business statement and acceptance criterion. Briefly document the decision. Do not force a category based only on one step or a side effect.
+
+Mandatory rules:
+- Every test case must reference at least one specific acceptance criterion or statement in the requirement.
+- Strictly distinguish evidenced information, necessary assumptions and open questions.
+- Missing information is not automatically a business defect. Mark it as clarification needed.
+- Do not invent concrete test data. Use descriptive placeholders when values are missing and state what must be clarified.
+- Do not invent expected results. If an outcome is not supported by the text, mark it as open and do not present the case as fully executable.
+- Strictly distinguish whether a scenario can be derived from the requirement and whether it is actually executable. A derivable scenario may have status B when execution details are missing.
+- Assign status A only when the test case is practically executable with the evidenced information: necessary preconditions, test data/data characteristics, concrete business steps and expected result are sufficiently specified; necessary execution and observation prerequisites are also known. Business derivability alone is not sufficient for A. A descriptive placeholder alone does not make a test case executable.
+- Assign status B only when a necessary business clarification is missing. If practical preparation is also needed, assign B first and reassess after the business clarification.
+- Assign status C when the scenario is fully specifiable from a business perspective, but test data, test preparation, or technical execution/observation prerequisites are still missing. Assign status D when no concrete business test scenario can be derived from the text. Do not create an artificial test case.
+- A test case depending on an unresolved contradiction must not receive status A. Use B when the scenario is identifiable and business clarification is the concrete blocker; use D when no concrete test idea or scenario can yet be derived. Do not create an artificial test case; list the point under open questions instead.
+- Explicitly mark any step that cannot be specified due to missing information as “clarification required”; do not present it as an established system process.
+- Use unique test case IDs (TC-001, TC-002 …) sequentially across all three categories, without gaps or duplicates.
+- Avoid redundant test cases. Explain when cases cover different risks or criteria.
+- If a test case depends on an unresolved business rule or contradiction, explicitly identify the dependency by finding/question ID. Mark the case as “blocked pending clarification”; do not present it as independently executable and do not derive an expected result from either conflicting alternative.
+- Include a dependent test case only when its test idea and condition under test are identifiable from the text. Assess business derivability and practical executability separately. If the contradiction leaves the expected business rule unresolved, the case is at least partially derivable and can be practically executed only after business clarification.
+- Do not create test cases merely to populate all categories. A category may explicitly state “No test cases derivable”.
+- Cover positive, negative, and boundary/special cases only to the extent justified by the requirement.
+- Use concrete, atomic test steps. Separate preconditions, test data, action and expected result.
+- A test step must describe a concrete, observable action or state change. An intention such as “The user wants to change their email address” is not a test step.
+- Do not repeat preconditions, acceptance criteria or expected results as numbered test steps.
+- Distinguish a business-level test action from its concrete technical or UI interaction path. An abstract action such as “perform a login attempt with incorrect credentials” is allowed when the requirement explicitly refers to failed login attempts. Do not invent clicks, screens, URLs, buttons or technical calls.
+- Write business-level actions supported by the requirement as numbered, abstract test steps. Example: “Perform three consecutive failed login attempts.” Do not add unsupported UI or system details.
+- If only the concrete interaction path is missing, the business-level test step may still be stated. List the missing path separately as “Technical/UI clarification”; do not treat the whole scenario as not derivable for that reason alone.
+- If no business-level action can be derived, do not invent a substitute. State: “No concrete business-level test action can be derived from the supplied text.”
+- Number only business-level test actions supported by the text. A clarification question, technical interaction path or verification idea must never be presented as an executed step.
+- List missing technical/UI actions separately, e.g. “Through which interface or UI is the login attempt initiated?” Avoid redundant questions about the same interaction path.
+- Do not use generic pseudo-steps such as “trigger validation”, “perform the check”, “start the confirmation process” or “check system behavior” when the business action itself is not described.
+- Clearly separate (1) evidenced business-level test actions, (2) technical/UI execution details still to be clarified, and (3) business rules or expected results.
+- A missing technical interaction path must not lower the business derivability assessment. It may, however, limit practical execution in a specific test environment.
+- In the expected result, state only the behavior guaranteed by the requirement. Keep technical or UI verification methods separate unless they are specified.
+- By default, set priority to “not assessed” unless the requirement provides a specific priority, criticality or substantiated risk information. The general importance of a core feature alone is not sufficient to assign “High”.
+- Perform a mandatory quality review of every test case before output:
+  1. Is every numbered step a business-level test action supported by the text, rather than an intention, precondition, rule or expected result?
+  2. Are abstract business actions used without inventing unsupported UI or technical details?
+  3. Are missing technical/UI execution details separated from the business scenario?
+  4. Are business derivability and practical executability assessed independently?
+  5. Are mandatory business clarifications separated from optional QA extensions?
+  6. Are priorities evidenced or correctly marked “not assessed”?
+  7. Is each case classified by its primary test objective using the E2E-04 decision order? Are invalid/impermissible actions negative, explicitly tested thresholds/time limits/special state transitions boundary/special, and permitted successful flows positive?
+  8. Were initially ambiguous categories resolved by the primary test objective, with a brief rationale documented?
+  9. Are dependencies on unresolved contradictions visible, with affected cases marked blocked rather than independently executable?
+  10. Are statuses A/B/C/D assigned according to practical executability and business clarification under the Quality Standard?
+  11. Do test case IDs, categories, sources, statuses and counts match?
+- Remove or correct every test step that fails this review before producing the output.
+
+Assess two separate dimensions for each test case:
+1. Business derivability:
+   - “Fully derivable”: The scenario, relevant condition and expected business behavior are supported by the text.
+   - “Partially derivable”: Part of the scenario is supported, but a necessary business rule or expected result is missing.
+   - “Not derivable”: The text does not support a concrete business-level scenario.
+2. Practical executability:
+   A. “Executable with the information provided”: The business action, necessary preconditions/test data and expected result are sufficiently specified. An unspecified UI path does not prevent status A when the business action is clear and can be executed abstractly.
+   B. “Executable after clarification”: The business scenario is derivable, but a necessary business precondition, data characteristic, test access, or execution/observation path for the chosen test environment is missing. State exactly what is missing and distinguish business clarification from technical/UI clarification.
+   C. “Not yet derivable”: No concrete business-level test scenario can be derived. Do not invent a substitute.
+Important: A test case may be fully derivable from a business perspective while still needing practical execution details. Do not mark it as partially business-derivable merely because UI details are missing.
+
+Also classify open points:
+- “Mandatory business clarification”: Without this information, a business expectation or required test state is ambiguous.
+- “Technical/UI clarification”: Only the concrete execution or observation path is missing, not the business rule.
+- “Optional QA extension”: An additional robustness, operational or edge-case test not required by the current scope. Do not present it as a requirement defect, blocker or mandatory clarification.
+
+Output format:
+1. Short overview
+- Number of test cases per category
+- Number per execution status A, B, C and D
+- Number per business derivability (fully, partially, not derivable)
+- Count only test cases actually described; do not count open questions without a test case ID.
+- Most important limitations and open points
+
+2. Positive test cases
+3. Negative test cases
+4. Boundary and special cases
+
+For each test case provide:
+- Test case ID
+- Title
+- Test objective
+- Source (acceptance criterion / text passage)
+- Preconditions
+- Test data
+- Test steps (numbered)
+- Expected result
+- Execution status
+- Clarification needed (if any)
+- Priority only if it can be derived from the business risk; otherwise “not assessed”.
+
+5. Not-yet-derivable test cases and open questions
+- State the missing information specifically.
+- Formulate a targeted question for the requirement owner.
+- Do not turn open questions into invented test cases.
+
+6. QA conclusion
+- Are the test cases traceable to the supplied text?
+- Which cases can be executed immediately?
+- Which require clarification?
+- Which coverage remains open due to missing information?
+- Which points are mandatory business clarifications, technical/UI clarifications, or optional QA extensions?
+- Explicitly distinguish business derivability from practical executability.
+
+Mandatory harmonization under QAIORA Quality Standard V1.1 (E2E-01 to E2E-04):
+- Scope (E2E-01): Unconfirmed scope topics remain open scope questions and are not counted as mandatory test cases.
+- Unified status model (E2E-02): A = business-specified and practically executable, practical prerequisites confirmed; B = business clarification required; C = fully business-specifiable but practical test preparation/technical prerequisites required; D = no reliable test scenario derivable. Do not use the old A/B/C scheme. If business clarification and practical preparation are both needed, assign B first; after clarification reassess whether C remains. Always report business derivability and practical executability separately.
+- Contradiction dependencies: A case whose expected result depends on an unresolved contradiction remains blocked and receives B; identify the exact dependency. Do not invent an expected variant. Use D only when no concrete scenario is derivable.
+- Error messages (E2E-03): Assess the presence of a required error message separately from its exact wording. Do not invent wording. A vague requirement such as “understandable error message” is not automatically a blocker or mandatory business clarification.
+- Categories (E2E-04): Determine the category from the primary test objective using this order: (1) invalid input/impermissible action with expected rejection = negative; (2) explicitly tested threshold, time/repetition limit or special state transition = boundary/special; (3) permitted successful flow without a primary boundary/special objective = positive. A correct system response does not make a negative test positive; any state change does not automatically make a test a special case. Assign exactly one category per test case.
+- Mandatory self-correction before output: Review every case against the E2E-04 decision order. Correct any unsuitable category and its rationale before producing the answer. Then recalculate positive, negative and boundary/special totals only from the final categorized test case IDs. Do not reuse previously calculated totals without rechecking them.
+- Final check: the A/B/C/D status distribution must exactly equal the number of test case IDs; categories and business-derivability totals must also reconcile without overlap. Also verify that the sum of the three category counts exactly equals the total number of test case IDs.
+
+Finally, check consistency: IDs, categories, counts, source references and execution statuses must match.`;
+      testCaseOutput.hidden = false;
+      testCaseCopyStatus.textContent = "";
+      testCaseOutput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    document.getElementById("clearTestCases").addEventListener("click", () => {
+      testCaseText.value = "";
+      generatedTestCasePrompt.value = "";
+      testCaseOutput.hidden = true;
+      testCaseCopyStatus.textContent = "";
+      testCaseText.focus();
+    });
+
+    document.getElementById("copyTestCasePrompt").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(generatedTestCasePrompt.value);
+        testCaseCopyStatus.textContent = "Prompt copied to clipboard.";
+      } catch (error) {
+        generatedTestCasePrompt.focus();
+        generatedTestCasePrompt.select();
+        testCaseCopyStatus.textContent = "Select and copy the prompt manually.";
+      }
+    });
+
+    const module3Translations = {
+      en: {intro:"Turn requirements and acceptance criteria into structured test cases. QAIORA creates a prompt for your own ChatGPT conversation; no AI analysis is performed on this page.",reqLabel:"Requirement and acceptance criteria",reqPlaceholder:"Paste the requirement and its acceptance criteria here.",promptLang:"Prompt language",create:"Create test case prompt",clear:"Clear",outputLabel:"Your QAIORA test case prompt",copy:"Copy prompt",open:"Open ChatGPT ↗",note:"Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page."},
+      de: {intro:"Überführe Anforderungen und Akzeptanzkriterien in strukturierte Testfälle. QAIORA erstellt einen Prompt für deine eigene ChatGPT-Konversation; auf dieser Seite findet keine KI-Analyse statt.",reqLabel:"Anforderung und Akzeptanzkriterien",reqPlaceholder:"Füge hier die Anforderung und ihre Akzeptanzkriterien ein.",promptLang:"Sprache des Prompts",create:"Testfall-Prompt erstellen",clear:"Leeren",outputLabel:"Dein QAIORA-Testfall-Prompt",copy:"Prompt kopieren",open:"ChatGPT öffnen ↗",note:"Deine Anforderung wird lokal in diesem Browser zur Erstellung des Prompts verarbeitet. Diese Seite sendet nichts an QAIORA oder einen KI-Dienst."},
+      fr: {intro:"Transformez les exigences et critères d’acceptation en cas de test structurés. QAIORA crée un prompt pour votre propre conversation ChatGPT ; aucune analyse IA n’est effectuée sur cette page.",reqLabel:"Exigence et critères d’acceptation",reqPlaceholder:"Collez ici l’exigence et ses critères d’acceptation.",promptLang:"Langue du prompt",create:"Créer le prompt de cas de test",clear:"Effacer",outputLabel:"Votre prompt QAIORA de cas de test",copy:"Copier le prompt",open:"Ouvrir ChatGPT ↗",note:"Votre exigence est traitée localement dans ce navigateur pour créer le prompt. Cette page n’envoie rien à QAIORA ni à un service d’IA."},
+      ar: {intro:"حوّل المتطلبات ومعايير القبول إلى حالات اختبار منظمة. تنشئ QAIORA موجهاً لمحادثتك الخاصة في ChatGPT؛ ولا يتم إجراء أي تحليل بالذكاء الاصطناعي على هذه الصفحة.",reqLabel:"المتطلب ومعايير القبول",reqPlaceholder:"أدخل المتطلب ومعايير القبول هنا.",promptLang:"لغة الموجّه",create:"إنشاء موجّه حالات الاختبار",clear:"مسح",outputLabel:"موجّه QAIORA لحالات الاختبار",copy:"نسخ الموجّه",open:"فتح ChatGPT ↗",note:"تتم معالجة المتطلب محلياً في هذا المتصفح لإنشاء الموجّه. لا ترسل هذه الصفحة أي شيء إلى QAIORA أو إلى خدمة ذكاء اصطناعي."}
+    };
+    function setModule3Language(lang) {
+      const dict = module3Translations[lang] || module3Translations.en;
+      document.querySelectorAll("[data-m3]").forEach(el => { el.textContent = dict[el.dataset.m3]; });
+      document.querySelectorAll("[data-m3-placeholder]").forEach(el => { el.placeholder = dict[el.dataset.m3Placeholder]; });
+    }
+
+    const translations = {
+      en: {
+        "Main navigation": "Main navigation",
+        "QAIORA home": "QAIORA home",
+        "Platform": "Platform",
+        "Capabilities": "Capabilities",
+        "Our approach": "Our approach",
+        "Vision": "Vision",
+        "Get in touch": "Get in touch",
+        "Menu": "Menu",
+        "The next perspective on quality": "The next perspective on quality",
+        "The Intelligence": "The Intelligence",
+        "Behind Quality.": "Behind Quality.",
+        "Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.": "Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.",
+        "Discover the platform": "Discover the platform",
+        "Explore capabilities": "Explore capabilities",
+        "A new approach to AI-powered Quality Assurance & Engineering.": "A new approach to AI-powered Quality Assurance & Engineering.",
+        "INTELLIGENCE": "INTELLIGENCE",
+        "Requirement insight": "Requirement insight",
+        "Understand what matters": "Understand what matters",
+        "Quality by design": "Quality by design",
+        "Make quality actionable": "Make quality actionable",
+        "AI-assisted testing": "AI-assisted testing",
+        "From insight to confidence": "From insight to confidence",
+        "Intelligent requirement analysis": "Intelligent requirement analysis",
+        "Testability-focused thinking": "Testability-focused thinking",
+        "AI-assisted quality engineering": "AI-assisted quality engineering",
+        "Human expertise at the centre": "Human expertise at the centre",
+        "What QAIORA is about": "What QAIORA is about",
+        "Quality engineering,": "Quality engineering,",
+        "amplified by AI.": "amplified by AI.",
+        "Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.": "Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.",
+        "Requirement Analysis": "Requirement Analysis",
+        "Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.": "Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.",
+        "Testability Assessment": "Testability Assessment",
+        "Evaluate whether requirements are specific, measurable, consistent and ready to be tested.": "Evaluate whether requirements are specific, measurable, consistent and ready to be tested.",
+        "Test Case Generation": "Test Case Generation",
+        "Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.": "Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.",
+        "Test Data Support": "Test Data Support",
+        "Support the creation of realistic, relevant test data for meaningful and repeatable testing.": "Support the creation of realistic, relevant test data for meaningful and repeatable testing.",
+        "One connected perspective": "One connected perspective",
+        "From requirements to": "From requirements to",
+        "quality confidence.": "quality confidence.",
+        "QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.": "QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.",
+        "Find gaps and ambiguities earlier": "Find gaps and ambiguities earlier",
+        "Improve requirement clarity and testability": "Improve requirement clarity and testability",
+        "Generate structured testing ideas faster": "Generate structured testing ideas faster",
+        "Keep human judgement in the loop": "Keep human judgement in the loop",
+        "QAIORA quality workflow": "QAIORA quality workflow",
+        "Concept overview": "Concept overview",
+        "Understand": "Understand",
+        "Analyse requirements and context": "Analyse requirements and context",
+        "Insight": "Insight",
+        "Assess": "Assess",
+        "Check completeness and testability": "Check completeness and testability",
+        "Clarity": "Clarity",
+        "Design": "Design",
+        "Derive scenarios and test cases": "Derive scenarios and test cases",
+        "Coverage": "Coverage",
+        "Prepare": "Prepare",
+        "Support meaningful test data": "Support meaningful test data",
+        "Readiness": "Readiness",
+        "Our approach": "Our approach",
+        "AI supports expertise.": "AI supports expertise.",
+        "People create quality.": "People create quality.",
+        "Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.": "Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.",
+        "Clarity": "Clarity",
+        "Make requirements and quality expectations easier to understand.": "Make requirements and quality expectations easier to understand.",
+        "Consistency": "Consistency",
+        "Encourage repeatable methods and structured quality practices.": "Encourage repeatable methods and structured quality practices.",
+        "Efficiency": "Efficiency",
+        "Reduce repetitive effort and give teams more room for critical thinking.": "Reduce repetitive effort and give teams more room for critical thinking.",
+        "Human oversight": "Human oversight",
+        "Keep professional judgement, review and accountability at the centre.": "Keep professional judgement, review and accountability at the centre.",
+        "The QAIORA vision": "The QAIORA vision",
+        "Make quality a smarter part of every decision.": "Make quality a smarter part of every decision.",
+        "We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.": "We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.",
+        "Stay connected": "Stay connected",
+        "Quality is evolving.": "Quality is evolving.",
+        "Be part of the journey.": "Be part of the journey.",
+        "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.",
+        "Back to top": "Back to top",
+        "All rights reserved.": "All rights reserved.",
+        "Requirement Analyzer": "Requirement Analyzer",
+        "Testability Checker": "Testability Checker",
+        "QAIORA workspace · first module": "QAIORA workspace · first module",
+        "Requirement": "Requirement",
+        "Analyzer.": "Analyzer.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.",
+        "Your requirement": "Your requirement",
+        "Prompt language": "Prompt language",
+        "Create analysis prompt": "Create analysis prompt",
+        "Clear": "Clear",
+        "Your QAIORA prompt": "Your QAIORA prompt",
+        "Copy prompt": "Copy prompt",
+        "Open ChatGPT ↗": "Open ChatGPT ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.",
+        "QAIORA workspace · second module": "QAIORA workspace · second module",
+        "Testability": "Testability",
+        "Checker.": "Checker.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.",
+        "Requirement and acceptance criteria": "Requirement and acceptance criteria",
+        "Create testability prompt": "Create testability prompt",
+        "Your QAIORA testability prompt": "Your QAIORA testability prompt",
+        "The Intelligence Behind Quality.": "The Intelligence Behind Quality.",
+        "QAIORA. All rights reserved.": "QAIORA. All rights reserved.",      },
+      de: {
+        "Platform": "Plattform",
+        "Capabilities": "Funktionen",
+        "Our approach": "Unser Ansatz",
+        "Vision": "Vision",
+        "Get in touch": "Kontakt",
+        "Menu": "Menü",
+        "The next perspective on quality": "Eine neue Perspektive auf Qualität",
+        "The Intelligence": "Die Intelligenz",
+        "Behind Quality.": "hinter Qualität.",
+        "Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.": "QAIORA verbindet künstliche Intelligenz mit Quality Engineering. Wir entwickeln einen intelligenteren Weg, Anforderungen zu verstehen, Testbarkeit zu stärken und Qualität über den gesamten Softwarelebenszyklus hinweg zu unterstützen.",
+        "Discover the platform": "Plattform entdecken",
+        "Explore capabilities": "Funktionen entdecken",
+        "A new approach to AI-powered Quality Assurance & Engineering.": "Ein neuer Ansatz für KI-gestützte Qualitätssicherung und Quality Engineering.",
+        "INTELLIGENCE": "INTELLIGENZ",
+        "Requirement insight": "Anforderungsanalyse",
+        "Understand what matters": "Das Wesentliche erkennen",
+        "Quality by design": "Qualität von Anfang an",
+        "Make quality actionable": "Qualität gezielt gestalten",
+        "AI-assisted testing": "KI-gestütztes Testen",
+        "From insight to confidence": "Von Erkenntnis zu Sicherheit",
+        "Intelligent requirement analysis": "Intelligente Anforderungsanalyse",
+        "Testability-focused thinking": "Fokus auf Testbarkeit",
+        "AI-assisted quality engineering": "KI-gestütztes Quality Engineering",
+        "Human expertise at the centre": "Der Mensch bleibt im Mittelpunkt",
+        "What QAIORA is about": "Wofür QAIORA steht",
+        "Quality engineering,": "Quality Engineering,",
+        "amplified by AI.": "verstärkt durch KI.",
+        "Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.": "Hervorragende Softwarequalität beginnt lange vor der Umsetzung. QAIORA unterstützt Teams intelligent dabei, das Richtige zu entwickeln – und es richtig umzusetzen.",
+        "Requirement Analysis": "Anforderungsanalyse",
+        "Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.": "Lücken, Mehrdeutigkeiten und fehlende Informationen erkennen, damit Anforderungen klarer und umsetzbarer werden.",
+        "Testability Assessment": "Prüfung der Testbarkeit",
+        "Evaluate whether requirements are specific, measurable, consistent and ready to be tested.": "Bewerten, ob Anforderungen eindeutig, messbar, konsistent und testbar sind.",
+        "Test Case Generation": "Testfallgenerierung",
+        "Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.": "Anforderungen und Akzeptanzkriterien in strukturierte positive, negative und Grenzfallszenarien überführen.",
+        "Test Data Support": "Testdatenunterstützung",
+        "Support the creation of realistic, relevant test data for meaningful and repeatable testing.": "Die Erstellung realistischer und relevanter Testdaten für aussagekräftige, wiederholbare Tests unterstützen.",
+        "One connected perspective": "Ein ganzheitlicher Blick",
+        "From requirements to": "Von Anforderungen zu",
+        "quality confidence.": "verlässlicher Qualität.",
+        "QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.": "QAIORA möchte zentrale Qualitätsaktivitäten in einem intelligenten Workflow verbinden. KI hilft dabei, Informationen zu erschließen, Risiken sichtbar zu machen und Tests besser vorzubereiten – während Menschen Kontext, Entscheidungen und Ergebnisse verantworten.",
+        "Find gaps and ambiguities earlier": "Lücken und Mehrdeutigkeiten früh erkennen",
+        "Improve requirement clarity and testability": "Klarheit und Testbarkeit von Anforderungen verbessern",
+        "Generate structured testing ideas faster": "Strukturierte Testideen schneller entwickeln",
+        "Keep human judgement in the loop": "Menschliche Bewertung einbeziehen",
+        "QAIORA quality workflow": "QAIORA-Qualitätsworkflow",
+        "Concept overview": "Konzeptioneller Überblick",
+        "Understand": "Verstehen",
+        "Analyse requirements and context": "Anforderungen und Kontext analysieren",
+        "Insight": "Erkenntnis",
+        "Assess": "Bewerten",
+        "Check completeness and testability": "Vollständigkeit und Testbarkeit prüfen",
+        "Clarity": "Klarheit",
+        "Design": "Entwerfen",
+        "Derive scenarios and test cases": "Szenarien und Testfälle ableiten",
+        "Coverage": "Abdeckung",
+        "Prepare": "Vorbereiten",
+        "Support meaningful test data": "Aussagekräftige Testdaten bereitstellen",
+        "Readiness": "Bereitschaft",
+        "AI supports expertise.": "KI unterstützt Expertise.",
+        "People create quality.": "Menschen schaffen Qualität.",
+        "Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.": "Technologie soll Qualitätsarbeit fokussierter, konsistenter und transparenter machen – nicht die Erfahrung und das Urteilsvermögen der Menschen ersetzen.",
+        "Clarity": "Klarheit",
+        "Make requirements and quality expectations easier to understand.": "Anforderungen und Qualitätserwartungen verständlicher machen.",
+        "Consistency": "Konsistenz",
+        "Encourage repeatable methods and structured quality practices.": "Wiederholbare Methoden und strukturierte Qualitätspraktiken fördern.",
+        "Efficiency": "Effizienz",
+        "Reduce repetitive effort and give teams more room for critical thinking.": "Wiederkehrenden Aufwand reduzieren und mehr Raum für kritisches Denken schaffen.",
+        "Human oversight": "Menschliche Kontrolle",
+        "Keep professional judgement, review and accountability at the centre.": "Fachliche Bewertung, Prüfung und Verantwortung im Mittelpunkt halten.",
+        "The QAIORA vision": "Die QAIORA-Vision",
+        "Make quality a smarter part of every decision.": "Qualität zum intelligenten Bestandteil jeder Entscheidung machen.",
+        "We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.": "Wir glauben an eine vernetzte, intelligente und kollaborative Zukunft der Qualitätssicherung. Auf dieser Überzeugung baut QAIORA auf.",
+        "Stay connected": "In Verbindung bleiben",
+        "Quality is evolving.": "Qualität entwickelt sich weiter.",
+        "Be part of the journey.": "Werde Teil dieser Entwicklung.",
+        "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "QAIORA nimmt Gestalt an. Begleite uns auf dem Weg zu einem intelligenteren Ansatz für Qualitätssicherung und Quality Engineering.",
+        "Back to top": "Nach oben",
+        "All rights reserved.": "Alle Rechte vorbehalten.",
+        "Requirement Analyzer": "Anforderungsanalyse",
+        "Testability Checker": "Testbarkeitsprüfung",
+        "QAIORA workspace · first module": "QAIORA-Arbeitsbereich · erstes Modul",
+        "Requirement": "Anforderungs-",
+        "Analyzer.": "analyse.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "Beschreibe oder füge eine Anforderung ein. QAIORA erstellt daraus einen strukturierten Quality-Engineering-Prompt, den du in deine eigene ChatGPT-Unterhaltung kopieren kannst. Die Analyse selbst findet in ChatGPT statt, nicht auf dieser Seite.",
+        "Your requirement": "Deine Anforderung",
+        "Prompt language": "Sprache des Prompts",
+        "Create analysis prompt": "Analyse-Prompt erstellen",
+        "Clear": "Leeren",
+        "Your QAIORA prompt": "Dein QAIORA-Prompt",
+        "Copy prompt": "Prompt kopieren",
+        "Open ChatGPT ↗": "ChatGPT öffnen ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "Deine Anforderung wird lokal in diesem Browser verarbeitet, um den Prompt zu erstellen. Diese Seite sendet keine Daten an QAIORA oder einen KI-Dienst.",
+        "QAIORA workspace · second module": "QAIORA-Arbeitsbereich · zweites Modul",
+        "Testability": "Testbar-",
+        "Checker.": "keitsprüfung.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "Prüfe, ob eine Anforderung objektiv und reproduzierbar getestet werden kann. QAIORA erstellt dafür einen strukturierten Bewertungs-Prompt für deine eigene ChatGPT-Unterhaltung. Auf dieser Seite findet keine KI-Analyse statt.",
+        "Requirement and acceptance criteria": "Anforderung und Akzeptanzkriterien",
+        "Create testability prompt": "Testbarkeits-Prompt erstellen",
+        "Your QAIORA testability prompt": "Dein QAIORA-Testbarkeitsprompt",
+        "The Intelligence Behind Quality.": "Die Intelligenz hinter Qualität.",
+        "QAIORA. All rights reserved.": "QAIORA. Alle Rechte vorbehalten.",      },
+      fr: {
+        "Platform": "Plateforme",
+        "Capabilities": "Fonctionnalités",
+        "Our approach": "Notre approche",
+        "Vision": "Vision",
+        "Get in touch": "Contact",
+        "Menu": "Menu",
+        "The next perspective on quality": "Une nouvelle perspective sur la qualité",
+        "The Intelligence": "L’intelligence",
+        "Behind Quality.": "au service de la qualité.",
+        "Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.": "QAIORA associe l’intelligence artificielle au Quality Engineering. Nous imaginons une approche plus intelligente pour comprendre les exigences, renforcer leur testabilité et soutenir la qualité tout au long du cycle de vie logiciel.",
+        "Discover the platform": "Découvrir la plateforme",
+        "Explore capabilities": "Explorer les fonctionnalités",
+        "A new approach to AI-powered Quality Assurance & Engineering.": "Une nouvelle approche de l’assurance qualité et du Quality Engineering assistés par l’IA.",
+        "INTELLIGENCE": "INTELLIGENCE",
+        "Requirement insight": "Analyse des exigences",
+        "Understand what matters": "Comprendre l’essentiel",
+        "Quality by design": "La qualité dès la conception",
+        "Make quality actionable": "Rendre la qualité concrète",
+        "AI-assisted testing": "Tests assistés par l’IA",
+        "From insight to confidence": "De l’analyse à la confiance",
+        "Intelligent requirement analysis": "Analyse intelligente des exigences",
+        "Testability-focused thinking": "Priorité à la testabilité",
+        "AI-assisted quality engineering": "Quality Engineering assisté par l’IA",
+        "Human expertise at the centre": "L’expertise humaine au centre",
+        "What QAIORA is about": "La raison d’être de QAIORA",
+        "Quality engineering,": "Le Quality Engineering,",
+        "amplified by AI.": "augmenté par l’IA.",
+        "Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.": "La qualité logicielle commence bien avant l’exécution. QAIORA apporte une assistance intelligente aux activités qui aident les équipes à concevoir le bon produit et à le réaliser correctement.",
+        "Requirement Analysis": "Analyse des exigences",
+        "Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.": "Repérer les lacunes, les ambiguïtés et les informations manquantes afin de rendre les exigences plus claires et exploitables.",
+        "Testability Assessment": "Évaluation de la testabilité",
+        "Evaluate whether requirements are specific, measurable, consistent and ready to be tested.": "Évaluer si les exigences sont précises, mesurables, cohérentes et prêtes à être testées.",
+        "Test Case Generation": "Génération de cas de test",
+        "Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.": "Transformer les exigences et critères d’acceptation en scénarios structurés : positifs, négatifs et cas limites.",
+        "Test Data Support": "Assistance aux données de test",
+        "Support the creation of realistic, relevant test data for meaningful and repeatable testing.": "Faciliter la création de données de test réalistes et pertinentes pour des tests fiables et reproductibles.",
+        "One connected perspective": "Une vision unifiée",
+        "From requirements to": "Des exigences à",
+        "quality confidence.": "la confiance qualité.",
+        "QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.": "La vision de QAIORA consiste à relier les principales activités qualité dans un flux de travail intelligent. L’IA aide les équipes à explorer les informations, révéler les risques et mieux préparer les tests — les personnes restant responsables du contexte, des décisions et des résultats.",
+        "Find gaps and ambiguities earlier": "Détecter plus tôt les lacunes et ambiguïtés",
+        "Improve requirement clarity and testability": "Améliorer la clarté et la testabilité des exigences",
+        "Generate structured testing ideas faster": "Élaborer plus rapidement des idées de test structurées",
+        "Keep human judgement in the loop": "Garder le jugement humain au cœur du processus",
+        "QAIORA quality workflow": "Flux qualité QAIORA",
+        "Concept overview": "Vue d’ensemble du concept",
+        "Understand": "Comprendre",
+        "Analyse requirements and context": "Analyser les exigences et le contexte",
+        "Insight": "Analyse",
+        "Assess": "Évaluer",
+        "Check completeness and testability": "Vérifier la complétude et la testabilité",
+        "Clarity": "Clarté",
+        "Design": "Concevoir",
+        "Derive scenarios and test cases": "Déduire des scénarios et des cas de test",
+        "Coverage": "Couverture",
+        "Prepare": "Préparer",
+        "Support meaningful test data": "Préparer des données de test pertinentes",
+        "Readiness": "Préparation",
+        "AI supports expertise.": "L’IA renforce l’expertise.",
+        "People create quality.": "Les personnes créent la qualité.",
+        "Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.": "La technologie doit rendre le travail qualité plus ciblé, cohérent et transparent — sans remplacer l’expérience ni le discernement des personnes.",
+        "Clarity": "Clarté",
+        "Make requirements and quality expectations easier to understand.": "Rendre les exigences et les attentes qualité plus faciles à comprendre.",
+        "Consistency": "Cohérence",
+        "Encourage repeatable methods and structured quality practices.": "Favoriser des méthodes reproductibles et des pratiques qualité structurées.",
+        "Efficiency": "Efficacité",
+        "Reduce repetitive effort and give teams more room for critical thinking.": "Réduire les tâches répétitives et laisser davantage de place à l’analyse critique.",
+        "Human oversight": "Supervision humaine",
+        "Keep professional judgement, review and accountability at the centre.": "Placer l’expertise, la validation et la responsabilité au centre.",
+        "The QAIORA vision": "La vision de QAIORA",
+        "Make quality a smarter part of every decision.": "Faire de la qualité une composante intelligente de chaque décision.",
+        "We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.": "Nous croyons en un avenir de l’assurance qualité connecté, intelligent et collaboratif. C’est autour de cette conviction que QAIORA se développe.",
+        "Stay connected": "Restons en contact",
+        "Quality is evolving.": "La qualité évolue.",
+        "Be part of the journey.": "Faites partie de l’aventure.",
+        "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "QAIORA prend forme. Suivez notre évolution vers une approche plus intelligente de l’assurance qualité et du Quality Engineering.",
+        "Back to top": "Retour en haut",
+        "All rights reserved.": "Tous droits réservés.",
+        "Requirement Analyzer": "Analyse des exigences",
+        "Testability Checker": "Vérification de la testabilité",
+        "QAIORA workspace · first module": "Espace de travail QAIORA · premier module",
+        "Requirement": "Analyse",
+        "Analyzer.": "des exigences.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "Décrivez ou collez une exigence. QAIORA crée un prompt structuré de Quality Engineering que vous pouvez copier dans votre propre conversation ChatGPT. L’analyse elle-même s’effectue dans ChatGPT, et non sur cette page.",
+        "Your requirement": "Votre exigence",
+        "Prompt language": "Langue du prompt",
+        "Create analysis prompt": "Créer le prompt d’analyse",
+        "Clear": "Effacer",
+        "Your QAIORA prompt": "Votre prompt QAIORA",
+        "Copy prompt": "Copier le prompt",
+        "Open ChatGPT ↗": "Ouvrir ChatGPT ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "Votre exigence est traitée localement dans ce navigateur pour créer le prompt. Cette page n’envoie aucune donnée à QAIORA ni à un service d’IA.",
+        "QAIORA workspace · second module": "Espace de travail QAIORA · deuxième module",
+        "Testability": "Vérification",
+        "Checker.": "de la testabilité.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "Vérifiez si une exigence peut être testée de manière objective et reproductible. QAIORA crée un prompt d’évaluation structuré pour votre propre conversation ChatGPT. Aucune analyse par IA n’est effectuée sur cette page.",
+        "Requirement and acceptance criteria": "Exigence et critères d’acceptation",
+        "Create testability prompt": "Créer le prompt de testabilité",
+        "Your QAIORA testability prompt": "Votre prompt QAIORA de testabilité",
+        "The Intelligence Behind Quality.": "L’intelligence au service de la qualité.",
+        "QAIORA. All rights reserved.": "QAIORA. Tous droits réservés.",      },
+      ar: {
+        "Platform": "المنصة",
+        "Capabilities": "الإمكانات",
+        "Our approach": "نهجنا",
+        "Vision": "رؤيتنا",
+        "Get in touch": "تواصل معنا",
+        "Menu": "القائمة",
+        "The next perspective on quality": "رؤية جديدة للجودة",
+        "The Intelligence": "الذكاء",
+        "Behind Quality.": "في خدمة الجودة.",
+        "Bring AI and Quality Engineering together. QAIORA is shaping a smarter way to understand requirements, strengthen testability and support quality throughout the software lifecycle.": "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة، وتقدم نهجاً أكثر ذكاءً لفهم المتطلبات وتعزيز قابليتها للاختبار ودعم الجودة طوال دورة حياة البرمجيات.",
+        "Discover the platform": "اكتشف المنصة",
+        "Explore capabilities": "استكشف الإمكانات",
+        "A new approach to AI-powered Quality Assurance & Engineering.": "نهج جديد لضمان الجودة وهندسة الجودة بالاستعانة بالذكاء الاصطناعي.",
+        "INTELLIGENCE": "الذكاء",
+        "Requirement insight": "تحليل المتطلبات",
+        "Understand what matters": "فهم الأمور الأساسية",
+        "Quality by design": "الجودة منذ التصميم",
+        "Make quality actionable": "تحويل الجودة إلى خطوات عملية",
+        "AI-assisted testing": "اختبار مدعوم بالذكاء الاصطناعي",
+        "From insight to confidence": "من الفهم إلى الثقة",
+        "Intelligent requirement analysis": "تحليل ذكي للمتطلبات",
+        "Testability-focused thinking": "التركيز على قابلية الاختبار",
+        "AI-assisted quality engineering": "هندسة جودة مدعومة بالذكاء الاصطناعي",
+        "Human expertise at the centre": "الخبرة البشرية في صميم العمل",
+        "What QAIORA is about": "ما الذي تقدمه QAIORA؟",
+        "Quality engineering,": "هندسة الجودة،",
+        "amplified by AI.": "معززة بالذكاء الاصطناعي.",
+        "Great software quality starts long before execution. QAIORA brings intelligent assistance to the activities that help teams build the right thing — and build it right.": "تبدأ جودة البرمجيات الممتازة قبل التنفيذ بوقت طويل. تقدم QAIORA مساعدة ذكية للأنشطة التي تمكّن الفرق من بناء المنتج المناسب وتنفيذه بالشكل الصحيح.",
+        "Requirement Analysis": "تحليل المتطلبات",
+        "Identify gaps, ambiguity and missing information to make requirements clearer and more actionable.": "اكتشاف الثغرات والغموض والمعلومات الناقصة لجعل المتطلبات أكثر وضوحاً وقابلية للتنفيذ.",
+        "Testability Assessment": "تقييم قابلية الاختبار",
+        "Evaluate whether requirements are specific, measurable, consistent and ready to be tested.": "تقييم مدى وضوح المتطلبات وقابليتها للقياس واتساقها وجاهزيتها للاختبار.",
+        "Test Case Generation": "إنشاء حالات الاختبار",
+        "Turn requirements and acceptance criteria into structured positive, negative and edge-case scenarios.": "تحويل المتطلبات ومعايير القبول إلى سيناريوهات اختبار منظمة، تشمل الحالات الإيجابية والسلبية والحالات الحدّية.",
+        "Test Data Support": "دعم بيانات الاختبار",
+        "Support the creation of realistic, relevant test data for meaningful and repeatable testing.": "دعم إنشاء بيانات اختبار واقعية وملائمة لإجراء اختبارات موثوقة وقابلة للتكرار.",
+        "One connected perspective": "رؤية مترابطة وشاملة",
+        "From requirements to": "من المتطلبات إلى",
+        "quality confidence.": "الثقة بالجودة.",
+        "QAIORA’s vision is to connect key quality activities in one intelligent workflow. AI can help teams explore information, reveal risks and prepare better testing — while people remain responsible for context, decisions and outcomes.": "تتمثل رؤية QAIORA في ربط أنشطة الجودة الأساسية ضمن سير عمل ذكي واحد. يساعد الذكاء الاصطناعي الفرق على استكشاف المعلومات وكشف المخاطر وتحسين إعداد الاختبارات، مع بقاء الأشخاص مسؤولين عن السياق والقرارات والنتائج.",
+        "Find gaps and ambiguities earlier": "اكتشاف الثغرات والغموض في وقت مبكر",
+        "Improve requirement clarity and testability": "تحسين وضوح المتطلبات وقابليتها للاختبار",
+        "Generate structured testing ideas faster": "إنشاء أفكار اختبار منظمة بسرعة أكبر",
+        "Keep human judgement in the loop": "الإبقاء على التقييم البشري ضمن العملية",
+        "QAIORA quality workflow": "سير عمل الجودة في QAIORA",
+        "Concept overview": "نظرة عامة على المفهوم",
+        "Understand": "الفهم",
+        "Analyse requirements and context": "تحليل المتطلبات والسياق",
+        "Insight": "رؤية",
+        "Assess": "التقييم",
+        "Check completeness and testability": "التحقق من الاكتمال وقابلية الاختبار",
+        "Clarity": "الوضوح",
+        "Design": "التصميم",
+        "Derive scenarios and test cases": "اشتقاق السيناريوهات وحالات الاختبار",
+        "Coverage": "التغطية",
+        "Prepare": "التحضير",
+        "Support meaningful test data": "توفير بيانات اختبار ذات معنى",
+        "Readiness": "الجاهزية",
+        "AI supports expertise.": "الذكاء الاصطناعي يدعم الخبرة.",
+        "People create quality.": "الإنسان يصنع الجودة.",
+        "Technology should make quality work more focused, consistent and transparent — not replace the experience and judgement of the people doing it.": "ينبغي للتكنولوجيا أن تجعل أعمال الجودة أكثر تركيزاً واتساقاً وشفافية، لا أن تحل محل خبرة الأشخاص القائمين بها وحكمهم المهني.",
+        "Consistency": "الاتساق",
+        "Encourage repeatable methods and structured quality practices.": "تعزيز الأساليب القابلة للتكرار وممارسات الجودة المنظمة.",
+        "Efficiency": "الكفاءة",
+        "Reduce repetitive effort and give teams more room for critical thinking.": "تقليل الجهد المتكرر وإتاحة مساحة أكبر للفرق للتفكير النقدي.",
+        "Human oversight": "الإشراف البشري",
+        "Keep professional judgement, review and accountability at the centre.": "الحفاظ على التقييم المهني والمراجعة والمساءلة في صميم العمل.",
+        "The QAIORA vision": "رؤية QAIORA",
+        "Make quality a smarter part of every decision.": "اجعل الجودة جزءاً أكثر ذكاءً من كل قرار.",
+        "We believe the future of Quality Assurance is connected, intelligent and collaborative. QAIORA is being developed around that belief.": "نؤمن بأن مستقبل ضمان الجودة مترابط وذكي وتعاوني. ويجري تطوير QAIORA انطلاقاً من هذا الإيمان.",
+        "Stay connected": "ابقَ على تواصل",
+        "Quality is evolving.": "الجودة تتطور.",
+        "Be part of the journey.": "كن جزءاً من هذه الرحلة.",
+        "QAIORA is taking shape. Follow the journey as we develop a more intelligent approach to Quality Assurance & Engineering.": "تتخذ QAIORA شكلها. تابع رحلتنا ونحن نطور نهجاً أكثر ذكاءً لضمان الجودة وهندسة الجودة.",
+        "Back to top": "العودة إلى الأعلى",
+        "All rights reserved.": "جميع الحقوق محفوظة.",
+        "Requirement Analyzer": "محلل المتطلبات",
+        "Testability Checker": "مدقق قابلية الاختبار",
+        "QAIORA workspace · first module": "مساحة عمل QAIORA · الوحدة الأولى",
+        "Requirement": "تحليل",
+        "Analyzer.": "المتطلبات.",
+        "Describe or paste a requirement. QAIORA turns it into a structured Quality Engineering prompt that you can copy into your own ChatGPT conversation. The analysis itself takes place in ChatGPT, not on this page.": "اكتب المتطلب أو الصقه. تنشئ QAIORA موجهاً منظماً لهندسة الجودة يمكنك نسخه إلى محادثتك الخاصة في ChatGPT. تتم عملية التحليل نفسها في ChatGPT وليس على هذه الصفحة.",
+        "Your requirement": "المتطلب",
+        "Prompt language": "لغة الموجّه",
+        "Create analysis prompt": "إنشاء موجّه التحليل",
+        "Clear": "مسح",
+        "Your QAIORA prompt": "موجّه QAIORA الخاص بك",
+        "Copy prompt": "نسخ الموجّه",
+        "Open ChatGPT ↗": "فتح ChatGPT ↗",
+        "Your requirement is processed locally in this browser to create the prompt. Nothing is sent to QAIORA or an AI service by this page.": "تتم معالجة المتطلب محلياً في هذا المتصفح لإنشاء الموجّه. لا ترسل هذه الصفحة أي بيانات إلى QAIORA أو إلى أي خدمة ذكاء اصطناعي.",
+        "QAIORA workspace · second module": "مساحة عمل QAIORA · الوحدة الثانية",
+        "Testability": "قابلية",
+        "Checker.": "الاختبار.",
+        "Check whether a requirement can be tested objectively and reproducibly. QAIORA creates a structured assessment prompt for your own ChatGPT conversation; no AI analysis is performed on this page.": "تحقق مما إذا كان من الممكن اختبار المتطلب بموضوعية وبشكل قابل للتكرار. تنشئ QAIORA موجّه تقييم منظماً لمحادثتك الخاصة في ChatGPT. لا يتم إجراء أي تحليل بالذكاء الاصطناعي على هذه الصفحة.",
+        "Requirement and acceptance criteria": "المتطلب ومعايير القبول",
+        "Create testability prompt": "إنشاء موجّه قابلية الاختبار",
+        "Your QAIORA testability prompt": "موجّه QAIORA لقابلية الاختبار",
+        "Make requirements and quality expectations easier to understand.": "اجعل المتطلبات وتوقعات الجودة أسهل فهماً.",
+        "The Intelligence Behind Quality.": "الذكاء في خدمة الجودة.",
+        "QAIORA. All rights reserved.": "QAIORA. جميع الحقوق محفوظة.",      }
+    };
+
+    const originalTextNodes = [];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.parentElement && !["SCRIPT", "STYLE", "SELECT", "OPTION"].includes(node.parentElement.tagName)) {
+        const key = node.nodeValue.trim();
+        if (key) originalTextNodes.push({ node, key, leading: node.nodeValue.match(/^\s*/)[0], trailing: node.nodeValue.match(/\s*$/)[0] });
+      }
+    }
+
+    function setLanguage(lang) {
+      const dictionary = translations[lang] || translations.en;
+      originalTextNodes.forEach(({ node, key, leading, trailing }) => {
+        const translated = dictionary[key] ?? translations.en[key] ?? key;
+        node.nodeValue = leading + translated + trailing;
+      });
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.title = lang === "de"
+        ? "QAIORA — Die Intelligenz hinter Qualität"
+        : lang === "fr"
+          ? "QAIORA — L’intelligence au service de la qualité"
+          : lang === "ar"
+            ? "QAIORA — الذكاء في خدمة الجودة"
+            : "QAIORA — The Intelligence Behind Quality";
+      document.querySelector('meta[name="description"]').content = lang === "de"
+        ? "QAIORA verbindet KI und Quality Engineering für intelligente Qualitätssicherung."
+        : lang === "fr"
+          ? "QAIORA associe l’IA et le Quality Engineering pour une assurance qualité intelligente."
+          : lang === "ar"
+            ? "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة لضمان جودة أكثر ذكاءً."
+            : "QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.";
+      document.getElementById("languageSelect").value = lang;
+      setModule3Language(lang);
+
+      // Keep input examples and hints in sync with the selected site language.
+      const placeholders = {
+        en: {
+          requirement: "Example: As a user, I want to reset my password so that I can regain access to my account if I forget it.",
+          testability: "Paste the requirement and its acceptance criteria here. Include relevant business rules if available."
+        },
+        de: {
+          requirement: "Beispiel: Als Benutzer möchte ich mein Passwort zurücksetzen können, damit ich wieder Zugriff auf mein Konto erhalte, wenn ich es vergessen habe.",
+          testability: "Füge hier die Anforderung und ihre Akzeptanzkriterien ein. Ergänze bei Bedarf relevante Geschäftsregeln."
+        },
+        fr: {
+          requirement: "Exemple : En tant qu’utilisateur, je souhaite réinitialiser mon mot de passe afin de retrouver l’accès à mon compte si je l’oublie.",
+          testability: "Collez ici l’exigence et ses critères d’acceptation. Ajoutez les règles métier pertinentes, si elles sont disponibles."
+        },
+        ar: {
+          requirement: "مثال: بصفتي مستخدماً، أريد إعادة تعيين كلمة المرور حتى أتمكن من استعادة الوصول إلى حسابي إذا نسيتها.",
+          testability: "أدخل المتطلب ومعايير القبول هنا. أضف قواعد العمل ذات الصلة إذا كانت متاحة."
+        }
+      };
+      document.getElementById("requirementText").placeholder = placeholders[lang].requirement;
+      document.getElementById("testabilityText").placeholder = placeholders[lang].testability;
+
+      try { localStorage.setItem("qaiora-language", lang); } catch (e) {}
+    }
+
+    const languageSelect = document.getElementById("languageSelect");
+    let savedLanguage = "en";
+    try { savedLanguage = localStorage.getItem("qaiora-language") || "en"; } catch (e) {}
+    languageSelect.addEventListener("change", event => setLanguage(event.target.value));
+
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+    menuButton.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(open));
+    });
+    navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuButton.setAttribute("aria-expanded", "false");
+    }));
+    document.getElementById("year").textContent = new Date().getFullYear();
+    setLanguage(savedLanguage);
+  </script>
+
+  <style>
+    .qaiora-logout{position:fixed;right:18px;bottom:18px;z-index:1000;border:1px solid rgba(98,216,206,.45);border-radius:999px;padding:9px 14px;background:#0b1929;color:#62d8ce;font:600 .82rem system-ui;cursor:pointer;box-shadow:0 8px 24px #0005}
+    html[lang="ar"] .qaiora-logout{right:auto;left:18px}
+  </style>
+  <button class="qaiora-logout" id="qaioraLogout" type="button">Sign out</button>
+  <script>
+    document.getElementById('qaioraLogout').addEventListener('click', async () => {
+      await fetch('/auth/logout', { method: 'POST' });
+      location.href = '/login?logout=1';
+    });
+  </script>
+
+</body>
+</html>
