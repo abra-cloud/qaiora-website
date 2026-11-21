@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="de">
 <head>
@@ -5,105 +6,373 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
   <title>QAIORA – Zugang</title>
+
   <style>
-    :root{color-scheme:dark;--bg:#07111f;--panel:#102238;--line:rgba(167,203,218,.2);--text:#f4f8fb;--muted:#a8b8c8;--teal:#62d8ce}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 80% 4%,rgba(38,154,160,.18),transparent 34rem),var(--bg);font:16px/1.5 Inter,system-ui,sans-serif;color:var(--text)}
-    main{width:min(100%,460px);padding:34px;border:1px solid var(--line);border-radius:22px;background:rgba(16,34,56,.9);box-shadow:0 24px 80px #0005}
-    .brand{font-weight:900;letter-spacing:.16em;color:var(--teal);font-size:1.2rem}.tag{color:var(--muted);margin:6px 0 26px;font-size:.9rem}h1{font-size:1.8rem;margin:0 0 8px}p{color:var(--muted)}label{display:block;font-weight:650;margin:15px 0 7px}input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:#081827;color:var(--text);font:inherit}button{width:100%;padding:13px;margin-top:14px;border:0;border-radius:999px;background:linear-gradient(135deg,#8ce8dc,#48c5bc);color:#06151e;font-weight:800;font-size:.95rem;cursor:pointer}.secondary{background:transparent;color:var(--teal);border:1px solid var(--line)}.switch{display:flex;gap:10px;margin:22px 0 0}.switch button{margin:0}.switch button[aria-pressed="true"]{background:rgba(98,216,206,.16);color:var(--teal);border:1px solid rgba(98,216,206,.45)}#message{min-height:48px;margin-top:16px;font-size:.9rem;color:var(--teal)}.small{font-size:.78rem;color:#8296a9;margin-top:18px}
+    :root {
+      color-scheme: dark;
+      --bg: #07111f;
+      --panel: #102238;
+      --line: rgba(167,203,218,.2);
+      --text: #f4f8fb;
+      --muted: #a8b8c8;
+      --teal: #62d8ce;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(
+          ellipse at 80% 4%,
+          rgba(38,154,160,.18),
+          transparent 34rem
+        ),
+        var(--bg);
+      font: 16px/1.5 Inter, system-ui, sans-serif;
+      color: var(--text);
+    }
+
+    main {
+      width: min(100%, 460px);
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(16,34,56,.9);
+      box-shadow: 0 24px 80px #0005;
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: .16em;
+      color: var(--teal);
+      font-size: 1.2rem;
+    }
+
+    .tag {
+      color: var(--muted);
+      margin: 6px 0 26px;
+      font-size: .9rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0 0 8px;
+    }
+
+    p {
+      color: var(--muted);
+    }
+
+    label {
+      display: block;
+      font-weight: 650;
+      margin: 15px 0 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #081827;
+      color: var(--text);
+      font: inherit;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg,#8ce8dc,#48c5bc);
+      color: #06151e;
+      font-weight: 800;
+      font-size: .95rem;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .secondary {
+      background: transparent;
+      color: var(--teal);
+      border: 1px solid var(--line);
+    }
+
+    .switch {
+      display: flex;
+      gap: 10px;
+      margin: 22px 0 0;
+    }
+
+    .switch button {
+      margin: 0;
+    }
+
+    .switch button[aria-pressed="true"] {
+      background: rgba(98,216,206,.16);
+      color: var(--teal);
+      border: 1px solid rgba(98,216,206,.45);
+    }
+
+    #message {
+      min-height: 48px;
+      margin-top: 16px;
+      font-size: .9rem;
+      color: var(--teal);
+    }
+
+    .small {
+      font-size: .78rem;
+      color: #8296a9;
+      margin-top: 18px;
+    }
   </style>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 <main>
   <div class="brand">QAIORA</div>
   <div class="tag">The Intelligence Behind Quality.</div>
+
   <h1 id="heading">Willkommen bei QAIORA</h1>
-  <p id="intro">Melde dich an oder erstelle ein Konto. Nach der E-Mail-Bestätigung erhältst du Zugang.</p>
+
+  <p id="intro">
+    Melde dich an oder erstelle ein Konto.
+    Nach der E-Mail-Bestätigung erhältst du Zugang.
+  </p>
+
   <div class="switch" role="group" aria-label="Zugangsart">
-    <button class="secondary" id="loginTab" type="button" aria-pressed="true">Anmelden</button>
-    <button class="secondary" id="signupTab" type="button" aria-pressed="false">Registrieren</button>
+    <button
+      class="secondary"
+      id="loginTab"
+      type="button"
+      aria-pressed="true">
+      Anmelden
+    </button>
+
+    <button
+      class="secondary"
+      id="signupTab"
+      type="button"
+      aria-pressed="false">
+      Registrieren
+    </button>
   </div>
+
   <form id="authForm">
-    <label for="email">E-Mail-Adresse</label><input id="email" type="email" autocomplete="email" required>
-    <label for="password">Passwort</label><input id="password" type="password" autocomplete="current-password" minlength="8" required>
-    <button id="submitButton" type="submit">Anmelden</button>
+    <label for="email">E-Mail-Adresse</label>
+    <input
+      id="email"
+      type="email"
+      autocomplete="email"
+      required>
+
+    <label for="password">Passwort</label>
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      minlength="8"
+      required>
+
+    <button id="submitButton" type="submit">
+      Anmelden
+    </button>
   </form>
+
   <div id="message" role="status" aria-live="polite"></div>
-  <div class="small">Deine Anforderungen werden weiterhin lokal in deinem Browser verarbeitet. QAIORA führt auf dieser Seite keine KI-Analyse aus.</div>
+
+  <div class="small">
+    Deine Anforderungen werden weiterhin lokal in deinem Browser
+    verarbeitet. QAIORA führt auf dieser Seite keine KI-Analyse aus.
+  </div>
 </main>
+
 <script>
 (() => {
-  const SUPABASE_URL = 'https://feljpsrmlkwpabzgmbrx.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_fsmlio2uCWd932eQUQ7A-w_qwhI5qOH';
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+  const SUPABASE_URL =
+    'https://feljpsrmlkwpabzgmbrx.supabase.co';
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    'sb_publishable_fsmlio2uCWd932eQUQ7A-w_qwhI5qOH';
+
+  const client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    }
+  );
+
   const form = document.getElementById('authForm');
   const message = document.getElementById('message');
   const loginTab = document.getElementById('loginTab');
   const signupTab = document.getElementById('signupTab');
   const submitButton = document.getElementById('submitButton');
+
   let mode = 'login';
+
   function setMode(next) {
     mode = next;
-    loginTab.setAttribute('aria-pressed', String(mode === 'login'));
-    signupTab.setAttribute('aria-pressed', String(mode === 'signup'));
-    submitButton.textContent = mode === 'login' ? 'Anmelden' : 'Konto erstellen';
-    document.getElementById('heading').textContent = mode === 'login' ? 'Willkommen zurück' : 'QAIORA-Konto erstellen';
-    document.getElementById('intro').textContent = mode === 'login' ? 'Melde dich mit deinem bestätigten Konto an.' : 'Registriere dich mit deiner E-Mail-Adresse. Du erhältst anschließend eine Bestätigungs-E-Mail.';
-    document.getElementById('password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+
+    loginTab.setAttribute(
+      'aria-pressed',
+      String(mode === 'login')
+    );
+
+    signupTab.setAttribute(
+      'aria-pressed',
+      String(mode === 'signup')
+    );
+
+    submitButton.textContent =
+      mode === 'login' ? 'Anmelden' : 'Konto erstellen';
+
+    document.getElementById('heading').textContent =
+      mode === 'login'
+        ? 'Willkommen zurück'
+        : 'QAIORA-Konto erstellen';
+
+    document.getElementById('intro').textContent =
+      mode === 'login'
+        ? 'Melde dich mit deinem bestätigten Konto an.'
+        : 'Registriere dich mit deiner E-Mail-Adresse. Du erhältst anschließend eine Bestätigungs-E-Mail.';
+
+    document.getElementById('password').autocomplete =
+      mode === 'login'
+        ? 'current-password'
+        : 'new-password';
+
     message.textContent = '';
   }
-  loginTab.addEventListener('click', () => setMode('login'));
-  signupTab.addEventListener('click', () => setMode('signup'));
+
+  loginTab.addEventListener(
+    'click',
+    () => setMode('login')
+  );
+
+  signupTab.addEventListener(
+    'click',
+    () => setMode('signup')
+  );
+
   async function establishWorkerSession(session) {
-    const response = await fetch('/auth/session', { method: 'POST', headers: { 'Authorization': `Bearer ${session.access_token}` } });
-    if (!response.ok) throw new Error('Die Anmeldung konnte nicht für QAIORA übernommen werden. Bitte erneut anmelden.');
+    const response = await fetch('/auth/session', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        'Die Anmeldung konnte nicht für QAIORA übernommen werden. Bitte erneut anmelden.'
+      );
+    }
+
     location.replace('/');
   }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+
     submitButton.disabled = true;
     message.textContent = 'Einen Moment bitte …';
+
     try {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+      const email =
+        document.getElementById('email').value.trim();
+
+      const password =
+        document.getElementById('password').value;
+
       if (mode === 'signup') {
-        const { data, error } = await client.auth.signUp({ email, password, options: { emailRedirectTo: `${location.origin}/login` } });
+        const { data, error } =
+          await client.auth.signUp({
+            email,
+            password,
+            options: {
+              emailRedirectTo: `${location.origin}/login`
+            }
+          });
+
         if (error) throw error;
-        if (data.session) await establishWorkerSession(data.session);
-        else message.textContent = 'Registrierung gestartet. Bitte öffne die Bestätigungs-E-Mail und bestätige deine Adresse. Danach kannst du dich hier anmelden.';
+
+        if (data.session) {
+          await establishWorkerSession(data.session);
+        } else {
+          message.textContent =
+            'Registrierung gestartet. Bitte öffne die Bestätigungs-E-Mail und bestätige deine Adresse. Danach kannst du dich hier anmelden.';
+        }
+
       } else {
-        const { data, error } = await client.auth.signInWithPassword({ email, password });
+        const { data, error } =
+          await client.auth.signInWithPassword({
+            email,
+            password
+          });
+
         if (error) throw error;
+
         await establishWorkerSession(data.session);
       }
+
     } catch (error) {
-      message.textContent = error.message || 'Es ist ein Fehler aufgetreten.';
+      message.textContent =
+        error.message || 'Es ist ein Fehler aufgetreten.';
+
     } finally {
       submitButton.disabled = false;
     }
   });
+
   const query = new URLSearchParams(location.search);
+
+  // Logout: Supabase-Sitzung und Worker-Cookie löschen.
   if (query.has('logout')) {
     (async () => {
       try {
-        // Clear the HttpOnly Worker cookie as well as the browser-side Supabase session.
-        await fetch('/auth/logout', { method: 'POST' });
+        await fetch('/auth/logout', {
+          method: 'POST'
+        });
+
         await client.auth.signOut();
-        message.textContent = 'Du wurdest abgemeldet.';
+
+        message.textContent =
+          'Du wurdest abgemeldet.';
+
       } catch {
-        message.textContent = 'Abmeldung abgeschlossen. Bitte schließe dieses Fenster.';
+        message.textContent =
+          'Abmeldung abgeschlossen. Bitte schließe dieses Fenster.';
       }
     })();
-  } else {
-    client.auth.getSession().then(async ({ data, error }) => {
-      if (error) return;
-      if (data.session) {
-        try { await establishWorkerSession(data.session); }
-        catch (e) { message.textContent = e.message; }
-      }
-    });
   }
-  if (query.has('verified')) message.textContent = 'E-Mail-Adresse bestätigt. Bitte melde dich an.';
+
+  // Nach E-Mail-Bestätigung keine automatische Weiterleitung.
+  if (query.has('verified')) {
+    message.textContent =
+      'E-Mail-Adresse bestätigt. Bitte melde dich an.';
+  }
+
+  // Absichtlich keine automatische getSession()-Weiterleitung.
 })();
 </script>
 </body>
