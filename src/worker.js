@@ -72,7 +72,7 @@ async function validCookie(request, secret) {
     const expiresAt = Number(expiresAtText);
 
     return Boolean(userId) &&
-      /^\\d+$/.test(expiresAtText) &&
+     /^\d+$/.test(expiresAtText) &&
       Number.isSafeInteger(expiresAt) &&
       expiresAt > Math.floor(Date.now() / 1000);
   } catch {
