@@ -99,7 +99,7 @@ export default {
 
     // Login page is public; all application assets remain protected below.
     if (path === '/login' || path === '/login/') {
-      return serveAsset(env, '/login.html', request);
+      return serveAsset(env, '/login', request);
     }
 
     if (path === '/auth/session' && request.method === 'POST') {
