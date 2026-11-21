@@ -19,3 +19,4 @@ Das QAIORA-Cookie läuft nach 1 Stunde ab. Die Supabase-Session bleibt im Browse
 
 ## Sicherheitshinweis
 Die Seite wird nur für nicht angemeldete Besucher geschützt. Angemeldete Nutzer können weiterhin den an ihren Browser ausgelieferten HTML-/JavaScript-Code untersuchen. Für den aktuellen QAIORA-Ansatz liegen die Promptvorlagen im Clientcode; wenn diese auch vor angemeldeten Nutzern verborgen bleiben sollen, müssten sie in serverseitige Logik verschoben werden.
+Cloudflare test build
