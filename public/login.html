@@ -84,7 +84,16 @@
   });
   const query = new URLSearchParams(location.search);
   if (query.has('logout')) {
-    client.auth.signOut().then(() => { message.textContent = 'Du wurdest abgemeldet.'; });
+    (async () => {
+      try {
+        // Clear the HttpOnly Worker cookie as well as the browser-side Supabase session.
+        await fetch('/auth/logout', { method: 'POST' });
+        await client.auth.signOut();
+        message.textContent = 'Du wurdest abgemeldet.';
+      } catch {
+        message.textContent = 'Abmeldung abgeschlossen. Bitte schließe dieses Fenster.';
+      }
+    })();
   } else {
     client.auth.getSession().then(async ({ data, error }) => {
       if (error) return;
