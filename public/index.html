@@ -2012,6 +2012,17 @@ Finally, check consistency: IDs, categories, counts, source references and execu
             ? "تجمع QAIORA بين الذكاء الاصطناعي وهندسة الجودة لضمان جودة أكثر ذكاءً."
             : "QAIORA — The Intelligence Behind Quality. An AI-powered approach to Quality Assurance and Engineering.";
       document.getElementById("languageSelect").value = lang;
+      const logoutLabels = {
+  en: "Sign out",
+  de: "Abmelden",
+  fr: "Se déconnecter",
+  ar: "تسجيل الخروج"
+};
+
+const logoutButton = document.getElementById("qaioraLogout");
+if (logoutButton) {
+  logoutButton.textContent = logoutLabels[lang] || logoutLabels.en;
+}
       setModule3Language(lang);
 
       // Keep input examples and hints in sync with the selected site language.
