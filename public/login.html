@@ -207,7 +207,7 @@
   </div>
 
   <form id="authForm">
-    <label for="email">E-Mail-Adresse</label>
+    <label for="email" id="emailLabel">E-Mail-Adresse</label>
     <input
       id="email"
       type="email"
@@ -277,8 +277,8 @@
   const loginTab = document.getElementById('loginTab');
   const signupTab = document.getElementById('signupTab');
   const submitButton = document.getElementById('submitButton');
-  const passwordInput = document.getElementById('password');
-  const passwordLabel = document.getElementById('passwordLabel');
+ const emailInput = document.getElementById('email');
+const emailLabel = document.getElementById('emailLabel');
   const forgotRow = document.getElementById('forgotRow');
   const forgotLink = document.getElementById('forgotLink');
   const backToLogin = document.getElementById('backToLogin');
@@ -307,9 +307,13 @@
     );
 
     passwordInput.hidden = isForgot;
-    passwordLabel.hidden = isForgot;
+passwordLabel.hidden = isForgot;
 
-    passwordInput.required = !isForgot;
+emailInput.hidden = isRecovery;
+emailLabel.hidden = isRecovery;
+emailInput.required = !isRecovery;
+
+passwordInput.required = !isForgot;
 
     forgotRow.hidden = !isLogin;
     backToLogin.hidden = !isForgot;
