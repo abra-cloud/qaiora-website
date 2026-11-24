@@ -126,6 +126,35 @@
       border: 1px solid rgba(98,216,206,.45);
     }
 
+    .forgot-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 9px;
+    }
+
+    .text-link {
+      display: inline-block;
+      width: auto;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      color: var(--teal);
+      font: inherit;
+      font-size: .85rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    #backToLogin {
+      margin-top: 14px;
+    }
+
     #message {
       min-height: 48px;
       margin-top: 16px;
@@ -137,6 +166,10 @@
       font-size: .78rem;
       color: #8296a9;
       margin-top: 18px;
+    }
+
+    [hidden] {
+      display: none !important;
     }
   </style>
 
@@ -155,7 +188,7 @@
     Nach der E-Mail-Bestätigung erhältst du Zugang.
   </p>
 
-  <div class="switch" role="group" aria-label="Zugangsart">
+  <div class="switch" id="modeSwitch" role="group" aria-label="Zugangsart">
     <button
       class="secondary"
       id="loginTab"
@@ -181,7 +214,7 @@
       autocomplete="email"
       required>
 
-    <label for="password">Passwort</label>
+    <label for="password" id="passwordLabel">Passwort</label>
     <input
       id="password"
       type="password"
@@ -189,8 +222,25 @@
       minlength="8"
       required>
 
+    <div class="forgot-row" id="forgotRow">
+      <button
+        class="text-link"
+        id="forgotLink"
+        type="button">
+        Passwort vergessen?
+      </button>
+    </div>
+
     <button id="submitButton" type="submit">
       Anmelden
+    </button>
+
+    <button
+      class="text-link"
+      id="backToLogin"
+      type="button"
+      hidden>
+      Zurück zur Anmeldung
     </button>
   </form>
 
@@ -227,39 +277,73 @@
   const loginTab = document.getElementById('loginTab');
   const signupTab = document.getElementById('signupTab');
   const submitButton = document.getElementById('submitButton');
+  const passwordInput = document.getElementById('password');
+  const passwordLabel = document.getElementById('passwordLabel');
+  const forgotRow = document.getElementById('forgotRow');
+  const forgotLink = document.getElementById('forgotLink');
+  const backToLogin = document.getElementById('backToLogin');
+  const modeSwitch = document.getElementById('modeSwitch');
 
   let mode = 'login';
 
   function setMode(next) {
     mode = next;
 
+    const isLogin = mode === 'login';
+    const isSignup = mode === 'signup';
+    const isForgot = mode === 'forgot';
+    const isRecovery = mode === 'recovery';
+
+    modeSwitch.hidden = isForgot || isRecovery;
+
     loginTab.setAttribute(
       'aria-pressed',
-      String(mode === 'login')
+      String(isLogin)
     );
 
     signupTab.setAttribute(
       'aria-pressed',
-      String(mode === 'signup')
+      String(isSignup)
     );
 
+    passwordInput.hidden = isForgot;
+    passwordLabel.hidden = isForgot;
+
+    passwordInput.required = !isForgot;
+
+    forgotRow.hidden = !isLogin;
+    backToLogin.hidden = !isForgot;
+
     submitButton.textContent =
-      mode === 'login' ? 'Anmelden' : 'Konto erstellen';
+      isLogin ? 'Anmelden' :
+      isSignup ? 'Konto erstellen' :
+      isForgot ? 'Reset-Link senden' :
+      'Passwort speichern';
 
     document.getElementById('heading').textContent =
-      mode === 'login'
-        ? 'Willkommen zurück'
-        : 'QAIORA-Konto erstellen';
+      isLogin ? 'Willkommen zurück' :
+      isSignup ? 'QAIORA-Konto erstellen' :
+      isForgot ? 'Passwort zurücksetzen' :
+      'Neues Passwort festlegen';
 
     document.getElementById('intro').textContent =
-      mode === 'login'
+      isLogin
         ? 'Melde dich mit deinem bestätigten Konto an.'
-        : 'Registriere dich mit deiner E-Mail-Adresse. Du erhältst anschließend eine Bestätigungs-E-Mail.';
+        : isSignup
+        ? 'Registriere dich mit deiner E-Mail-Adresse. Du erhältst anschließend eine Bestätigungs-E-Mail.'
+        : isForgot
+        ? 'Gib deine registrierte E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts.'
+        : 'Vergib ein neues Passwort für dein QAIORA-Konto.';
 
-    document.getElementById('password').autocomplete =
-      mode === 'login'
-        ? 'current-password'
-        : 'new-password';
+    passwordInput.autocomplete =
+      isSignup || isRecovery
+        ? 'new-password'
+        : 'current-password';
+
+    passwordLabel.textContent =
+      isRecovery ? 'Neues Passwort' : 'Passwort';
+
+    passwordInput.minLength = 8;
 
     message.textContent = '';
   }
@@ -273,6 +357,14 @@
     'click',
     () => setMode('signup')
   );
+
+  forgotLink.addEventListener('click', () => {
+    setMode('forgot');
+  });
+
+  backToLogin.addEventListener('click', () => {
+    setMode('login');
+  });
 
   async function establishWorkerSession(session) {
     const response = await fetch('/auth/session', {
@@ -301,8 +393,7 @@
       const email =
         document.getElementById('email').value.trim();
 
-      const password =
-        document.getElementById('password').value;
+      const password = passwordInput.value;
 
       if (mode === 'signup') {
         const { data, error } =
@@ -323,7 +414,7 @@
             'Registrierung gestartet. Bitte öffne die Bestätigungs-E-Mail und bestätige deine Adresse. Danach kannst du dich hier anmelden.';
         }
 
-      } else {
+      } else if (mode === 'login') {
         const { data, error } =
           await client.auth.signInWithPassword({
             email,
@@ -333,6 +424,33 @@
         if (error) throw error;
 
         await establishWorkerSession(data.session);
+
+      } else if (mode === 'forgot') {
+        const { error } =
+          await client.auth.resetPasswordForEmail(email, {
+            redirectTo: `${location.origin}/login?reset=1`
+          });
+
+        if (error) throw error;
+
+        message.textContent =
+          'Falls ein Konto mit dieser E-Mail-Adresse existiert, erhältst du eine E-Mail mit einem Link zum Zurücksetzen deines Passworts. Bitte prüfe auch deinen Spam-Ordner.';
+
+      } else if (mode === 'recovery') {
+        const { error } =
+          await client.auth.updateUser({
+            password
+          });
+
+        if (error) throw error;
+
+        await client.auth.signOut();
+
+        passwordInput.value = '';
+        setMode('login');
+
+        message.textContent =
+          'Dein Passwort wurde erfolgreich geändert. Du kannst dich jetzt mit deinem neuen Passwort anmelden.';
       }
 
     } catch (error) {
@@ -370,6 +488,13 @@
   if (query.has('verified')) {
     message.textContent =
       'E-Mail-Adresse bestätigt. Bitte melde dich an.';
+  }
+
+  // Nach dem Klick auf den Passwort-Reset-Link.
+  if (query.has('reset')) {
+    setMode('recovery');
+    message.textContent =
+      'Dein Reset-Link wurde geöffnet. Bitte vergib ein neues Passwort.';
   }
 
   // Absichtlich keine automatische getSession()-Weiterleitung.
