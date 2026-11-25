@@ -373,7 +373,11 @@ passwordInput.required = !isForgot;
     setMode('login');
   });
 
-  async function establishWorkerSession(session) {
+
+async function establishWorkerSession(session) {
+  message.textContent = 'Anmeldung wird überprüft …';
+
+  try {
     const response = await fetch('/auth/session', {
       method: 'POST',
       headers: {
@@ -381,14 +385,23 @@ passwordInput.required = !isForgot;
       }
     });
 
+    const result = await response.json().catch(() => ({}));
+
     if (!response.ok) {
       throw new Error(
-        'Die Anmeldung konnte nicht für QAIORA übernommen werden. Bitte erneut anmelden.'
+        `Cloudflare-Session fehlgeschlagen (${response.status}): ${result.error || 'Unbekannter Fehler'}`
       );
     }
 
+    message.textContent = 'Anmeldung erfolgreich. QAIORA wird geöffnet …';
+
     location.replace('/');
+  } catch (error) {
+    message.textContent = error.message;
+    throw error;
   }
+}
+
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
